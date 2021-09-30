@@ -1,0 +1,785 @@
+/**********************************************************
+  CONTENT
+ **********************************************************
+  1.  General Layout
+  2.  Button (Text)
+  3.  Button (Icon only)
+  4.  Form
+  5.  Header (Landing)
+  6.  Header (General)
+  7.  Footer
+  8.  Nav Bar
+  9.  Landing Page
+  10. Sign In/Up Page
+  11. Profile Page
+  12. Posts Page
+**********************************************************/
+
+
+@import url('https://fonts.googleapis.com/css2?family=Prompt:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Mukta:wght@200;300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Handlee&display=swap');
+
+
+/**********************************************************
+  1. General Layout
+**********************************************************/
+
+.page-container {
+  position: relative;
+  min-height: 100vh;
+  font-family: 'Mukta', sans-serif;
+  background-color: rgb(20, 29, 43);
+  color: rgb(194, 194, 210);
+}
+
+.content-wrap {
+  padding-top: 5rem;  /* Header height */
+  padding-bottom: 2.5rem;  /* Footer height */
+}
+
+.content-container {
+  padding: 3% 10%;
+}
+
+.content {
+  margin-left: 24%;
+  padding-left: 30px;
+}
+
+
+/**********************************************************
+  2. Button (Text)
+**********************************************************/
+
+.custom-btn {
+  color: ghostwhite;
+  border-style: none;
+  border-radius: 14px;
+  height: 40px;
+  transition: all 0.25s ease;
+  -webkit-transition: all 0.25s ease;
+  -moz-transition: all 0.25s ease;
+}
+.custom-btn:hover {
+  opacity: 0.8;
+}
+.custom-btn:focus {
+  outline: none;
+  border-radius: 14px;
+}
+.custom-btn:active {
+  border: none;
+}
+
+.form-btn {
+  background-color: lightseagreen;
+  width: 270px;
+}
+.form-btn:focus {
+  border: 1px solid teal;
+}
+.form-btn:active {
+  background-color: teal;
+}
+
+.pf-save-btn {
+  background-color: lightseagreen;
+  width: 170px;
+}
+.pf-save-btn:focus {
+  border: 1px solid teal;
+}
+.pf-save-btn:active {
+  background-color: teal;
+}
+
+.pf-dlt-btn {
+  background-color: tomato;
+  width: 170px;
+}
+.pf-dlt-btn:focus {
+  border: 1px solid crimson;
+}
+.pf-dlt-btn:active {
+  background-color: crimson;
+}
+
+.po-btn {
+  background-color: lightseagreen;
+  width: 100px;
+  font-size: 14px;
+}
+.po-btn:focus {
+  border: 1px solid teal;
+}
+.po-btn:active {
+  background-color: teal;
+}
+.po-btn:disabled {
+  opacity: 0.4;
+}
+
+.po-dlt-btn {
+  background-color: tomato;
+  width: 100px;
+  font-size: 14px;
+}
+.po-dlt-btn:focus {
+  border: 1px solid crimson;
+}
+.po-dlt-btn:active {
+  background-color: crimson;
+}
+
+
+/**********************************************************
+  3. Button (Icon only)
+**********************************************************/
+
+.icon-btn {
+  background-color: transparent;
+  border-style: none;
+  border-radius: 14px;
+  height: 40px;
+  width: 40px;
+  transition: all 0.4s ease;
+  -webkit-transition: all 0.4s ease;
+  -moz-transition: all 0.4s ease;
+}
+.icon-btn:focus {
+  outline: none;
+  border-radius: 14px;
+}
+.icon-btn:active {
+  border: none;
+}
+
+.pf-edit-btn {
+  color: rgb(118, 132, 162);
+  margin-right: 5px;
+}
+.pf-edit-btn:focus {
+  border: 1px solid rgb(118, 132, 162, 0.3);
+}
+.pf-edit-btn:hover,
+.pf-edit-btn:active {
+  background-color: rgb(118, 132, 162, 0.2);
+}
+
+.pf-trash-btn {
+  color: tomato;
+}
+.pf-trash-btn:focus {
+  border: 1px solid rgb(255, 160, 122, 0.4);
+}
+.pf-trash-btn:hover,
+.pf-trash-btn:active {
+  background-color: rgba(255, 143, 99, 0.3);
+}
+
+.po-icon-btn {
+  color: rgb(118, 132, 162);
+}
+.po-icon-btn:focus {
+  border: 1px solid rgb(118, 132, 162, 0.3);
+}
+.po-icon-btn:hover,
+.po-icon-btn:active {
+  background-color: rgb(118, 132, 162, 0.2);
+}
+
+.pf-avatar-opt-btn {
+  width: 55px;
+  height: 55px;
+  margin-right: 6px;
+  background-color: rgb(20, 29, 43);
+  transition: all 0.2s ease;
+  -webkit-transition: all 0.2s ease;
+  -moz-transition: all 0.2s ease;
+}
+.pf-avatar-opt-btn:hover,
+.pf-avatar-opt-btn:active {
+  box-shadow: 0 0 15px rgb(46, 58, 83);
+  background-color: rgb(20, 29, 43);
+}
+.pf-avatar-select {
+  border: 1px solid mediumseagreen;
+}
+
+.cancel-btn {
+  height: 30px;
+  width: 26px;
+  color: rgb(118, 132, 162);
+  font-size: 12px;
+  line-height: 12px;
+  padding: 9px 0px;
+  margin-left: 5px;
+}
+.cancel-btn:hover{
+  opacity: 0.6;
+}
+
+
+/**********************************************************
+  4. Form
+**********************************************************/
+
+/* remove browser default input autofill styling */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 40px rgb(20, 29, 43) inset !important;
+}
+input:-webkit-autofill {
+  -webkit-text-fill-color: rgb(221, 221, 227) !important;
+}
+input {
+  filter: none;
+}
+
+.form-wrap {
+  position: absolute;
+  height: 100vh;
+  top: 0px;
+  display: flex;
+  align-items: center;
+  right: 0px;
+  width: 32vw; /* position from right */
+  z-index: 3;
+}
+
+.form-title {
+  font-family: "Prompt", sans-serif;
+  font-weight: 600;
+}
+
+.form-msg {
+  border-radius: 12px;
+  padding: 6px 12px;
+  line-height: 18px;
+  font-size: 14px;
+}
+
+.form-error {
+  background-color: rgba(255, 143, 99, 0.1);
+  color: orangered;
+  border: 1px solid rgba(255, 69, 0, 0.5);
+}
+
+.form-noti {
+  background-color: rgba(222, 255, 220, 0.1);
+  color: mediumseagreen;
+  border: 1px solid mediumseagreen;
+}
+
+.form-msg-no-outline {
+  border: none;
+  line-height: 15px;
+  font-size: 12px;
+  display: inline-block;
+}
+
+.form-msg-sm {
+  border: none;
+  display: inline;
+  border-radius: 14px;
+  font-size: 13px;
+  padding: 9px 12px;
+  margin: 0px 10px 0px 0px;
+}
+
+.input-title {
+  width: 150px;
+}
+
+.input-body {
+  border-style: none;
+  border-radius: 14px;
+  height: 40px;
+  width: 270px;
+  text-indent: 10px;
+  background-color: rgb(20, 29, 43);
+  color: rgb(221, 221, 227);
+  transition: all 0.2s ease;
+  -webkit-transition: all 0.2s ease;
+  -moz-transition: all 0.2s ease;
+  caret-color: rgb(118, 132, 162);
+}
+.input-body::placeholder {
+  color: rgb(85, 99, 129);
+  font-size: small;
+}
+.input-body:hover {
+  box-shadow: 0 0 13px rgb(46, 58, 83);
+}
+.input-body:focus {
+  outline: none;
+  border: 1px solid rgb(69, 80, 105);
+  border-radius: 14px;
+}
+.input-body:active {
+  border-style: none;
+}
+
+
+/**********************************************************
+  5. Header (Landing)
+**********************************************************/
+
+.header-logo {
+  width: 30px;
+  height: 30px;
+  object-fit: cover;
+  margin: 0 8px 6px 0;
+}
+
+.landing-header {
+  height: 5rem;
+  background-image: linear-gradient(rgb(0, 0, 0, 0.9), rgb(0, 0, 0, 0));
+}
+
+.landing-navbar-brand {
+  font-family: 'Prompt', sans-serif;
+  font-weight: 600;
+  font-size: 26px !important;
+  color: rgba(240, 255, 255, 0.9) !important;
+}
+
+.landing-nav-link {
+  color: rgba(240, 255, 255, 0.7) !important;
+}
+.landing-nav-link:hover {
+  color: rgba(240, 255, 255, 0.9) !important;
+}
+
+
+/**********************************************************
+  6. Header (General)
+**********************************************************/
+
+.general-header {
+  height: 5rem;
+  background-color: rgb(29, 38, 54);
+  box-shadow: 0 3px 30px 3px rgb(8, 13, 21);
+}
+
+.general-navbar-brand {
+  font-family: 'Prompt', sans-serif;
+  font-weight: 600;
+  font-size: 26px !important;
+  color: rgb(221, 221, 227) !important;
+}
+
+.general-nav-link {
+  color: rgb(221, 221, 227, 0.7) !important;
+}
+.general-nav-link:hover {
+  color: rgb(221, 221, 227) !important;
+}
+
+
+/**********************************************************
+  7. Footer
+**********************************************************/
+
+.footer {
+  position: absolute;
+  background-color: rgb(29, 38, 54);
+  bottom: 0;
+  width: 100%;
+  height: 2.5rem;
+  font-size: small;
+  z-index: 3;
+}
+
+.footer-content {
+  line-height: 2.5rem;
+  text-align: center;
+  margin: 0;
+}
+
+
+/**********************************************************
+  8. Nav Bar
+**********************************************************/
+
+.nav-sidebar {
+  position: fixed;
+  width: 19%; /* relative to viewport width */
+  min-height: 25vh;
+  padding: 30px 15px;
+  background-color: rgb(29, 38, 54);
+  font-family: "Prompt", sans-serif;
+  font-weight: 400;
+  border-radius: 10px;
+}
+
+.nav-sidebar-list {
+  display: block;
+  padding: 8px 26px;
+  margin: 5px 0;
+  text-decoration: none;
+  border-radius: 10px;
+  cursor: pointer;
+  color: rgb(194, 194, 210);
+  transition: all 0.35s ease;
+  -webkit-transition: all 0.35s ease;
+  -moz-transition: all 0.35s ease;
+}
+.nav-sidebar-list:hover:not(.active) {
+  background-color: rgba(75, 86, 111);
+  color: white;
+}
+
+.nav-sidebar-current {
+  background-color: rgb(46, 58, 83);
+  color: white;
+}
+
+.nav-info-wrap {
+  text-align: center;
+}
+
+.nav-avatar {
+  width: 60px;
+  height: 60px;
+  object-fit:cover;
+}
+
+
+/**********************************************************
+  9. Landing Page
+**********************************************************/
+
+.parallax {
+  background-image: url("./images/background-team.jpg");
+  opacity: 0.7;
+  min-height: 80vh; 
+
+  /* Parallax scrolling effect */
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.intro-wrap {
+  min-height: 80vh;
+  background-color: rgb(20, 29, 43);
+  padding: 0px 7%;
+  text-align: center;
+}
+
+.intro-scroll {
+  position: relative;
+}
+.intro-scroll::before {
+  animation: bounce 1s ease infinite;
+  color: white;
+  content: '\27CD\27CB';
+  font-size: 2rem;
+  height: 3rem;
+  width: 6rem;
+  bottom: 2rem;
+  left: 50%;
+  margin-left: -3rem;
+  opacity: 0.5;
+  position: absolute;
+  letter-spacing: -3px;
+}
+@keyframes bounce {
+  50% {
+    transform: translateY(-50%);
+  }
+}
+
+.intro-title {
+  font-family: 'Handlee', sans-serif;
+  font-weight: 600;
+  font-size: 54px;
+  color: rgb(35, 145, 205);
+  line-height: 20vh;
+  letter-spacing: 1px;
+}
+
+.intro-text {
+  color: rgb(0, 150, 199);
+}
+
+.intro-icon {
+  width: 60%;
+  margin-bottom: 20px;
+}
+
+.feature-title {
+  font-family: 'Prompt', sans-serif;
+  font-size: 22px;
+  color: lightseagreen;
+}
+
+.feature-desc {
+  color: darkcyan;
+}
+
+.references {
+  font-weight: 300;
+  font-size: 12px;
+  color: rgb(118, 132, 162);
+}
+
+.link {
+  color: rgb(118, 132, 162);
+  text-decoration-line: none;
+}
+.link:hover {
+  color: rgb(118, 132, 162);
+  text-decoration-line: underline;
+}
+.link:focus {
+  outline: none;
+  text-decoration-line: underline;
+}
+.link:active {
+  border: none;
+  padding: 0;
+}
+
+
+/**********************************************************
+  10. Sign In/Up Page
+**********************************************************/
+
+.welcome-wrap {
+  position: absolute;
+  height: 100vh;
+  top: 0px;
+  display: flex;
+  align-items: center;
+  left: 0px;
+}
+
+.welcome-text {
+  position: absolute;
+  left: 10vw;
+  color: rgb(118, 132, 162);
+  font-family: "Prompt", sans-serif;
+  font-weight: 600;
+  font-size: 60px;
+  border-left: rgb(118, 132, 162) solid 10px;
+  padding-left: 15px;
+  width: 50vw; 
+}
+.welcome-text-deco {
+  margin: 0px 0px;
+}
+
+.wave {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  height: 100vh; 
+}
+.wave1 {
+  width: 45vw; 
+  border-radius: 70% 0 0 50%; 
+  background-color: rgb(118, 132, 162);
+  z-index: 1;
+  opacity: 0.3;
+}
+.wave2 {
+  width: 50vw; 
+  border-radius: 30% 0 0 80%; 
+  background-color: rgb(29, 38, 54);
+  z-index: 2;
+  opacity: 0.8;
+}
+
+
+/**********************************************************
+  11. Profile Page
+**********************************************************/
+
+.pf-wrap {
+  background-color: rgb(29, 38, 54);
+  padding: 5%;
+  border-radius: 10px;
+}
+
+.pf-avatar-wrap {
+  text-align: center;
+  margin-right: -20px;
+}
+.pf-avatar {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+
+.pf-avatar-opt {
+  width: 30px;
+  height: 30px;
+}
+
+.pf-info {
+  font-size: 16px;
+  line-height: 16px;
+}
+
+
+/**********************************************************
+  12. Posts Page
+**********************************************************/
+
+.all-po-wrap {
+  /* reverse all posts (show latest post first) */
+  display: flex;
+  flex-direction: column-reverse;
+}
+.po-wrap {
+  background-color: rgb(29, 38, 54);
+  padding: 3% 5%;
+  border-radius: 10px;
+}
+
+.po-avatar-wrap {
+  width: 40px;
+}
+
+.po-avatar {
+  width: 30px;
+  height: 30px;
+  object-fit: cover;
+  margin: 5px;
+}
+
+.po-info-wrap {
+  display: flex;
+}
+
+.po-name-date-wrap {
+  flex: 1;
+  margin-left: 8px;
+}
+
+.po-name {
+  font-size: 14px;
+  line-height: 22px;
+  margin: 0px;
+}
+
+.po-info-icon {
+  font-size: 8px;
+  margin-bottom: 1px;
+}
+
+.po-date {
+  font-size: 10px;
+  line-height: 18px;
+  font-weight: 300;
+  margin: 0px;
+}
+
+.po-reply-wrap {
+  margin-left: 10%;
+}
+
+.po-input-wrap {
+  display: flex;
+}
+
+.po-input-body-wrap {
+  flex: 1;
+}
+
+.po-input-body {
+  border-style: none;
+  border-radius: 12px;
+  width: 97%;
+  height: 40px;
+  padding: 11px 15px;
+  font-size: 14px;
+  line-height: 18px;
+  background-color: rgb(20, 29, 43);
+  color: rgb(221, 221, 227);
+  transition: all 0.2s ease;
+  -webkit-transition: all 0.2s ease;
+  -moz-transition: all 0.2s ease;
+  caret-color: rgb(118, 132, 162);
+}
+.po-input-body::placeholder {
+  color: rgb(85, 99, 129);
+  font-size: small;
+}
+.po-input-body:hover {
+  box-shadow: 0 0 13px rgb(46, 58, 83);
+}
+.po-input-body:focus {
+  outline: none;
+  border: 1px solid rgb(69, 80, 105);
+  border-radius: 12px;
+}
+.po-input-body:active {
+  border-style: none;
+}
+
+.po-btns-wrap {
+  width: 120px;
+}
+
+.reply-wrap {
+  margin-left: 20px;
+  padding-left: 4%;
+  border-left: 1px solid rgb(46, 58, 83);
+}
+
+.po-text {
+  font-size: 15px;
+}
+.po-dlted-text {
+  font-style: italic;
+  font-weight: 300;
+  font-size: 13px;
+  color: rgb(111, 124, 154);
+}
+
+.reply-text {
+  font-size: 13px;
+}
+.reply-dlted-text {
+  font-style: italic;
+  font-weight: 300;
+  font-size: 12px;
+  color: rgb(111, 124, 154);
+}
+
+.dlt-confirmation {
+  font-size: 14px;
+  margin-right: 20px;
+}
+
+.po-image-wrap {
+  text-align: center;
+}
+
+.po-image {
+  width: auto;
+  max-height: 350px;
+}
+
+.img-input-wrap {
+  background-color: rgb(46, 58, 83);
+  font-size: 12px;
+  line-height: 12px;
+  border-radius: 10px;
+  height: 30px;
+  padding: 9px 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  -webkit-transition: all 0.2s ease;
+  -moz-transition: all 0.2s ease;
+}
+.img-input-wrap:hover {
+  opacity: 0.7;
+}
