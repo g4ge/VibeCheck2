@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import Header from "components/Header";
-import { authenticateUser } from "data/UsersRepository";
+import { loginUser } from "data/UserRepository";
 import { useUserContext } from "libs/Context";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
@@ -12,7 +12,7 @@ function SignIn() {
   const { setAuthUser } = useUserContext();
   const [error, setError] = useState("");
   const [form, setForm] = useState({
-    email: "",
+    username: "",
     password: ""
   });
 
@@ -25,16 +25,16 @@ function SignIn() {
   };
 
   
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const authUser = authenticateUser(form);
+    const authUser = await loginUser(form.username, form.password);
 
     // if user is authenticated, navigates to profile page, otherwise set the error
     if (authUser) {
       setAuthUser(authUser)
       history.push("/profile");
     } else {
-      setError("Incorrect email or password")
+      setError("Incorrect username or password")
     }
   };
 
@@ -66,18 +66,18 @@ function SignIn() {
               </div>
             }
 
-            {/* form input email */}
+            {/* form input username */}
             <div className="form-group mb-3">
-              <label>Email</label>
+              <label>Username</label>
               <br />
               <input 
-                type="email" 
+                type="text" 
                 className="input-body"
-                placeholder="enter email" 
+                placeholder="enter username" 
                 spellCheck={false} 
                 required={true} 
-                name="email" 
-                value={form.email} 
+                name="username" 
+                value={form.username} 
                 onChange={handleChange} 
               />
             </div>

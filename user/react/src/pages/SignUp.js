@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import Header from "components/Header";
-import { createUser } from "data/UsersRepository";
+import { createUser } from "data/UserRepository";
 import { validatePassword, isEmptyString, validateEmail } from "utils/FormValidation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
@@ -11,6 +11,7 @@ function SignUp() {
   const history = useHistory();
   const [error, setError] = useState("");
   const [form, setForm] = useState({
+    username: "",
     name: "",
     email: "",
     password: ""
@@ -25,8 +26,14 @@ function SignUp() {
   };
 
   
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // check if username only contain whitespaces
+    if (isEmptyString(form.username)) {
+      setError("Userame cannot be empty");
+      return;
+    }
 
     // check if name only contain whitespaces
     if (isEmptyString(form.name)) {
@@ -46,13 +53,13 @@ function SignUp() {
       return;
     }
 
-    const isUserCreated = createUser(form);
+    const user = await createUser(form);
 
     // if user is created, navigates to sign in page, otherwise set the error
-    if (isUserCreated) {
+    if (user) {
       history.push("/signin");
     } else {    
-      setError("Duplicate email found")
+      setError("Duplicate username found")
     }
   };
 
@@ -83,6 +90,22 @@ function SignUp() {
               </div>
             }
 
+            {/* form input username */}
+            <div className="form-group mb-3">
+              <label>Userame</label>
+              <br />
+              <input 
+                type="text" 
+                className="input-body"
+                placeholder="enter username" 
+                spellCheck={false} 
+                required={true} 
+                name="username" 
+                value={form.username} 
+                onChange={handleChange} 
+              />
+            </div>
+            
             {/* form input name */}
             <div className="form-group mb-3">
               <label>Name</label>
