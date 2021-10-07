@@ -42,9 +42,28 @@ function getMsSinceEpoch() {
   return (today.getTime()).toString();
 }
 
+function convertTimestampToDate(timestampStr) {
+  /*
+   * convert database datetime into new string format:
+   * 2021-10-07T09:54:39.000Z -> 7 Oct 2021
+   */
+  const options = { 
+    day: 'numeric', 
+    month: 'short', 
+    year: 'numeric'
+  };
+
+  const epoch = Date.parse(timestampStr); // convert timestamp in string into epoch
+  const datetime = new Date(epoch); // convert epoch to js datetime
+  const dateStr = datetime.toLocaleDateString('en-AU', options); // convert js datetime into specifed format
+  
+  return dateStr;
+}
+
 export {
   getCurrentDate,
   getCurrentTime,
-  getMsSinceEpoch
+  getMsSinceEpoch,
+  convertTimestampToDate
 }
   
