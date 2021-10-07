@@ -6,7 +6,6 @@ const USER_API_URL = process.env.REACT_APP_API_URL + "/user";
 
 async function createUser(user) {
   const res = await axios.post(USER_API_URL + "/create", user);
-
   return res.data;
 }
 
@@ -22,6 +21,23 @@ async function loginUser(username, password) {
   return user;
 }
 
+async function editUser(id, user, avatar) {
+  // add avatar attr into part of user form
+  user.avatar = avatar;
+  
+  const res = await axios.post(USER_API_URL + "/edit", user, { params: { id } });
+  const editedUser = res.data;
+
+  // user is returned without error
+  if (editedUser.id) {
+    editedUser.joinedDate = convertTimestampToDate(editedUser.joinedDate) // change date format
+    setAuthUser(editedUser);
+  }
+
+  return editedUser;
+}
+
+
 // async function findUser(id) {
 //   const res = await axios.get(REACT_APP_API_URL + `/user/select/${id}`);
 
@@ -30,5 +46,6 @@ async function loginUser(username, password) {
 
 export {
   createUser,
-  loginUser
+  loginUser,
+  editUser
 }
