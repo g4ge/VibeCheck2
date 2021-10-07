@@ -48,21 +48,30 @@ exports.edit = async (req, res) => {
   const isPasswordCorrect = await argon2.verify(user.password, req.body.curPassword); // verify password
 
   if (isPasswordCorrect) {
-    // edit user fields
-    user.username = req.body.username;
-    user.name = req.body.name;
-    user.email = req.body.email;
-    user.avatar = req.body.avatar;
+    // get user by username
+    const userByUsername = await db.user.findOne({ where: { username: req.body.username } }); 
     
-    // edit password if new password is supplied
-    if (req.body.newPassword.length) {
-      const hash = await argon2.hash(req.body.newPassword, { type: argon2.argon2id });
-      user.password = hash;
+    // check for user with duplicate username
+    if (userByUsername === null || userByUsername.id === parseInt(req.query.id)) {
+      // edit user fields if username is unique / not changed
+      user.username = req.body.username;
+      user.name = req.body.name;
+      user.email = req.body.email;
+      user.avatar = req.body.avatar;
+      
+      // edit password if new password is supplied
+      if (req.body.newPassword.length) {
+        const hash = await argon2.hash(req.body.newPassword, { type: argon2.argon2id });
+        user.password = hash;
+      }
+      
+      await user.save();
+      res.json(user); // edit successful
+
+    } else {
+      res.json({ error: "Duplicate username. Please try again." }); // edit failed
     }
-    
-    await user.save();
-    res.json(user); // edit successful
   } else {
-    res.json(null); // edit failed
+    res.json({ error: "Incorrect password. Please try again." }); // edit failed
   }
 };
