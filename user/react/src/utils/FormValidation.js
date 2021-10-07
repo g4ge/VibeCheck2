@@ -12,6 +12,7 @@ function validatePassword(password) {
 }
 
 function validateEmail(email) {
+  // ensure email is in correct format
   const validEmail = /\S+@\S+\.\S+/;
   return validEmail.test(email);
 }
@@ -21,8 +22,14 @@ function isEmptyString(str) {
   return !str.trim();
 }
 
+function validateMaxLength(str, maxLen) {
+  // ensure input string does not exceed maximum length
+  return str.length <= maxLen
+}
+
 export {
   validatePassword,
   validateEmail,
-  isEmptyString
+  isEmptyString,
+  validateMaxLength
 } 

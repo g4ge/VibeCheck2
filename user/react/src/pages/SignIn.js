@@ -5,6 +5,7 @@ import { loginUser } from "data/UserRepository";
 import { useUserContext } from "libs/Context";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
+import { validateMaxLength } from "utils/FormValidation";
 import "App.css";
 
 function SignIn() {
@@ -24,9 +25,29 @@ function SignIn() {
     });
   };
 
+
+  const handleValidation = () => {
+    if (!validateMaxLength(form.username, 30)) {
+      setError("Username length cannot be greater than 30");
+      return false;
+    }
+
+    if (!validateMaxLength(form.password, 60)) {
+      setError("Password length cannot be greater than 60");
+      return false;
+    }
+    
+    return true;
+  }
+
   
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // stop logging user in if form input is invalid
+    if (!handleValidation())
+      return;
+
     const authUser = await loginUser(form.username, form.password);
 
     // if user is authenticated, navigates to profile page, otherwise set the error
