@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useUserContext } from "libs/Context";
 import { editUser } from "data/UsersRepository";
-import { validatePassword, isEmptyString, validateEmail } from "utils/FormValidation";
+import { validatePassword, isEmptyString, validateEmail, validateMaxLength } from "utils/FormValidation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle, faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
 import AvatarBook from "images/avatars/book.png";
@@ -34,29 +34,67 @@ function AccountEditForm() {
   };
 
 
+  const handleValidation = () => {
+    if (isEmptyString(form.username)) {
+      setError("Username cannot be empty");
+      return false;
+    }
+
+    if (!validateMaxLength(form.username, 30)) {
+      setError("Username length cannot be greater than 30");
+      return false;
+    }
+
+    if (isEmptyString(form.name)) {
+      setError("Name cannot be empty");
+      return false;
+    }
+
+    if (!validateMaxLength(form.name, 60)) {
+      setError("Name length cannot be greater than 60");
+      return false;
+    }
+
+    if (!validateEmail(form.email)) {
+      setError("Email address is invalid");
+      return false;
+    }
+
+    if (!validateMaxLength(form.email, 60)) {
+      setError("Email length cannot be greater than 60");
+      return false;
+    }
+
+    // if new password is entered, check if it meets password requirements
+    if (form.newPassword.length > 0 && !validatePassword(form.newPassword)) {
+      setError("New password must be at least 6 characters and should be mix of lowercase and uppercase characters, number and punctuation")  
+      return false;
+    }
+
+    // if new password is entered, check if it exceeds maximum password length
+    if (form.newPassword.length > 0 &&!validateMaxLength(form.newPassword, 60)) {
+      setError("New password length cannot be greater than 60");
+      return false;
+    }
+
+    if (!validateMaxLength(form.curPassword, 60)) {
+      setError("Current password length cannot be greater than 60");
+      return false;
+    }
+
+    return true;
+  }
+
+
   const handleSubmit = (e) => {
     e.preventDefault();
     // clear notification & error
     setNotification("");
     setError("");
 
-    // check if name only contain whitespaces
-    if (isEmptyString(form.name)) {
-      setError("Name cannot be empty");
+    // stop editing user profile if form input is invalid
+    if (!handleValidation())
       return;
-    }
-
-    // check if email is valid
-    if (!validateEmail(form.email)) {
-      setError("Email address is invalid");
-      return;
-    }
-
-    // if input new password is entered, check if it meets requirements
-    if (form.newPassword.length > 0 && !validatePassword(form.newPassword)) {
-      setError("Password must be at least 6 characters and should be mix of lowercase and uppercase characters, number and punctuation")  
-      return;
-    }
     
     // edit user profile
     const userEdited = editUser(authUser, form, avatar);
