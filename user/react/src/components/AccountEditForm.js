@@ -18,6 +18,7 @@ function AccountEditForm() {
   const [notification, setNotification] = useState("");
   const [avatar, setAvatar] = useState(authUser.avatar);
   const [form, setForm] = useState({
+    username: authUser.username,
     name: authUser.name,
     email: authUser.email,
     newPassword: "",
@@ -143,6 +144,20 @@ function AccountEditForm() {
               <img className="pf-avatar-opt" src={AvatarUfo} alt="Avatar Ufo"></img>
             </button>
           </div>
+          {/* input username */}
+          <div className="form-group mb-3">
+            <label className="input-title">Username</label>
+            <input
+              type="text"
+              className="input-body"
+              placeholder="enter new username"
+              spellCheck={false}
+              required={true}
+              name="username"
+              value={form.username}
+              onChange={handleChange}
+            />
+          </div>
           {/* input name */}
           <div className="form-group mb-3">
             <label className="input-title">Name</label>
@@ -177,7 +192,7 @@ function AccountEditForm() {
             <input
               type="password"
               className="input-body"
-              placeholder="enter new password"
+              placeholder="enter new password (optional)"
               spellCheck={false}
               required={false}
               name="newPassword"
@@ -191,7 +206,7 @@ function AccountEditForm() {
             <input
               type="password"
               className="input-body"
-              placeholder="enter current password"
+              placeholder="enter current password (required)"
               spellCheck={false}
               required={true}
               name="curPassword"
