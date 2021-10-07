@@ -19,40 +19,40 @@ function removeAuthUser() {
   localStorage.removeItem(AUTH_USER_KEY);
 }
 
-// export {
-//   setAuthUser,
-//   getAuthUser,
-//   removeAuthUser
+export {
+  setAuthUser,
+  getAuthUser,
+  removeAuthUser
+}
+
+// /*
+//  * Return authenticated user data without password
+//  */
+// function getAuthUserProfile() {
+//   const authUser = JSON.parse(localStorage.getItem(AUTH_USER_KEY));
+
+//   if (authUser) {
+//     const authUserWithoutPwd = {
+//       name: authUser.name,
+//       email: authUser.email,
+//       joinedDate: authUser.joinedDate,
+//       avatar: authUser.avatar
+//     }
+//     return authUserWithoutPwd;
+//   }
+//   return null;
 // }
 
-/*
- * Return authenticated user data without password
- */
-function getAuthUserProfile() {
-  const authUser = JSON.parse(localStorage.getItem(AUTH_USER_KEY));
 
-  if (authUser) {
-    const authUserWithoutPwd = {
-      name: authUser.name,
-      email: authUser.email,
-      joinedDate: authUser.joinedDate,
-      avatar: authUser.avatar
-    }
-    return authUserWithoutPwd;
-  }
-  return null;
-}
+// function verifyAuthPassword(password) {
+//   const authUser = JSON.parse(localStorage.getItem(AUTH_USER_KEY));
+//   return password === authUser.password;
+// }
 
-
-function verifyAuthPassword(password) {
-  const authUser = JSON.parse(localStorage.getItem(AUTH_USER_KEY));
-  return password === authUser.password;
-}
-
-export {
-  getAuthUser,
-  setAuthUser,
-  getAuthUserProfile,
-  removeAuthUser,
-  verifyAuthPassword
-}
+// export {
+//   getAuthUser,
+//   setAuthUser,
+//   getAuthUserProfile,
+//   removeAuthUser,
+//   verifyAuthPassword
+// }

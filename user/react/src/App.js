@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Switch, Route } from "react-router-dom";
 import { UserContext } from "libs/Context";
-import { getAuthUserProfile } from "data/AuthUserRepository";
+import { getAuthUser } from "data/AuthUserRepository";
 
 import Landing from "pages/Landing";
 import SignIn from "pages/SignIn";
@@ -12,7 +12,7 @@ import Search from "pages/Search";
 import Footer from "components/Footer";;
 
 function App() {
-  const [authUser, setAuthUser] = useState(getAuthUserProfile())
+  const [authUser, setAuthUser] = useState(getAuthUser())
 
   return (
     <UserContext.Provider value={{ authUser, setAuthUser }}>
