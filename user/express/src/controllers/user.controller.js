@@ -2,11 +2,11 @@ const db = require("../database");
 const argon2 = require("argon2");
 
 /*
- * create a new user
+ * Create a new user
  */ 
 exports.create = async (req, res) => {
-  // get the user with the similar username in database
-  const user = await db.user.findOne({ where: { username: req.body.username } });
+  // get user by username
+  const user = await db.user.findOne({ where: { username: req.body.username } }); 
 
   let newUser = null;
 
@@ -26,13 +26,43 @@ exports.create = async (req, res) => {
 };
 
 /*
- * get a single user if the username and password are a match
+ * Get a single user
  */ 
 exports.login = async (req, res) => {
-  const user = await db.user.findOne({ where: { username: req.query.username } });
+  // get user by username
+  const user = await db.user.findOne({ where: { username: req.query.username } }); 
   
+  // check if user doesn't exist or password is incorrect
   if (user === null || await argon2.verify(user.password, req.query.password) === false)
     res.json(null); // login failed
   else
     res.json(user); // login successful
+};
+
+
+/*
+ * Edit a single user
+ */ 
+exports.edit = async (req, res) => {
+  const user = await db.user.findByPk(req.query.id); // get user by id
+  const isPasswordCorrect = await argon2.verify(user.password, req.body.curPassword); // verify password
+
+  if (isPasswordCorrect) {
+    // edit user fields
+    user.username = req.body.username;
+    user.name = req.body.name;
+    user.email = req.body.email;
+    user.avatar = req.body.avatar;
+    
+    // edit password if new password is supplied
+    if (req.body.newPassword.length) {
+      const hash = await argon2.hash(req.body.newPassword, { type: argon2.argon2id });
+      user.password = hash;
+    }
+    
+    await user.save();
+    res.json(user); // edit successful
+  } else {
+    res.json(null); // edit failed
+  }
 };
