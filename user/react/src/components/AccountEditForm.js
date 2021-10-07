@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useUserContext } from "libs/Context";
-import { editUser } from "data/UsersRepository";
+import { editUser } from "data/UserRepository";
 import { validatePassword, isEmptyString, validateEmail, validateMaxLength } from "utils/FormValidation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle, faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
@@ -86,7 +86,7 @@ function AccountEditForm() {
   }
 
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // clear notification & error
     setNotification("");
@@ -97,13 +97,13 @@ function AccountEditForm() {
       return;
     
     // edit user profile
-    const userEdited = editUser(authUser, form, avatar);
+    const user = await editUser(authUser.id, form, avatar);
 
-    if (userEdited.error) {
-      setError(userEdited.response);
+    if (user.error) {
+      setError(user.error);
     } else {
       // update authenticated user profile
-      setAuthUser(userEdited.response); 
+      setAuthUser(user); 
       setNotification("Profile has been updated");
       // clear password field
       setForm({
