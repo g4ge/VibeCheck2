@@ -50,9 +50,23 @@ async function deleteUser(id, password) {
   return res.data;
 }
 
+
+async function getUser(id) {
+  const res = await axios.get(USER_API_URL + "/profile", { params: { id } });
+  const user = res.data;
+  
+  // user is returned
+  if (user)
+    user.joinedDate = convertTimestampToDate(user.joinedDate) // change date format
+
+  return user;
+}
+
+
 export {
   createUser,
   loginUser,
   editUser,
-  deleteUser
+  deleteUser,
+  getUser
 }
