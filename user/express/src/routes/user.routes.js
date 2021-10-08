@@ -5,7 +5,7 @@ module.exports = (express, app) => {
   // create a new user
   router.post("/create", controller.create);
 
-  // get a single user
+  // authenticate a single user
   router.get("/login", controller.login);
   
   // edit a single user
@@ -13,6 +13,9 @@ module.exports = (express, app) => {
 
   // delete a single user
   router.get("/delete", controller.delete);
+
+  // get a single user
+  router.get("/profile", controller.profile);
 
   // add routes to server
   app.use("/api/user", router);

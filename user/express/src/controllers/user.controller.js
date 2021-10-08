@@ -2,7 +2,7 @@ const db = require("../database");
 const argon2 = require("argon2");
 
 /*
- * Create a new user
+ * Create a new user with user details
  * --------------------
  * success: user
  * fail   : null
@@ -30,7 +30,7 @@ exports.create = async (req, res) => {
 
 
 /*
- * Get a single user
+ * Authenticate a single user with username & password
  * --------------------
  * success: user
  * fail   : null
@@ -48,7 +48,7 @@ exports.login = async (req, res) => {
 
 
 /*
- * Edit a single user
+ * Edit a single user with user details
  * --------------------
  * success: user
  * fail   : error message
@@ -88,7 +88,7 @@ exports.edit = async (req, res) => {
 
 
 /*
- * Delete a single user
+ * Delete a single user with id & password
  * --------------------
  * success: null
  * fail   : error message
@@ -103,4 +103,20 @@ exports.delete = async (req, res) => {
   } else {
     res.json({ error: "Incorrect password." }); // delete failed
   }
+};
+
+
+/*
+ * Get a single user with id
+ * --------------------
+ * success: user
+ * fail   : null
+ */ 
+exports.profile = async (req, res) => {
+  const user = await db.user.findByPk(req.query.id); // get user by id
+
+  if (user) 
+    res.json(user)
+  else
+    res.json(null)
 };
