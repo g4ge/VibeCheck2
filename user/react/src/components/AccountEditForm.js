@@ -12,15 +12,15 @@ import AvatarUfo from "images/avatars/ufo.png";
 import AvatarUser from "images/avatars/user.png";
 import "App.css";
 
-function AccountEditForm() {
-  const { authUser, setAuthUser } = useUserContext();
+function AccountEditForm({ profile, refreshProfile }) {
+  const { setAuthUser } = useUserContext();
   const [error, setError] = useState("");
   const [notification, setNotification] = useState("");
-  const [avatar, setAvatar] = useState(authUser.avatar);
+  const [avatar, setAvatar] = useState(profile.avatar);
   const [form, setForm] = useState({
-    username: authUser.username,
-    name: authUser.name,
-    email: authUser.email,
+    username: profile.username,
+    name: profile.name,
+    email: profile.email,
     newPassword: "",
     curPassword: ""
   });
@@ -97,14 +97,14 @@ function AccountEditForm() {
       return;
     
     // edit user profile
-    const user = await editUser(authUser.id, form, avatar);
+    const user = await editUser(profile.id, form, avatar);
 
     if (user.error) {
       setError(user.error);
     } else {
-      // update authenticated user profile
-      setAuthUser(user); 
-      setNotification("Profile has been updated");
+      refreshProfile(); // update profile page
+      setAuthUser(user); // update user stored in context
+      setNotification("Profile has been updated.");
       // clear password field
       setForm({
         ...form,

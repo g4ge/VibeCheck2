@@ -1,15 +1,13 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { deleteUser } from "data/UserRepository";
-import { useUserContext } from "libs/Context";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
 import { validateMaxLength } from "utils/FormValidation";
 import "App.css";
 
-function AccountDeleteForm() {
+function AccountDeleteForm({ profile }) {
   const history = useHistory();
-  const { authUser } = useUserContext();
   const [error, setError] = useState("");
   const [password, setPassword] = useState("");
 
@@ -29,7 +27,7 @@ function AccountDeleteForm() {
     if (!handleValidation())
       return;
 
-    const res = await deleteUser(authUser.id, password);
+    const res = await deleteUser(profile.id, password);
 
     if (res === null)
       history.push("/"); // back to landing page

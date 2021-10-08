@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Header from "components/Header";
 import NavBar from "components/NavBar";
 import { useUserContext } from "libs/Context";
@@ -12,13 +12,28 @@ import AvatarCoffee from "images/avatars/coffee.png";
 import AvatarConsole from "images/avatars/console.png";
 import AvatarUfo from "images/avatars/ufo.png";
 import AvatarUser from "images/avatars/user.png";
+import { getUser } from "data/UserRepository";
 import "App.css";
 
 function Profile() {
   const avatars = { AvatarBook, AvatarCat, AvatarCoffee, AvatarConsole, AvatarUfo, AvatarUser };
   const { authUser } = useUserContext();
+  const [profile, setProfile] = useState([]);
   const [showEdit, setShowEdit] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
+  
+  const refreshProfile = useCallback(() => {
+    // fetch user profile details from database via API
+    const axiosGetUser = async () => {
+      const user = await getUser(authUser.id);
+      setProfile(user);
+    }  
+    axiosGetUser();
+  }, [authUser.id])
+
+  useEffect(() => {
+    refreshProfile();
+  }, [refreshProfile]);
 
   return (
     <div>
@@ -33,15 +48,15 @@ function Profile() {
               <div className="row">
                 {/* profile photo */}
                 <div className="col-md-3 pf-avatar-wrap">
-                  <img className="pf-avatar" src={avatars[authUser.avatar]} alt="Avatar"></img>
+                  <img className="pf-avatar" src={avatars[profile.avatar]} alt="Avatar"></img>
                 </div>
 
                 {/* profile info */}
                 <div className="col-md-7 pf-info">
-                  <p className="form-title" style={{fontSize: "20px", lineHeight: "30px"}}>{authUser.name}</p>
-                  <p className="pf-info-field"><FontAwesomeIcon icon={faUser} size="xs" fixedWidth /> {authUser.username}</p>
-                  <p className="pf-info-field"><FontAwesomeIcon icon={faEnvelope} size="xs" fixedWidth /> {authUser.email}</p>
-                  <p className="pf-info-field"><FontAwesomeIcon icon={faClock} size="xs" fixedWidth /> Joined on {authUser.joinedDate}</p>
+                  <p className="form-title" style={{fontSize: "20px", lineHeight: "30px"}}>{profile.name}</p>
+                  <p className="pf-info-field"><FontAwesomeIcon icon={faUser} size="xs" fixedWidth /> &nbsp;{profile.username}</p>
+                  <p className="pf-info-field"><FontAwesomeIcon icon={faEnvelope} size="xs" fixedWidth /> &nbsp;{profile.email}</p>
+                  <p className="pf-info-field"><FontAwesomeIcon icon={faClock} size="xs" fixedWidth /> &nbsp;Joined on {profile.joinedDate}</p>
                 </div>
 
                 {/* profile edit and delete buttons */}
@@ -56,8 +71,8 @@ function Profile() {
               </div>
               
               {/* display selected form */}
-              {showEdit && <AccountEditForm />}
-              {showDelete && <AccountDeleteForm />}
+              {showEdit && <AccountEditForm profile={profile} refreshProfile={refreshProfile} />}
+              {showDelete && <AccountDeleteForm profile={profile} />}
             </div>
           </div>
         </div>
