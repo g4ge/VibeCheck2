@@ -24,6 +24,7 @@ function NavBar({ currentPage }) {
         <div className="nav-info-wrap">
           <img className="nav-avatar" src={avatars[authUser.avatar]} alt="Avatar"></img>
           <div className="mt-3" style={{fontWeight: "500"}}>{authUser.name}</div>
+          <div className="mt-1" style={{fontSize: "12px", opacity: "0.7"}}>{authUser.username}</div>
         </div>
 
         {/* app navigation links */}
