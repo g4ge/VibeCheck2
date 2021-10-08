@@ -1,5 +1,5 @@
 import axios from "axios";
-import { setAuthUser } from "./AuthUserRepository";
+import { setAuthUser, removeAuthUser } from "./AuthUserRepository";
 import { convertTimestampToDate } from "utils/Date";
 
 const USER_API_URL = process.env.REACT_APP_API_URL + "/user";
@@ -13,6 +13,7 @@ async function loginUser(username, password) {
   const res = await axios.get(USER_API_URL + "/login", { params: { username, password } });
   const user = res.data;
   
+  // user is returned
   if (user) {
     user.joinedDate = convertTimestampToDate(user.joinedDate) // change date format
     setAuthUser(user);
@@ -22,7 +23,7 @@ async function loginUser(username, password) {
 }
 
 async function editUser(id, user, avatar) {
-  // add avatar attr into part of user form
+  // add avatar field as part of user form
   user.avatar = avatar;
   
   const res = await axios.post(USER_API_URL + "/edit", user, { params: { id } });
@@ -38,14 +39,20 @@ async function editUser(id, user, avatar) {
 }
 
 
-// async function findUser(id) {
-//   const res = await axios.get(REACT_APP_API_URL + `/user/select/${id}`);
+async function deleteUser(id, password) {
+  const res = await axios.get(USER_API_URL + "/delete", { params: { id, password } });
+  
+  // user is deleted successfully
+  if (res.data === null) {
+    removeAuthUser();
+  }
 
-//   return res.data;
-// }
+  return res.data;
+}
 
 export {
   createUser,
   loginUser,
-  editUser
+  editUser,
+  deleteUser
 }
