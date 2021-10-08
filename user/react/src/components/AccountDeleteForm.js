@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { deleteUser } from "data/UsersRepository";
+import { deleteUser } from "data/UserRepository";
 import { useUserContext } from "libs/Context";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
+import { validateMaxLength } from "utils/FormValidation";
 import "App.css";
 
 function AccountDeleteForm() {
@@ -12,14 +13,28 @@ function AccountDeleteForm() {
   const [error, setError] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const userDeleted = deleteUser(authUser, password);
+  const handleValidation = () => {
+    if (!validateMaxLength(password, 60)) {
+      setError("Password length cannot be greater than 60");
+      return false;
+    }
+    
+    return true;
+  }
 
-    if (userDeleted)
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // stop deleting user if form input is invalid
+    if (!handleValidation())
+      return;
+
+    const res = await deleteUser(authUser.id, password);
+
+    if (res === null)
       history.push("/"); // back to landing page
     else
-      setError("Incorrect password")
+      setError(res.error)  
   }
 
   return (
