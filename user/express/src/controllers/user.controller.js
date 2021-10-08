@@ -3,6 +3,9 @@ const argon2 = require("argon2");
 
 /*
  * Create a new user
+ * --------------------
+ * success: user
+ * fail   : null
  */ 
 exports.create = async (req, res) => {
   // get user by username
@@ -25,8 +28,12 @@ exports.create = async (req, res) => {
   res.json(newUser);
 };
 
+
 /*
  * Get a single user
+ * --------------------
+ * success: user
+ * fail   : null
  */ 
 exports.login = async (req, res) => {
   // get user by username
@@ -42,6 +49,9 @@ exports.login = async (req, res) => {
 
 /*
  * Edit a single user
+ * --------------------
+ * success: user
+ * fail   : error message
  */ 
 exports.edit = async (req, res) => {
   const user = await db.user.findByPk(req.query.id); // get user by id
@@ -73,5 +83,24 @@ exports.edit = async (req, res) => {
     }
   } else {
     res.json({ error: "Incorrect password. Please try again." }); // edit failed
+  }
+};
+
+
+/*
+ * Delete a single user
+ * --------------------
+ * success: null
+ * fail   : error message
+ */ 
+exports.delete = async (req, res) => {
+  const user = await db.user.findByPk(req.query.id); // get user by id
+  const isPasswordCorrect = await argon2.verify(user.password, req.query.password); // verify password
+
+  if (isPasswordCorrect) {
+    await db.user.destroy({ where: { id: req.query.id } });
+    res.json(null) // delete successful
+  } else {
+    res.json({ error: "Incorrect password." }); // delete failed
   }
 };
