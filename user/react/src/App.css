@@ -609,7 +609,9 @@ input {
 
 .pf-avatar-wrap {
   text-align: center;
-  margin-right: -20px;
+  margin-right: -10px;
+  padding: 15px 0px;
+  height: 130px;
 }
 .pf-avatar {
   width: 100px;
@@ -625,6 +627,9 @@ input {
 .pf-info {
   font-size: 16px;
   line-height: 16px;
+}
+.pf-info-field {
+  opacity: 0.8;
 }
 
 

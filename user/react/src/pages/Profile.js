@@ -3,7 +3,7 @@ import Header from "components/Header";
 import NavBar from "components/NavBar";
 import { useUserContext } from "libs/Context";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import { faUser, faEdit, faTrashAlt, faEnvelope, faClock } from "@fortawesome/free-solid-svg-icons";
 import AccountDeleteForm from "components/AccountDeleteForm";
 import AccountEditForm from "components/AccountEditForm";
 import AvatarBook from "images/avatars/book.png";
@@ -38,9 +38,10 @@ function Profile() {
 
                 {/* profile info */}
                 <div className="col-md-7 pf-info">
-                  <p className="form-title" style={{fontSize: "24px", lineHeight: "34px"}}>{authUser.name}</p>
-                  <p>{authUser.email}</p>
-                  <p>Joined on {authUser.joinedDate}</p>
+                  <p className="form-title" style={{fontSize: "20px", lineHeight: "30px"}}>{authUser.name}</p>
+                  <p className="pf-info-field"><FontAwesomeIcon icon={faUser} size="xs" fixedWidth /> {authUser.username}</p>
+                  <p className="pf-info-field"><FontAwesomeIcon icon={faEnvelope} size="xs" fixedWidth /> {authUser.email}</p>
+                  <p className="pf-info-field"><FontAwesomeIcon icon={faClock} size="xs" fixedWidth /> Joined on {authUser.joinedDate}</p>
                 </div>
 
                 {/* profile edit and delete buttons */}
