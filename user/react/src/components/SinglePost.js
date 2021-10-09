@@ -30,13 +30,13 @@ function SinglePost({ post, refreshPosts, includeOtherUsers = true }) {
 
 
   const refreshReplies = useCallback(() => {
-    // retrieve all replies to this post (i.e. root post)
-    const rootPostAllReplies = getReplies(post.id);
-    setAllReplies(rootPostAllReplies);
+    // // retrieve all replies to this post (i.e. root post)
+    // const rootPostAllReplies = getReplies(post.id);
+    // setAllReplies(rootPostAllReplies);
 
-    // extract child replies of this post
-    const rootPostChildReplies = rootPostAllReplies.filter((r) => r.parentId === post.id)
-    setChildReplies(rootPostChildReplies);
+    // // extract child replies of this post
+    // const rootPostChildReplies = rootPostAllReplies.filter((r) => r.parentId === post.id)
+    // setChildReplies(rootPostChildReplies);
   }, [post.id])
 
 
@@ -67,9 +67,9 @@ function SinglePost({ post, refreshPosts, includeOtherUsers = true }) {
       </div>
 
       {/* post's image */}
-      {post.imageUrl.length > 0 &&
+      {post.imageURL.length > 0 &&
         <div className="po-image-wrap mt-4 mb-4">
-          <img className="po-image" src={post.imageUrl} alt="Post"></img>
+          <img className="po-image" src={post.imageURL} alt="Post"></img>
         </div>
       }
 

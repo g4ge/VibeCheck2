@@ -2,16 +2,21 @@ import React, { useState, useEffect } from "react";
 import Header from "components/Header";
 import NavBar from "components/NavBar";
 import SinglePost from "components/SinglePost";
-import { getAllPosts } from "data/PostsRepository";
+import { getAllPosts } from "data/PostRepository";
 import PostCreateForm from "components/PostCreateForm";
 import "App.css";
 
 function Posts() {
   const [posts, setPosts] = useState([]);
 
-  // retrieve all posts (i.e. root post excluding replies) from local storage
+  // retrieve all posts (i.e. root posts excluding replies)
   const refreshPosts = () => {
-    setPosts(getAllPosts());
+    // setPosts(getAllPosts()); original
+    const axiosGetPosts = async () => {
+      const posts = await getAllPosts();
+      setPosts(posts);
+    }  
+    axiosGetPosts();
   }
 
   useEffect(() => {

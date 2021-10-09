@@ -24,7 +24,7 @@ function PostInfo({ post, sendButtonShown, showButtons = true }) {
     <div className="po-info-wrap mb-3">
       {/* post's author profile photo */}
       <div className="po-avatar-wrap">
-        <img className="po-avatar" src={avatars[post.authorAvatar]} alt="Avatar"></img>
+        <img className="po-avatar" src={avatars[post.user.avatar]} alt="Avatar"></img>
       </div>
 
       {/* post's author name & date */}
@@ -34,14 +34,14 @@ function PostInfo({ post, sendButtonShown, showButtons = true }) {
         ) : (
           <Fragment>
             <p className="po-name">
-              {post.authorName}{" "}
+              {post.user.name}{" "}
               {/* show icon if this is the current user */}
-              {authUser.email === post.authorEmail &&
+              {authUser.id === post.user.id &&
                 <FontAwesomeIcon icon={faUser} className="po-info-icon" fixedWidth />
               }
             </p>
             <p className="po-date">
-              {post.date} | {post.time} 
+              {post.postedDate} 
               {/* show edit icon if this post/reply has been edited */}
               {post.isContentEdited &&
                 <Fragment>{" "}| <FontAwesomeIcon icon={faEdit} className="po-info-icon" fixedWidth /></Fragment>
@@ -57,7 +57,7 @@ function PostInfo({ post, sendButtonShown, showButtons = true }) {
         {showButtons && 
           <Fragment>
             {/* show delete & edit buttons if (1) this is the current user, (2) post is not deleted, (3) author is not deleted */}
-            {authUser.email === post.authorEmail && !post.isAuthorDeleted && !post.isContentDeleted &&
+            {authUser.id === post.user.id && !post.isAuthorDeleted && !post.isContentDeleted &&
               <Fragment>
                 <button 
                   type="button" 
