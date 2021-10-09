@@ -8,6 +8,9 @@ module.exports = (express, app) => {
   // add image url of a post
   router.get("/image", controller.image);
 
+  // get all posts (root post only)
+  router.get("/all", controller.all);
+
   // add routes to server
   app.use("/api/post", router);
 };

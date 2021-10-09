@@ -17,6 +17,7 @@ exports.create = async (req, res) => {
   res.json(newPost);
 };
 
+
 /*
  * Add image url of a post
  * --------------------
@@ -28,4 +29,19 @@ exports.image = async (req, res) => {
   await post.save();
 
   res.json(post);
+};
+
+
+/*
+ * Get all posts (root post only, i.e. post with rootId = 0)
+ * --------------------
+ * success: posts
+ */ 
+exports.all = async (req, res) => {
+  // eager load all posts
+  const posts = await db.post.findAll({
+    include: { model: db.user }
+  });
+
+  res.json(posts);
 };
