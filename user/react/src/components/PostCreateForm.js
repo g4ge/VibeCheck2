@@ -2,9 +2,9 @@ import React, { Fragment, useState } from "react";
 import { useUserContext } from "libs/Context";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faReply, faExclamationCircle, faCheckCircle, faComment, faImage, faTimesCircle, faCircleNotch } from "@fortawesome/free-solid-svg-icons";
-import { createPost } from "data/PostsRepository";
+import { createPost } from "data/PostRepository";
 import { createReply } from "data/RepliesRepository";
-import { isEmptyString } from "utils/FormValidation";
+import { isEmptyString, validateMaxLength } from "utils/FormValidation";
 import "App.css";
 
 function PostCreateForm({ isNewPost, rootId, parentId, refreshPosts, refreshReplies }) {
@@ -15,35 +15,66 @@ function PostCreateForm({ isNewPost, rootId, parentId, refreshPosts, refreshRepl
   const [notification, setNotification] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
+  const handleValidation = () => {
+    // check if content only contain whitespaces
+    if (isEmptyString(content)) {
+      setError(isNewPost ? "Post cannot be empty" : "Reply cannot be empty");
+      return false;
+    }
+
+    if (!validateMaxLength(content, 600)) {
+      setError("Content length cannot be greater than 600");
+      return false;
+    }
+
+    return true;
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setNotification(""); // clear notification
     setError(""); // clear error
     
-    // check if content only contain whitespaces
-    if (isEmptyString(content)) {
-      setError(isNewPost ? "Post cannot be empty" : "Reply cannot be empty");
+    // stop creating post/reply if form input is invalid
+    if (!handleValidation())
       return;
-    }
     
     let noti = "";
     setIsLoading(true); // start posting process
 
+    // test -------------------------------------
     if (isNewPost) {
       // create a new individual post
-      const postedTime = await createPost(authUser, content, image);
-      noti = "You just shared a new post on " + postedTime + ".";
+      const post = await createPost(authUser.id, content, image);
+      noti = "You just shared a new post on " + post.postedDate + ".";
 
       // refresh all posts
-      refreshPosts(); 
+      refreshPosts();
     } else {
       // create a new reply to its parent (post/another reply) 
-      const repliedTime = await createReply(authUser, rootId, parentId, content, image);
-      noti = "You just replied on " + repliedTime + ".";
+      const reply = await createReply(authUser.id, content, image, rootId, parentId);
+      noti = "You just replied on " + reply.postedDate + ".";
 
       // refresh all replies under this individual post
       refreshReplies(); 
     }
+    // test -------------------------------------
+
+    // if (isNewPost) {
+    //   // create a new individual post
+    //   const postedTime = await createPost(authUser, content, image);
+    //   noti = "You just shared a new post on " + postedTime + ".";
+
+    //   // refresh all posts
+    //   refreshPosts(); 
+    // } else {
+    //   // create a new reply to its parent (post/another reply) 
+    //   const repliedTime = await createReply(authUser, rootId, parentId, content, image);
+    //   noti = "You just replied on " + repliedTime + ".";
+
+    //   // refresh all replies under this individual post
+    //   refreshReplies(); 
+    // }
   
     setIsLoading(false); // finish posting process
     setImage(null); // clear input image
