@@ -12,6 +12,7 @@ function getCurrentDate() {
   return day + " " + month + " " + year;
 }
 
+
 function getCurrentTime() {
   // get current javascript datetime
   const today = new Date();
@@ -34,6 +35,7 @@ function getCurrentTime() {
   return hour + ":" + min + ampm;
 }
 
+
 function getMsSinceEpoch() {
   // get current javascript datetime
   const today = new Date();
@@ -42,9 +44,10 @@ function getMsSinceEpoch() {
   return (today.getTime()).toString();
 }
 
+
 function convertTimestampToDate(timestampStr) {
   /*
-   * convert database datetime into new string format:
+   * convert database datetime into new date string format:
    * 2021-10-07T09:54:39.000Z -> 7 Oct 2021
    */
   const options = { 
@@ -60,10 +63,35 @@ function convertTimestampToDate(timestampStr) {
   return dateStr;
 }
 
+
+function convertTimestampToTime(timestampStr) {
+  const epoch = Date.parse(timestampStr); // convert timestamp in string into epoch
+  const datetime = new Date(epoch); // convert epoch to js datetime
+
+  let hour = datetime.getHours();
+  // add leading zero to single digit minute
+  const min = datetime.getMinutes() < 10 ? "0" + datetime.getMinutes() : datetime.getMinutes(); 
+ 
+  // convert to 12-hour format
+  const ampm = hour < 12 ? "am" : "pm"; 
+  if (hour > 12) 
+    hour -= 12;
+  if (hour === 0) 
+    hour = 12;
+
+  // add leading zero to single digit hour
+  if (hour < 10) 
+    hour = "0" + hour; 
+  
+  return hour + ":" + min + ampm;
+}
+
+
 export {
   getCurrentDate,
   getCurrentTime,
   getMsSinceEpoch,
-  convertTimestampToDate
+  convertTimestampToDate,
+  convertTimestampToTime
 }
   
