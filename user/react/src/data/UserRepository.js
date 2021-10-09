@@ -4,10 +4,12 @@ import { convertTimestampToDate } from "utils/Date";
 
 const USER_API_URL = process.env.REACT_APP_API_URL + "/user";
 
+
 async function createUser(user) {
   const res = await axios.post(USER_API_URL + "/create", user);
   return res.data;
 }
+
 
 async function loginUser(username, password) {
   const res = await axios.get(USER_API_URL + "/login", { params: { username, password } });
@@ -31,7 +33,7 @@ async function editUser(id, user, avatar) {
 
   // user is returned without error
   if (editedUser.id) {
-    editedUser.joinedDate = convertTimestampToDate(editedUser.joinedDate) // change date format
+    editedUser.joinedDate = convertTimestampToDate(editedUser.joinedDate); // change date format
     setAuthUser(editedUser);
   }
 
