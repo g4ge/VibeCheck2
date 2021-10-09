@@ -1,6 +1,6 @@
 import axios from "axios";
 import { uploadImage } from "utils/Upload";
-import { convertTimestampToTime } from "utils/Date";
+import { convertTimestampToTime, convertTimestampToDateTime } from "utils/Date";
 
 const POST_API_URL = process.env.REACT_APP_API_URL + "/post";
 
@@ -35,6 +35,21 @@ async function createPost(userId, content, image, rootId = 0, parentId = 0) {
   return post;
 }
 
+
+/*
+ * Get all posts (root post only, i.e. post with rootId = 0)
+ */ 
+async function getAllPosts() {
+  const res = await axios.get(POST_API_URL + "/all");
+  const posts = res.data;
+
+  for (let post of posts)
+    post.postedDate = convertTimestampToDateTime(post.postedDate); // change date time format
+
+  return res.data;
+}
+
 export {
   createPost,
+  getAllPosts,
 }
