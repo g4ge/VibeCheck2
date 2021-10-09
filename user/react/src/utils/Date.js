@@ -87,11 +87,20 @@ function convertTimestampToTime(timestampStr) {
 }
 
 
+function convertTimestampToDateTime(timestampStr) {
+  const date = convertTimestampToDate(timestampStr);
+  const time = convertTimestampToTime(timestampStr);
+  
+  return date + " | " + time;
+}
+
+
 export {
   getCurrentDate,
   getCurrentTime,
   getMsSinceEpoch,
   convertTimestampToDate,
-  convertTimestampToTime
+  convertTimestampToTime,
+  convertTimestampToDateTime
 }
   
