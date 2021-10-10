@@ -4,7 +4,7 @@ import Header from "components/Header";
 import NavBar from "components/NavBar";
 import { useUserContext } from "libs/Context";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser, faEdit, faTrashAlt, faEnvelope, faClock, faComment } from "@fortawesome/free-solid-svg-icons";
+import { faUser, faTrashAlt, faEnvelope, faClock, faComment, faUserPlus, faUserEdit, faUserCheck } from "@fortawesome/free-solid-svg-icons";
 import AccountDeleteForm from "components/AccountDeleteForm";
 import AccountEditForm from "components/AccountEditForm";
 import AvatarBook from "images/avatars/book.png";
@@ -27,6 +27,7 @@ function Profile() {
   const [showDelete, setShowDelete] = useState(false);
   const [showPosts, setShowPosts] = useState(false);
   const [posts, setPosts] = useState([]);
+  const [follow, setFollow] = useState(false);
 
   const refreshProfile = useCallback(() => {
     // fetch user profile details from database via API
@@ -65,24 +66,32 @@ function Profile() {
                 </div>
 
                 {/* profile info */}
-                <div className="col-md-6 pf-info">
+                <div className="col-md-5 pf-info">
                   <p className="form-title" style={{fontSize: "20px", lineHeight: "30px"}}>{profile.username}</p>
                   <p className="pf-info-field"><FontAwesomeIcon icon={faUser} size="xs" fixedWidth /> &nbsp;{profile.name}</p>
                   <p className="pf-info-field"><FontAwesomeIcon icon={faEnvelope} size="xs" fixedWidth /> &nbsp;{profile.email}</p>
                   <p className="pf-info-field"><FontAwesomeIcon icon={faClock} size="xs" fixedWidth /> &nbsp;Joined on {profile.joinedDate}</p>
                 </div>
 
-                <div className="col-md-3">
+                <div className="col-md-4">
                   <div className="pf-btns-wrap">
                     {/* profile posts button */}
                     <button type="button" className="icon-btn pf-edit-btn" onClick={() => {setShowEdit(false); setShowDelete(false); setShowPosts(!showPosts);}}>
                       <FontAwesomeIcon icon={faComment} fixedWidth /> 
                     </button>
+
+                    {/* profile follow button */}
+                    {parseInt(id) !== authUser.id &&
+                      <button type="button" className={`icon-btn ${follow ? "pf-follow-btn" : "pf-edit-btn"}`} onClick={() => {setFollow(!follow);}}>
+                        <FontAwesomeIcon icon={follow ? faUserCheck : faUserPlus} fixedWidth /> 
+                      </button>
+                    }
+                  
                     {/* profile edit and delete buttons */}
                     {parseInt(id) === authUser.id &&
                       <Fragment>
                         <button type="button" className="icon-btn pf-edit-btn" onClick={() => {setShowEdit(!showEdit); setShowDelete(false); setShowPosts(false);}}>
-                          <FontAwesomeIcon icon={faEdit} fixedWidth /> 
+                          <FontAwesomeIcon icon={faUserEdit} fixedWidth /> 
                         </button>
                         <button type="button" className="icon-btn pf-trash-btn" onClick={() => {setShowEdit(false); setShowDelete(!showDelete); setShowPosts(false);}}>
                           <FontAwesomeIcon icon={faTrashAlt} fixedWidth /> 

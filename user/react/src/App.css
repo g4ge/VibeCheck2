@@ -160,11 +160,23 @@
   margin-left: 5px;
 }
 .pf-edit-btn:focus {
-  border: 1px solid rgb(118, 132, 162, 0.3);
+  border: 1px solid rgba(118, 132, 162, 0.3);
 }
 .pf-edit-btn:hover,
 .pf-edit-btn:active {
-  background-color: rgb(118, 132, 162, 0.2);
+  background-color: rgba(118, 132, 162, 0.2);
+}
+
+.pf-follow-btn {
+  color: mediumspringgreen;
+  margin-left: 5px;
+}
+.pf-follow-btn:focus {
+  border: 1px solid rgba(0, 250, 154, 0.3);
+}
+.pf-follow-btn:hover,
+.pf-follow-btn:active {
+  background-color: rgba(118, 132, 162, 0.2);
 }
 
 .pf-trash-btn {
@@ -172,7 +184,7 @@
   margin-left: 5px;
 }
 .pf-trash-btn:focus {
-  border: 1px solid rgb(255, 160, 122, 0.4);
+  border: 1px solid rgba(255, 160, 122, 0.4);
 }
 .pf-trash-btn:hover,
 .pf-trash-btn:active {
@@ -188,11 +200,11 @@
 }
 .po-icon-btn:focus {
   border-radius: 10px;
-  border: 1px solid rgb(118, 132, 162, 0.3);
+  border: 1px solid rgba(118, 132, 162, 0.3);
 }
 .po-icon-btn:hover,
 .po-icon-btn:active {
-  background-color: rgb(118, 132, 162, 0.2);
+  background-color: rgba(118, 132, 162, 0.2);
 }
 
 .pf-avatar-opt-btn {
@@ -343,7 +355,7 @@ input {
 
 .landing-header {
   height: 5rem;
-  background-image: linear-gradient(rgb(0, 0, 0, 0.9), rgb(0, 0, 0, 0));
+  background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0));
 }
 
 .landing-navbar-brand {
@@ -379,7 +391,7 @@ input {
 }
 
 .general-nav-link {
-  color: rgb(221, 221, 227, 0.7) !important;
+  color: rgba(221, 221, 227, 0.7) !important;
 }
 .general-nav-link:hover {
   color: rgb(221, 221, 227) !important;
@@ -435,7 +447,7 @@ input {
   -moz-transition: all 0.35s ease;
 }
 .nav-sidebar-list:hover:not(.active) {
-  background-color: rgba(75, 86, 111);
+  background-color: rgb(75, 86, 111);
   color: white;
 }
 
