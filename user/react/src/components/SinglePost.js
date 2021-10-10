@@ -102,6 +102,7 @@ function SinglePost({ post, refreshPosts, includeOtherUsers = true }) {
           isPost={true}
           id={post.id} 
           currentContent={post.content}
+          currentImageURL={post.imageURL}
           refreshPosts={refreshPosts}
         />
       }

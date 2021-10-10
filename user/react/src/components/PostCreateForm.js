@@ -16,8 +16,8 @@ function PostCreateForm({ isNewPost, rootId, parentId, refreshPosts, refreshRepl
 
   const handleValidation = () => {
     // check if content only contain whitespaces
-    if (isEmptyString(content)) {
-      setError(isNewPost ? "Post cannot be empty" : "Reply cannot be empty");
+    if (isEmptyString(content) && image === null) {
+      setError((isNewPost ? "Post" : "Reply") + " cannot be empty. Add some text or upload an image.");
       return false;
     }
 
@@ -72,7 +72,7 @@ function PostCreateForm({ isNewPost, rootId, parentId, refreshPosts, refreshRepl
             className="po-input-body"
             placeholder={isNewPost ? "share your thoughts..." : "reply to the user above..."}
             spellCheck={false}
-            required={true}
+            required={false}
             rows="1"
             value={content}
             onChange={(e) => setContent(e.target.value)}

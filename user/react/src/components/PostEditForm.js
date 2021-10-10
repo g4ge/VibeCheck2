@@ -5,14 +5,14 @@ import { editPost } from "data/PostRepository";
 import { isEmptyString, validateMaxLength } from "utils/FormValidation";
 import "App.css";
 
-function PostEditForm({ isPost, id, currentContent, refreshPosts, refreshReplies }) {
+function PostEditForm({ isPost, id, currentContent, currentImageURL, refreshPosts, refreshReplies }) {
   const [content, setContent] = useState(currentContent);
   const [error, setError] = useState("");
   const [notification, setNotification] = useState("");
 
   const handleValidation = () => {
     // check if content only contain whitespaces
-    if (isEmptyString(content)) {
+    if (isEmptyString(content) && currentImageURL.length === 0) {
       setError("Edited content cannot be empty");
       return false;
     }
@@ -56,7 +56,7 @@ function PostEditForm({ isPost, id, currentContent, refreshPosts, refreshReplies
             className="po-input-body"
             placeholder={isPost ? "edit this post..." : "edit this reply..."}
             spellCheck={false}
-            required={true}
+            required={false}
             rows="1"
             value={content}
             onChange={(e) => setContent(e.target.value)}

@@ -79,6 +79,7 @@ function SingleReply({ allReplies, rootId, reply, refreshReplies}) {
           isPost={false}
           id={reply.id}
           currentContent={reply.content}
+          currentImageURL={reply.imageURL}
           refreshReplies={refreshReplies} 
         />
       }
