@@ -797,3 +797,14 @@ input {
 .img-input-wrap:hover {
   opacity: 0.7;
 }
+
+.username-link {
+  color: rgb(194, 194, 210);
+  text-decoration: none;
+  transition: all 0.2s ease;
+  -webkit-transition: all 0.2s ease;
+  -moz-transition: all 0.2s ease;
+}
+.username-link:hover {
+  color: rgba(194, 194, 210, 0.7);
+}

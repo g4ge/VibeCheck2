@@ -1,5 +1,6 @@
 import React, { useState, Fragment } from "react";
 import { useUserContext } from "libs/Context";
+import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faReply, faUser, faEdit, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import AvatarBook from "images/avatars/book.png";
@@ -34,7 +35,9 @@ function PostInfo({ post, sendButtonShown, showButtons = true }) {
         ) : (
           <Fragment>
             <p className="po-name">
-              {post.user.username}{" "}
+              <Link className="username-link" to={`/profile/${post.user.id}`}>
+                {post.user.username}{" "}
+              </Link>
               {/* show icon if this is the current user */}
               {authUser.id === post.user.id &&
                 <FontAwesomeIcon icon={faUser} className="po-info-icon" fixedWidth />
