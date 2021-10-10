@@ -9,7 +9,7 @@ const POST_API_URL = process.env.REACT_APP_API_URL + "/post";
  * Create a new post (default is post, specify rootId and parentId if it is a reply)
  */ 
 async function createPost(userId, content, image, rootId = 0, parentId = 0) {
-  const postInput = {
+  const body = {
     authorId: userId,
     rootId: rootId,
     parentId: parentId,
@@ -17,7 +17,7 @@ async function createPost(userId, content, image, rootId = 0, parentId = 0) {
   };
 
   // create a post without image
-  const res = await axios.post(POST_API_URL + "/create", postInput);
+  const res = await axios.post(POST_API_URL + "/create", body);
   const post = res.data;
   post.postedDate = convertTimestampToTime(post.postedDate); // change time format
 
@@ -63,8 +63,24 @@ async function getAllReplies(rootId) {
   return replies;
 }
 
+
+/*
+ * Edit a single post/reply
+ */ 
+async function editPost(id, content) {
+  const body = {
+    content: content
+  }
+  const res = await axios.post(POST_API_URL + "/edit", body, { params: { id } });
+  const post = res.data;
+  post.editedDate = convertTimestampToTime(post.editedDate); // change time format
+
+  return post;
+}
+
 export {
   createPost,
   getAllPosts,
-  getAllReplies
+  getAllReplies,
+  editPost
 }
