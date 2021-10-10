@@ -68,7 +68,6 @@ function SingleReply({ allReplies, rootId, reply, refreshReplies}) {
         <PostDeleteForm 
           isPost={false}
           id={reply.id}
-          rootId={rootId}
           refreshReplies={refreshReplies}
           sendButtonShown={sendButtonShown}
         />

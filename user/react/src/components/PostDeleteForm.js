@@ -1,19 +1,18 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt, faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
-import { deletePostById } from "data/PostsRepository";
-import { deleteReplyById } from "data/RepliesRepository";
+import { removePost } from "data/PostRepository";
 import "App.css";
 
-function PostDeleteForm({ isPost, id, rootId, refreshPosts, refreshReplies, sendButtonShown }) {
-  const handleClick = () => {
-    if (isPost) {
-      deletePostById(id);
+function PostDeleteForm({ isPost, id, refreshPosts, refreshReplies, sendButtonShown }) {
+  const handleClick = async () => {
+    // remove post/reply
+    await removePost(id);
+
+    if (isPost)
       refreshPosts();
-    } else {
-      deleteReplyById(id, rootId);
+    else
       refreshReplies();
-    }
 
     // hide all delete, edit & reply buttons
     sendButtonShown({
