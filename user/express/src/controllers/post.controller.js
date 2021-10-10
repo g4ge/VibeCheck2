@@ -80,3 +80,22 @@ exports.edit = async (req, res) => {
 
   res.json(post);
 };
+
+
+/*
+ * Remove a single post/reply (item still exists in table after removal)
+ * --------------------
+ * success: null
+ */ 
+exports.remove = async (req, res) => {
+  const post = await db.post.findByPk(req.query.id); // get post by id
+
+  // remove post
+  post.isContentDeleted = true;
+  post.content = " This post has been deleted by the author."
+  post.imageUrl = "";
+
+  await post.save();
+
+  res.json(null);
+};
