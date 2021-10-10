@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { getReplies } from "data/RepliesRepository";
+import { getAllReplies } from "data/PostRepository";
 import SingleReply from "./SingleReply";
 import PostCreateForm from "components/PostCreateForm";
 import PostDeleteForm from "components/PostDeleteForm";
@@ -30,13 +30,17 @@ function SinglePost({ post, refreshPosts, includeOtherUsers = true }) {
 
 
   const refreshReplies = useCallback(() => {
-    // // retrieve all replies to this post (i.e. root post)
-    // const rootPostAllReplies = getReplies(post.id);
-    // setAllReplies(rootPostAllReplies);
+    const axiosGetReplies = async () => {
+      // retrieve all replies to this post (i.e. root post)
+      const rootPostAllReplies = await getAllReplies(post.id);
+      setAllReplies(rootPostAllReplies);
 
-    // // extract child replies of this post
-    // const rootPostChildReplies = rootPostAllReplies.filter((r) => r.parentId === post.id)
-    // setChildReplies(rootPostChildReplies);
+      // extract child replies of this post
+      const rootPostChildReplies = rootPostAllReplies.filter((r) => r.parentId === post.id)
+      console.log(post.id, rootPostChildReplies)
+      setChildReplies(rootPostChildReplies);
+    }  
+    axiosGetReplies();
   }, [post.id])
 
 

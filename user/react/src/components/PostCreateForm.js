@@ -3,7 +3,6 @@ import { useUserContext } from "libs/Context";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faReply, faExclamationCircle, faCheckCircle, faComment, faImage, faTimesCircle, faCircleNotch } from "@fortawesome/free-solid-svg-icons";
 import { createPost } from "data/PostRepository";
-import { createReply } from "data/RepliesRepository";
 import { isEmptyString, validateMaxLength } from "utils/FormValidation";
 import "App.css";
 
@@ -42,7 +41,6 @@ function PostCreateForm({ isNewPost, rootId, parentId, refreshPosts, refreshRepl
     let noti = "";
     setIsLoading(true); // start posting process
 
-    // test -------------------------------------
     if (isNewPost) {
       // create a new individual post
       const post = await createPost(authUser.id, content, image);
@@ -52,29 +50,12 @@ function PostCreateForm({ isNewPost, rootId, parentId, refreshPosts, refreshRepl
       refreshPosts();
     } else {
       // create a new reply to its parent (post/another reply) 
-      const reply = await createReply(authUser.id, content, image, rootId, parentId);
+      const reply = await createPost(authUser.id, content, image, rootId, parentId);
       noti = "You just replied on " + reply.postedDate + ".";
 
       // refresh all replies under this individual post
       refreshReplies(); 
     }
-    // test -------------------------------------
-
-    // if (isNewPost) {
-    //   // create a new individual post
-    //   const postedTime = await createPost(authUser, content, image);
-    //   noti = "You just shared a new post on " + postedTime + ".";
-
-    //   // refresh all posts
-    //   refreshPosts(); 
-    // } else {
-    //   // create a new reply to its parent (post/another reply) 
-    //   const repliedTime = await createReply(authUser, rootId, parentId, content, image);
-    //   noti = "You just replied on " + repliedTime + ".";
-
-    //   // refresh all replies under this individual post
-    //   refreshReplies(); 
-    // }
   
     setIsLoading(false); // finish posting process
     setImage(null); // clear input image

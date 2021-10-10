@@ -47,9 +47,9 @@ function SingleReply({ allReplies, rootId, reply, refreshReplies}) {
       </div>
 
       {/* reply's image */}
-      {reply.imageUrl.length > 0 &&
+      {reply.imageURL.length > 0 &&
         <div className="po-image-wrap mt-4 mb-4">
-          <img className="po-image" src={reply.imageUrl} alt="Post"></img>
+          <img className="po-image" src={reply.imageURL} alt="Post"></img>
         </div>
       }
 
