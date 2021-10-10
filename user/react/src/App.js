@@ -30,7 +30,7 @@ function App() {
             <SignUp />
           </Route>
 
-          <Route path="/profile">
+          <Route exact path="/profile/:id">
             <Profile />
           </Route>
           

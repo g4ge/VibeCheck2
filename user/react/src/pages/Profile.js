@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
+import { useParams } from 'react-router-dom';
 import Header from "components/Header";
 import NavBar from "components/NavBar";
 import { useUserContext } from "libs/Context";
@@ -18,18 +19,19 @@ import "App.css";
 function Profile() {
   const avatars = { AvatarBook, AvatarCat, AvatarCoffee, AvatarConsole, AvatarUfo, AvatarUser };
   const { authUser } = useUserContext();
+  const { id } = useParams();
   const [profile, setProfile] = useState([]);
   const [showEdit, setShowEdit] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
-  
+
   const refreshProfile = useCallback(() => {
     // fetch user profile details from database via API
     const axiosGetUser = async () => {
-      const user = await getUser(authUser.id);
+      const user = await getUser(id);
       setProfile(user);
     }  
     axiosGetUser();
-  }, [authUser.id])
+  }, [id])
 
   useEffect(() => {
     refreshProfile();
@@ -41,7 +43,7 @@ function Profile() {
       
       <div className="content-wrap">
         <div className="content-container">
-          <NavBar currentPage="profile"/>
+          <NavBar currentPage="profile" profileId={id} />
 
           <div className="content">
             <div className="pf-wrap">

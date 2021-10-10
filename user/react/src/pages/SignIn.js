@@ -53,7 +53,7 @@ function SignIn() {
     // if user is authenticated, navigates to profile page, otherwise set the error
     if (authUser) {
       setAuthUser(authUser)
-      history.push("/profile");
+      history.push(`/profile/${authUser.id}`);
     } else {
       setError("Incorrect username or password")
     }

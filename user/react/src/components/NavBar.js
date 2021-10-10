@@ -12,7 +12,7 @@ import AvatarUfo from "images/avatars/ufo.png";
 import AvatarUser from "images/avatars/user.png";
 import "App.css";
 
-function NavBar({ currentPage }) {
+function NavBar({ currentPage, profileId }) {
   const avatars = { AvatarBook, AvatarCat, AvatarCoffee, AvatarConsole, AvatarUfo, AvatarUser };
   const { authUser } = useUserContext();
 
@@ -29,7 +29,7 @@ function NavBar({ currentPage }) {
 
         {/* app navigation links */}
         <div className="mt-5">
-          <Link className={`nav-sidebar-list ${currentPage === "profile" ? "nav-sidebar-current" : ""}`} to={"/profile"}>
+          <Link className={`nav-sidebar-list ${currentPage === "profile" && parseInt(profileId) === authUser.id ? "nav-sidebar-current" : ""}`} to={`/profile/${authUser.id}`}>
             <FontAwesomeIcon icon={faUser} size="sm" fixedWidth /> Profile
           </Link>
           <Link className={`nav-sidebar-list ${currentPage === "posts" ? "nav-sidebar-current" : ""}`} to={"/posts"}>
