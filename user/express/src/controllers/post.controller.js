@@ -62,3 +62,21 @@ exports.replies = async (req, res) => {
 
   res.json(replies);
 };
+
+
+/*
+ * Edit a single post/reply
+ * --------------------
+ * success: post/reply
+ */ 
+exports.edit = async (req, res) => {
+  const post = await db.post.findByPk(req.query.id); // get post by id
+  
+  // edit post
+  post.content = req.body.content;
+  post.isContentEdited = true;
+  
+  await post.save();
+
+  res.json(post);
+};

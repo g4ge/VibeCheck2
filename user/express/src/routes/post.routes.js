@@ -13,6 +13,9 @@ module.exports = (express, app) => {
 
   // get all replies to a root post
   router.get("/replies", controller.replies);
+  
+  // edit a single post/reply
+  router.post("/edit", controller.edit);
 
   // add routes to server
   app.use("/api/post", router);
