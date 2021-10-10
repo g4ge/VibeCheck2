@@ -5,7 +5,7 @@ import { editPost } from "data/PostRepository";
 import { isEmptyString, validateMaxLength } from "utils/FormValidation";
 import "App.css";
 
-function PostEditForm({ isPost, id, rootId, currentContent, refreshPosts, refreshReplies }) {
+function PostEditForm({ isPost, id, currentContent, refreshPosts, refreshReplies }) {
   const [content, setContent] = useState(currentContent);
   const [error, setError] = useState("");
   const [notification, setNotification] = useState("");

@@ -78,7 +78,6 @@ function SingleReply({ allReplies, rootId, reply, refreshReplies}) {
         <PostEditForm 
           isPost={false}
           id={reply.id}
-          rootId={rootId}
           currentContent={reply.content}
           refreshReplies={refreshReplies} 
         />
