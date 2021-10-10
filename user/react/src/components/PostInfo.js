@@ -34,7 +34,7 @@ function PostInfo({ post, sendButtonShown, showButtons = true }) {
         ) : (
           <Fragment>
             <p className="po-name">
-              {post.user.name}{" "}
+              {post.user.username}{" "}
               {/* show icon if this is the current user */}
               {authUser.id === post.user.id &&
                 <FontAwesomeIcon icon={faUser} className="po-info-icon" fixedWidth />

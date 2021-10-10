@@ -53,8 +53,8 @@ function Profile() {
 
                 {/* profile info */}
                 <div className="col-md-7 pf-info">
-                  <p className="form-title" style={{fontSize: "20px", lineHeight: "30px"}}>{profile.name}</p>
-                  <p className="pf-info-field"><FontAwesomeIcon icon={faUser} size="xs" fixedWidth /> &nbsp;{profile.username}</p>
+                  <p className="form-title" style={{fontSize: "20px", lineHeight: "30px"}}>{profile.username}</p>
+                  <p className="pf-info-field"><FontAwesomeIcon icon={faUser} size="xs" fixedWidth /> &nbsp;{profile.name}</p>
                   <p className="pf-info-field"><FontAwesomeIcon icon={faEnvelope} size="xs" fixedWidth /> &nbsp;{profile.email}</p>
                   <p className="pf-info-field"><FontAwesomeIcon icon={faClock} size="xs" fixedWidth /> &nbsp;Joined on {profile.joinedDate}</p>
                 </div>
