@@ -46,10 +46,25 @@ async function getAllPosts() {
   for (let post of posts)
     post.postedDate = convertTimestampToDateTime(post.postedDate); // change date time format
 
-  return res.data;
+  return posts;
+}
+
+
+/*
+ * Get all replies to a root post
+ */ 
+async function getAllReplies(rootId) {
+  const res = await axios.get(POST_API_URL + "/replies", { params: { rootId } });
+  const replies = res.data;
+
+  for (let reply of replies)
+    reply.postedDate = convertTimestampToDateTime(reply.postedDate); // change date time format
+
+  return replies;
 }
 
 export {
   createPost,
   getAllPosts,
+  getAllReplies
 }
