@@ -179,9 +179,14 @@
 }
 
 .po-icon-btn {
+  margin-left: 5px;
+  border-radius: 10px;
+  height: 30px;
+  width: 30px;
   color: rgb(118, 132, 162);
 }
 .po-icon-btn:focus {
+  border-radius: 10px;
   border: 1px solid rgb(118, 132, 162, 0.3);
 }
 .po-icon-btn:hover,
@@ -730,7 +735,11 @@ input {
 }
 
 .po-btns-wrap {
-  width: 120px;
+  width: 105px;
+}
+
+.po-icon {
+  font-size: 10px;
 }
 
 .reply-wrap {

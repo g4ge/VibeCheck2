@@ -71,7 +71,7 @@ function PostInfo({ post, sendButtonShown, showButtons = true }) {
                     setButton(newButton);
                     sendButtonShown(newButton);
                   }}>
-                  <FontAwesomeIcon icon={faTrashAlt} size="xs" fixedWidth /> 
+                  <FontAwesomeIcon icon={faTrashAlt} className="po-icon" fixedWidth /> 
                 </button> 
                 <button 
                   type="button" 
@@ -85,7 +85,7 @@ function PostInfo({ post, sendButtonShown, showButtons = true }) {
                     setButton(newButton);
                     sendButtonShown(newButton);
                   }}>
-                  <FontAwesomeIcon icon={faEdit} size="xs" fixedWidth /> 
+                  <FontAwesomeIcon icon={faEdit} className="po-icon" fixedWidth /> 
                 </button>
               </Fragment>
             }
@@ -102,7 +102,7 @@ function PostInfo({ post, sendButtonShown, showButtons = true }) {
                 setButton(newButton);
                 sendButtonShown(newButton);
               }}>
-                <FontAwesomeIcon icon={faReply} size="xs" fixedWidth /> 
+                <FontAwesomeIcon icon={faReply} className="po-icon" fixedWidth /> 
             </button>
           </Fragment>
         }
