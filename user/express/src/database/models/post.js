@@ -21,10 +21,6 @@ module.exports = (sequelize, DataTypes) =>
       type: DataTypes.STRING(100),
       allowNull: false
     },
-    postedDate: {
-      type: DataTypes.DATE, 
-      defaultValue: DataTypes.NOW
-    },
     isContentEdited: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
@@ -41,5 +37,7 @@ module.exports = (sequelize, DataTypes) =>
       defaultValue: false
     },
   }, {
-    timestamps: false,
+    timestamps: true,
+    createdAt: 'postedDate',
+    updatedAt: 'editedDate'
   });
