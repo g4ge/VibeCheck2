@@ -37,7 +37,6 @@ function SinglePost({ post, refreshPosts, includeOtherUsers = true }) {
 
       // extract child replies of this post
       const rootPostChildReplies = rootPostAllReplies.filter((r) => r.parentId === post.id)
-      console.log(post.id, rootPostChildReplies)
       setChildReplies(rootPostChildReplies);
     }  
     axiosGetReplies();

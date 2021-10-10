@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExclamationCircle, faCheckCircle, faEdit } from "@fortawesome/free-solid-svg-icons";
-import { editPost } from "data/PostsRepository";
-import { editReply } from "data/RepliesRepository";
-import { isEmptyString } from "utils/FormValidation";
+import { editPost } from "data/PostRepository";
+import { isEmptyString, validateMaxLength } from "utils/FormValidation";
 import "App.css";
 
 function PostEditForm({ isPost, id, rootId, currentContent, refreshPosts, refreshReplies }) {
@@ -11,29 +10,41 @@ function PostEditForm({ isPost, id, rootId, currentContent, refreshPosts, refres
   const [error, setError] = useState("");
   const [notification, setNotification] = useState("");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setNotification(""); // clear notification
-
+  const handleValidation = () => {
     // check if content only contain whitespaces
     if (isEmptyString(content)) {
       setError("Edited content cannot be empty");
+      return false;
+    }
+
+    if (!validateMaxLength(content, 600)) {
+      setError("Edited content length cannot be greater than 600");
+      return false;
+    }
+
+    return true;
+  }
+
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setNotification(""); // clear notification
+
+    // stop editing post/reply if form input is invalid
+    if (!handleValidation())
       return;
-    }
 
-    let editedTime = "";
+    // edit post/reply
+    const post = await editPost(id, content);
 
-    if (isPost) {
-      editedTime = editPost(id, content);
+    if (isPost) 
       refreshPosts();
-    } else {
-      editedTime = editReply(id, rootId, content);
+    else
       refreshReplies();
-    }
 
     setError(""); // clear error
     setContent(""); // clear edit textarea
-    setNotification("You just edited your " + (isPost ? "post" : "reply") + " on " + editedTime + "."); // show notification
+    setNotification("You just edited your " + (isPost ? "post" : "reply") + " on " + post.editedDate + "."); // show notification
   };
 
   return (
