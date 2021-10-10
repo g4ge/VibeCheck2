@@ -20,6 +20,9 @@ module.exports = (express, app) => {
   // remove a single post/reply
   router.get("/remove", controller.remove);
 
+  // get all posts & replies of a user
+  router.get("/user", controller.user);
+
   // add routes to server
   app.use("/api/post", router);
 };

@@ -99,3 +99,19 @@ exports.remove = async (req, res) => {
 
   res.json(null);
 };
+
+
+/*
+ * Get all posts & replies of a user
+ * --------------------
+ * success: posts & replies
+ */ 
+exports.user = async (req, res) => {
+  // eager load all posts
+  const posts = await db.post.findAll({
+    include: { model: db.user },
+    where: { authorId: req.query.authorId }
+  });
+
+  res.json(posts);
+};
