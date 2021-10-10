@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, Fragment } from "react";
 import { useParams } from 'react-router-dom';
 import Header from "components/Header";
 import NavBar from "components/NavBar";
 import { useUserContext } from "libs/Context";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser, faEdit, faTrashAlt, faEnvelope, faClock } from "@fortawesome/free-solid-svg-icons";
+import { faUser, faEdit, faTrashAlt, faEnvelope, faClock, faComment } from "@fortawesome/free-solid-svg-icons";
 import AccountDeleteForm from "components/AccountDeleteForm";
 import AccountEditForm from "components/AccountEditForm";
 import AvatarBook from "images/avatars/book.png";
@@ -54,21 +54,28 @@ function Profile() {
                 </div>
 
                 {/* profile info */}
-                <div className="col-md-7 pf-info">
+                <div className="col-md-6 pf-info">
                   <p className="form-title" style={{fontSize: "20px", lineHeight: "30px"}}>{profile.username}</p>
                   <p className="pf-info-field"><FontAwesomeIcon icon={faUser} size="xs" fixedWidth /> &nbsp;{profile.name}</p>
                   <p className="pf-info-field"><FontAwesomeIcon icon={faEnvelope} size="xs" fixedWidth /> &nbsp;{profile.email}</p>
                   <p className="pf-info-field"><FontAwesomeIcon icon={faClock} size="xs" fixedWidth /> &nbsp;Joined on {profile.joinedDate}</p>
                 </div>
 
-                {/* profile edit and delete buttons */}
-                <div className="col-md-2">
-                  <button type="button" className="icon-btn pf-edit-btn" onClick={() => {setShowEdit(!showEdit); setShowDelete(false)}}>
-                    <FontAwesomeIcon icon={faEdit} fixedWidth /> 
+                <div className="col-md-3">
+                  <button type="button" className="icon-btn pf-edit-btn" onClick={() => {setShowEdit(false); setShowDelete(!showDelete)}}>
+                    <FontAwesomeIcon icon={faComment} fixedWidth /> 
                   </button>
-                  <button type="button" className="icon-btn pf-trash-btn" onClick={() => {setShowEdit(false); setShowDelete(!showDelete)}}>
-                    <FontAwesomeIcon icon={faTrashAlt} fixedWidth /> 
-                  </button>
+                  {/* profile edit and delete buttons */}
+                  {parseInt(id) === authUser.id &&
+                    <Fragment>
+                      <button type="button" className="icon-btn pf-edit-btn" onClick={() => {setShowEdit(!showEdit); setShowDelete(false)}}>
+                        <FontAwesomeIcon icon={faEdit} fixedWidth /> 
+                      </button>
+                      <button type="button" className="icon-btn pf-trash-btn" onClick={() => {setShowEdit(false); setShowDelete(!showDelete)}}>
+                        <FontAwesomeIcon icon={faTrashAlt} fixedWidth /> 
+                      </button>
+                    </Fragment>
+                  }
                 </div>
               </div>
               

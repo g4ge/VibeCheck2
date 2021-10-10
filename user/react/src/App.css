@@ -157,7 +157,7 @@
 
 .pf-edit-btn {
   color: rgb(118, 132, 162);
-  margin-right: 5px;
+  margin-left: 5px;
 }
 .pf-edit-btn:focus {
   border: 1px solid rgb(118, 132, 162, 0.3);
@@ -169,6 +169,7 @@
 
 .pf-trash-btn {
   color: tomato;
+  margin-left: 5px;
 }
 .pf-trash-btn:focus {
   border: 1px solid rgb(255, 160, 122, 0.4);
