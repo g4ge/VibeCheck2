@@ -78,9 +78,19 @@ async function editPost(id, content) {
   return post;
 }
 
+
+/*
+ * Remove a single post/reply
+ */ 
+async function removePost(id) {
+  const res = await axios.get(POST_API_URL + "/remove", { params: { id } });
+  return res.data;
+}
+
 export {
   createPost,
   getAllPosts,
   getAllReplies,
-  editPost
+  editPost,
+  removePost
 }
