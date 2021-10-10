@@ -87,10 +87,25 @@ async function removePost(id) {
   return res.data;
 }
 
+
+/*
+ * Get all posts & replies of a user
+ */ 
+async function getAllUserPosts(authorId) {
+  const res = await axios.get(POST_API_URL + "/user", { params: { authorId } });
+  const posts = res.data;
+
+  for (let post of posts)
+    post.postedDate = convertTimestampToDateTime(post.postedDate); // change date time format
+
+  return posts;
+}
+
 export {
   createPost,
   getAllPosts,
   getAllReplies,
   editPost,
-  removePost
+  removePost,
+  getAllUserPosts
 }
