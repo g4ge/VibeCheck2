@@ -33,15 +33,32 @@ exports.image = async (req, res) => {
 
 
 /*
- * Get all posts (root post only, i.e. post with rootId = 0)
+ * Get all posts (root post only, i.e. post with rootId = 0, parentId = 0)
  * --------------------
  * success: posts
  */ 
 exports.all = async (req, res) => {
   // eager load all posts
   const posts = await db.post.findAll({
-    include: { model: db.user }
+    include: { model: db.user },
+    where: { rootId: 0, parentId: 0 }
   });
 
   res.json(posts);
+};
+
+
+/*
+ * Get all replies to a root post
+ * --------------------
+ * success: replies
+ */ 
+exports.replies = async (req, res) => {
+  // eager load all posts
+  const replies = await db.post.findAll({
+    include: { model: db.user },
+    where: { rootId: req.query.rootId }
+  });
+
+  res.json(replies);
 };

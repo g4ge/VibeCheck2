@@ -11,6 +11,9 @@ module.exports = (express, app) => {
   // get all posts (root post only)
   router.get("/all", controller.all);
 
+  // get all replies to a root post
+  router.get("/replies", controller.replies);
+
   // add routes to server
   app.use("/api/post", router);
 };
