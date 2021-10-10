@@ -11,7 +11,6 @@ function Posts() {
 
   // retrieve all posts (i.e. root posts excluding replies)
   const refreshPosts = () => {
-    // setPosts(getAllPosts()); original
     const axiosGetPosts = async () => {
       const posts = await getAllPosts();
       setPosts(posts);
