@@ -14,6 +14,8 @@ import AvatarConsole from "images/avatars/console.png";
 import AvatarUfo from "images/avatars/ufo.png";
 import AvatarUser from "images/avatars/user.png";
 import { getUser } from "data/UserRepository";
+import { getAllUserPosts } from "data/PostRepository";
+import SinglePost from "components/SinglePost";
 import "App.css";
 
 function Profile() {
@@ -23,6 +25,8 @@ function Profile() {
   const [profile, setProfile] = useState([]);
   const [showEdit, setShowEdit] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
+  const [showPosts, setShowPosts] = useState(false);
+  const [posts, setPosts] = useState([]);
 
   const refreshProfile = useCallback(() => {
     // fetch user profile details from database via API
@@ -35,6 +39,13 @@ function Profile() {
 
   useEffect(() => {
     refreshProfile();
+
+    // retrieve all posts/reeplies of the profile user
+    const axiosGetPosts = async () => {
+      const posts = await getAllUserPosts(parseInt(id));
+      setPosts(posts);
+    }  
+    axiosGetPosts();
   }, [refreshProfile]);
 
   return (
@@ -62,20 +73,23 @@ function Profile() {
                 </div>
 
                 <div className="col-md-3">
-                  <button type="button" className="icon-btn pf-edit-btn" onClick={() => {setShowEdit(false); setShowDelete(!showDelete)}}>
-                    <FontAwesomeIcon icon={faComment} fixedWidth /> 
-                  </button>
-                  {/* profile edit and delete buttons */}
-                  {parseInt(id) === authUser.id &&
-                    <Fragment>
-                      <button type="button" className="icon-btn pf-edit-btn" onClick={() => {setShowEdit(!showEdit); setShowDelete(false)}}>
-                        <FontAwesomeIcon icon={faEdit} fixedWidth /> 
-                      </button>
-                      <button type="button" className="icon-btn pf-trash-btn" onClick={() => {setShowEdit(false); setShowDelete(!showDelete)}}>
-                        <FontAwesomeIcon icon={faTrashAlt} fixedWidth /> 
-                      </button>
-                    </Fragment>
-                  }
+                  <div className="pf-btns-wrap">
+                    {/* profile posts button */}
+                    <button type="button" className="icon-btn pf-edit-btn" onClick={() => {setShowEdit(false); setShowDelete(false); setShowPosts(!showPosts);}}>
+                      <FontAwesomeIcon icon={faComment} fixedWidth /> 
+                    </button>
+                    {/* profile edit and delete buttons */}
+                    {parseInt(id) === authUser.id &&
+                      <Fragment>
+                        <button type="button" className="icon-btn pf-edit-btn" onClick={() => {setShowEdit(!showEdit); setShowDelete(false); setShowPosts(false);}}>
+                          <FontAwesomeIcon icon={faEdit} fixedWidth /> 
+                        </button>
+                        <button type="button" className="icon-btn pf-trash-btn" onClick={() => {setShowEdit(false); setShowDelete(!showDelete); setShowPosts(false);}}>
+                          <FontAwesomeIcon icon={faTrashAlt} fixedWidth /> 
+                        </button>
+                      </Fragment>
+                    }
+                  </div>
                 </div>
               </div>
               
@@ -83,6 +97,22 @@ function Profile() {
               {showEdit && <AccountEditForm profile={profile} refreshProfile={refreshProfile} />}
               {showDelete && <AccountDeleteForm profile={profile} />}
             </div>
+
+            {/* display all user posts and replies */}
+            {showPosts && 
+              <Fragment>
+                {/* display each post in reverse chronological order */}
+                {posts.length > 0 &&
+                  <div className="all-po-wrap">
+                    {posts.map(post =>
+                      <div key={post.id} className="po-wrap mt-3">
+                        <SinglePost post={post} includeOtherUsers={false} />
+                      </div>
+                    )}
+                  </div>
+                }
+              </Fragment>
+            }
           </div>
         </div>
       </div>
