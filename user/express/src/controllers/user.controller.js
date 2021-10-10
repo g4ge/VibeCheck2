@@ -88,7 +88,7 @@ exports.edit = async (req, res) => {
 
 
 /*
- * Delete a single user with id & password
+ * Delete a single user with id & password (i.e. purge user data from database)
  * --------------------
  * success: null
  * fail   : error message
@@ -98,6 +98,19 @@ exports.delete = async (req, res) => {
   const isPasswordCorrect = await argon2.verify(user.password, req.query.password); // verify password
 
   if (isPasswordCorrect) {
+    const posts = await db.post.findAll({ where: { authorId: req.query.id } });  // get all posts by authorId
+   
+    // remove all posts of the deleted user
+    for (let post of posts) {
+      post.authorId = 1; // point the author to the dummy user with id 1
+      post.isAuthorDeleted = true;
+      post.isContentDeleted = true;
+      post.content = " This post has been removed as the author does not exist anymore.";
+      post.imageUrl = "";
+    
+      await post.save();
+    }
+
     await db.user.destroy({ where: { id: req.query.id } });
     res.json(null) // delete successful
   } else {
