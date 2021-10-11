@@ -5,12 +5,18 @@ import { convertTimestampToDate } from "utils/Date";
 const USER_API_URL = process.env.REACT_APP_API_URL + "/user";
 
 
+/*
+ * Create a new user
+ */
 async function createUser(user) {
   const res = await axios.post(USER_API_URL + "/create", user);
   return res.data;
 }
 
 
+/*
+ * Authenticate a user
+ */ 
 async function loginUser(username, password) {
   const res = await axios.get(USER_API_URL + "/login", { params: { username, password } });
   const user = res.data;
@@ -24,6 +30,10 @@ async function loginUser(username, password) {
   return user;
 }
 
+
+/*
+ * Edit a user
+ */ 
 async function editUser(id, user, avatar) {
   // add avatar field as part of user form
   user.avatar = avatar;
@@ -41,6 +51,9 @@ async function editUser(id, user, avatar) {
 }
 
 
+/*
+ * Delete a single user (i.e. purge user data from database)
+ */ 
 async function deleteUser(id, password) {
   const res = await axios.get(USER_API_URL + "/delete", { params: { id, password } });
   
@@ -53,6 +66,10 @@ async function deleteUser(id, password) {
 }
 
 
+
+/*
+ * Get a single user
+ */ 
 async function getUser(id) {
   const res = await axios.get(USER_API_URL + "/profile", { params: { id } });
   const user = res.data;
