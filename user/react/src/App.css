@@ -222,6 +222,27 @@
   background-color: rgba(118, 132, 162, 0.2);
 }
 
+.po-icon-btn-long {
+  padding-left: 0;
+  padding-right: 0;
+  float: right;
+  width: 40px;
+}
+
+.po-like-btn {
+  color: mediumspringgreen;
+}
+.po-like-btn:focus {
+  border: 1px solid rgba(0, 250, 154, 0.3);
+}
+
+.po-dislike-btn {
+  color: tomato;
+}
+.po-dislike-btn:focus {
+  border: 1px solid rgba(255, 99, 71, 0.3);
+}
+
 .pf-avatar-opt-btn {
   width: 55px;
   height: 55px;
@@ -767,7 +788,7 @@ input {
 }
 
 .po-btns-wrap {
-  width: 105px;
+  width: 195px;
 }
 
 .po-icon {
