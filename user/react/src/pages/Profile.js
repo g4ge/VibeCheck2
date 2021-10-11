@@ -15,6 +15,7 @@ import AvatarUfo from "images/avatars/ufo.png";
 import AvatarUser from "images/avatars/user.png";
 import { getUser } from "data/UserRepository";
 import { getAllUserPosts } from "data/PostRepository";
+import { followUser, unfollowUser } from "data/FollowRepository";
 import SinglePost from "components/SinglePost";
 import "App.css";
 
@@ -29,6 +30,18 @@ function Profile() {
   const [posts, setPosts] = useState([]);
   const [follow, setFollow] = useState(false);
 
+  const handleFollow = async () => {
+    // follow or unfollow user
+    if (follow)
+      await unfollowUser(authUser.id, profile.id);
+    else 
+      await followUser(authUser.id, profile.id);
+      
+    // set following status
+    setFollow(!follow);
+  }
+  
+
   const refreshProfile = useCallback(() => {
     // fetch user profile details from database via API
     const axiosGetUser = async () => {
@@ -37,6 +50,7 @@ function Profile() {
     }  
     axiosGetUser();
   }, [id])
+
 
   useEffect(() => {
     refreshProfile();
@@ -82,7 +96,7 @@ function Profile() {
 
                     {/* profile follow button */}
                     {parseInt(id) !== authUser.id &&
-                      <button type="button" className={`icon-btn ${follow ? "pf-follow-btn" : "pf-edit-btn"}`} onClick={() => {setFollow(!follow);}}>
+                      <button type="button" className={`icon-btn ${follow ? "pf-follow-btn" : "pf-edit-btn"}`} onClick={handleFollow}>
                         <FontAwesomeIcon icon={follow ? faUserCheck : faUserPlus} fixedWidth /> 
                       </button>
                     }
