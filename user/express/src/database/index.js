@@ -16,10 +16,12 @@ db.sequelize = new Sequelize(config.DB, config.USER, config.PASSWORD, {
 // include models
 db.user = require("./models/user.js")(db.sequelize, DataTypes);
 db.post = require("./models/post.js")(db.sequelize, DataTypes);
+db.follow = require("./models/follow.js")(db.sequelize, DataTypes);
 
 
-// relate post and user
-db.post.belongsTo(db.user, { foreignKey: { name: "authorId", allowNull: false } });
+// relate tables
+db.post.belongsTo(db.user, { foreignKey: { name: "authorId", allowNull: false } }); // post to user (many to one)
+db.follow.belongsTo(db.user, { foreignKey: { name: "followingId", allowNull: false } }); // follower to following (one to one)
 
 
 // include a sync option with seed data logic included

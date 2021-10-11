@@ -16,6 +16,7 @@ app.use(cors());
 // add routes
 require("./src/routes/user.routes.js")(express, app);
 require("./src/routes/post.routes.js")(express, app);
+require("./src/routes/follow.routes.js")(express, app);
 
 // set port and listen for requests
 const PORT = 4000;
