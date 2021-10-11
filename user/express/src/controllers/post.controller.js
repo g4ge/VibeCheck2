@@ -92,12 +92,17 @@ exports.remove = async (req, res) => {
 
   // remove post
   post.isContentDeleted = true;
-  post.content = " This post has been deleted by the author."
+  post.content = " This " + (post.rootId === 0 && post.parentId === 0 ? "post" : "reply") + " has been deleted by the author."
   post.imageUrl = "";
   post.likeCount = 0;
   post.dislikeCount = 0;
-  
   await post.save();
+
+  // remove all likes of the post
+  await db.like.destroy({ where: { postId: req.query.id } });
+    
+  // remove all dislikes of the post
+  await db.dislike.destroy({ where: { postId: req.query.id } });
 
   res.json(null);
 };
