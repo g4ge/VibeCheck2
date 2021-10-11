@@ -15,7 +15,7 @@ import AvatarUfo from "images/avatars/ufo.png";
 import AvatarUser from "images/avatars/user.png";
 import { getUser } from "data/UserRepository";
 import { getAllUserPosts } from "data/PostRepository";
-import { followUser, unfollowUser } from "data/FollowRepository";
+import { followUser, unfollowUser, hasUserFollowed } from "data/FollowRepository";
 import SinglePost from "components/SinglePost";
 import "App.css";
 
@@ -28,17 +28,17 @@ function Profile() {
   const [showDelete, setShowDelete] = useState(false);
   const [showPosts, setShowPosts] = useState(false);
   const [posts, setPosts] = useState([]);
-  const [follow, setFollow] = useState(false);
+  const [hasFollowed, setHasFollowed] = useState(false);
 
   const handleFollow = async () => {
     // follow or unfollow user
-    if (follow)
+    if (hasFollowed)
       await unfollowUser(authUser.id, profile.id);
     else 
       await followUser(authUser.id, profile.id);
       
     // set following status
-    setFollow(!follow);
+    setHasFollowed(!hasFollowed);
   }
   
 
@@ -60,7 +60,15 @@ function Profile() {
       const posts = await getAllUserPosts(parseInt(id));
       setPosts(posts);
     }  
+
+    // check if current logged in user has follow the user in profile
+    const axiosGetFollowStatus = async () => {
+      const followed = await hasUserFollowed(authUser.id, parseInt(id));
+      setHasFollowed(followed);
+    }  
+
     axiosGetPosts();
+    axiosGetFollowStatus();
   }, [refreshProfile, id]);
 
   return (
@@ -96,8 +104,8 @@ function Profile() {
 
                     {/* profile follow button */}
                     {parseInt(id) !== authUser.id &&
-                      <button type="button" className={`icon-btn ${follow ? "pf-follow-btn" : "pf-edit-btn"}`} onClick={handleFollow}>
-                        <FontAwesomeIcon icon={follow ? faUserCheck : faUserPlus} fixedWidth /> 
+                      <button type="button" className={`icon-btn ${hasFollowed ? "pf-follow-btn" : "pf-edit-btn"}`} onClick={handleFollow}>
+                        <FontAwesomeIcon icon={hasFollowed ? faUserCheck : faUserPlus} fixedWidth /> 
                       </button>
                     }
                   
