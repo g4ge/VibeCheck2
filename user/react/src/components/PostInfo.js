@@ -11,6 +11,7 @@ import AvatarQuestion from "images/avatars/question.png";
 import AvatarUfo from "images/avatars/ufo.png";
 import AvatarUser from "images/avatars/user.png";
 import { addLike, removeLike, hasUserLiked } from "data/LikeRepository";
+import { addDislike, hasUserDisliked, removeDislike } from "data/DislikeRepository";
 import "App.css";
 
 function PostInfo({ post, sendButtonShown, showButtons = true }) {
@@ -32,24 +33,34 @@ function PostInfo({ post, sendButtonShown, showButtons = true }) {
     else 
       await addLike(authUser.id, post.id);
 
+    // update like & dislike buttons status
     setHasLiked(!hasLiked);
     setHasDisliked(false);
   }
 
 
   const handleDislike = async () => {
+    // add or remove a dislike on a post
+    if (hasDisliked)
+      await removeDislike(authUser.id, post.id);
+    else 
+      await addDislike(authUser.id, post.id);
+
+    // update like & dislike buttons status
     setHasDisliked(!hasDisliked);
     setHasLiked(false);
   }
 
 
   useEffect(() => {
-    // check if current logged in user has liked the post
-    const axiosGetLikeStatus = async () => {
+    // check if current logged in user has liked an the post
+    const axiosGetLikeDislikeStatus = async () => {
       const liked = await hasUserLiked(authUser.id, post.id);
+      const disliked = await hasUserDisliked(authUser.id, post.id);
       setHasLiked(liked);
+      setHasDisliked(disliked);
     }  
-    axiosGetLikeStatus();
+    axiosGetLikeDislikeStatus();
   }, [authUser.id, post.id]);
 
   return (
