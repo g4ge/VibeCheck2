@@ -13,6 +13,7 @@
   10. Sign In/Up Page
   11. Profile Page
   12. Posts Page
+  13. Follow Page
 **********************************************************/
 
 
@@ -130,6 +131,20 @@
 }
 .po-dlt-btn:active {
   background-color: crimson;
+}
+
+.flw-tab {
+  color: rgba(194, 194, 210, 0.7);
+  background-color: rgb(46, 58, 83);
+  width: 100%;
+  font-size: 14px;
+}
+.flw-tab:focus {
+  border: none;
+}
+.flw-tab-current {
+  color: rgb(194, 194, 210);
+  background-color: rgb(83, 94, 119);
 }
 
 
@@ -824,4 +839,36 @@ input {
 }
 .username-link:hover {
   color: rgba(194, 194, 210, 0.7);
+}
+
+
+/**********************************************************
+  13. Follow Page
+**********************************************************/
+
+.flw-user-tab {
+  color: rgb(194, 194, 210);
+  border-radius: 14px;
+  height: 60px;
+  background-color: rgb(46, 58, 83);
+  width: 100%;
+  font-size: 14px;
+  display: flex;
+}
+
+.flw-avatar-wrap {
+  height: 60px;
+  width: 60px;
+}
+
+.flw-avatar {
+  width: 30px;
+  height: 30px;
+  object-fit: cover;
+  margin: 15px 15px 15px 20px;
+}
+
+.flw-username {
+  font-size: 15px;
+  line-height: 60px;
 }

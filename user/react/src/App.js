@@ -9,6 +9,7 @@ import SignUp from "pages/SignUp";
 import Profile from "pages/Profile";
 import Posts from "pages/Posts";
 import Search from "pages/Search";
+import Follow from "pages/Follow";
 import Footer from "components/Footer";;
 
 function App() {
@@ -40,6 +41,10 @@ function App() {
 
           <Route path="/search">
             <Search />
+          </Route>
+          
+          <Route path="/follow">
+            <Follow />
           </Route>
         </Switch>
         <Footer />
