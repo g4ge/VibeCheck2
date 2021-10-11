@@ -14,6 +14,9 @@ module.exports = (express, app) => {
   // get all unfollowed users
   router.get("/unfollowed", controller.unfollowed);
 
+  // check if a user has followed another user
+  router.get("/status", controller.status);
+
   // add routes to server
   app.use("/api/follow", router);
 };
