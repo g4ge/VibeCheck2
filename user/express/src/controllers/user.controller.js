@@ -98,9 +98,10 @@ exports.delete = async (req, res) => {
   const isPasswordCorrect = await argon2.verify(user.password, req.query.password); // verify password
 
   if (isPasswordCorrect) {
+    /*
+     *  remove all posts of the deleted user
+     */
     const posts = await db.post.findAll({ where: { authorId: req.query.id } });  // get all posts by authorId
-   
-    // remove all posts of the deleted user
     for (let post of posts) {
       post.authorId = 1; // point the author to the dummy user with id 1
       post.isAuthorDeleted = true;
@@ -111,6 +112,16 @@ exports.delete = async (req, res) => {
       await post.save();
     }
 
+    /*
+     *  remove all follower/following connection of the deleted user
+     */
+    await db.follow.destroy({
+      where: {
+        [db.Op.or]: [{ followerId: req.query.id }, { followingId: req.query.id } ]
+      }
+    });
+
+    // purge user data 
     await db.user.destroy({ where: { id: req.query.id } });
     res.json(null) // delete successful
   } else {
