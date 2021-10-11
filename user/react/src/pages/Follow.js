@@ -28,7 +28,7 @@ function Follow() {
       setUnfollowedUsers(await getUnfollowedUsers(authUser.id));
     }  
     axiosGetFollowedUsers();
-  }, []);
+  }, [authUser.id]);
 
   return (
     <div>

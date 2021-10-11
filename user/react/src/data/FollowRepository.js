@@ -44,7 +44,7 @@ async function getUnfollowedUsers(followerId) {
  */ 
 async function hasUserFollowed(followerId, followingId) {
   const res = await axios.get(FOLLOW_API_URL + "/status", { params: { followerId, followingId } });
-  return res.data
+  return res.data;
 }
 
 

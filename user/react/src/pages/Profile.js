@@ -61,7 +61,7 @@ function Profile() {
       setPosts(posts);
     }  
 
-    // check if current logged in user has follow the user in profile
+    // check if current logged in user has followed the user in profile
     const axiosGetFollowStatus = async () => {
       const followed = await hasUserFollowed(authUser.id, parseInt(id));
       setHasFollowed(followed);
@@ -69,7 +69,7 @@ function Profile() {
 
     axiosGetPosts();
     axiosGetFollowStatus();
-  }, [refreshProfile, id]);
+  }, [refreshProfile, id, authUser.id]);
 
   return (
     <div>
