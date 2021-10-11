@@ -4,7 +4,7 @@ import Header from "components/Header";
 import NavBar from "components/NavBar";
 import { useUserContext } from "libs/Context";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser, faTrashAlt, faEnvelope, faClock, faComment, faUserPlus, faUserEdit, faUserCheck } from "@fortawesome/free-solid-svg-icons";
+import { faUser, faTrashAlt, faEnvelope, faClock, faComment, faUserPlus, faUserEdit, faUserCheck, faCommentSlash } from "@fortawesome/free-solid-svg-icons";
 import AccountDeleteForm from "components/AccountDeleteForm";
 import AccountEditForm from "components/AccountEditForm";
 import AvatarBook from "images/avatars/book.png";
@@ -47,7 +47,7 @@ function Profile() {
       setPosts(posts);
     }  
     axiosGetPosts();
-  }, [refreshProfile]);
+  }, [refreshProfile, id]);
 
   return (
     <div>
@@ -77,7 +77,7 @@ function Profile() {
                   <div className="pf-btns-wrap">
                     {/* profile posts button */}
                     <button type="button" className="icon-btn pf-edit-btn" onClick={() => {setShowEdit(false); setShowDelete(false); setShowPosts(!showPosts);}}>
-                      <FontAwesomeIcon icon={faComment} fixedWidth /> 
+                      <FontAwesomeIcon icon={showPosts ? faCommentSlash : faComment} fixedWidth /> 
                     </button>
 
                     {/* profile follow button */}
