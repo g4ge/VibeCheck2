@@ -4,7 +4,7 @@ const FOLLOW_API_URL = process.env.REACT_APP_API_URL + "/follow";
 
 
 /*
- * Add a new following user
+ * Add a new followed user
  */ 
 async function followUser(followerId, followingId) {
   const res = await axios.get(FOLLOW_API_URL + "/add", { params: { followerId, followingId } });
@@ -13,7 +13,7 @@ async function followUser(followerId, followingId) {
 
 
 /*
- * Remove a following user
+ * Remove a followed user
  */ 
 async function unfollowUser(followerId, followingId) {
   const res = await axios.get(FOLLOW_API_URL + "/remove", { params: { followerId, followingId } });
@@ -21,7 +21,27 @@ async function unfollowUser(followerId, followingId) {
 }
 
 
+/*
+ * Get all followed users
+ */ 
+async function getFollowedUsers(followerId) {
+  const res = await axios.get(FOLLOW_API_URL + "/followed", { params: { followerId } });
+  return res.data;
+}
+
+
+/*
+ * Get all unfollowed users
+ */ 
+async function getUnfollowedUsers(followerId) {
+  const res = await axios.get(FOLLOW_API_URL + "/unfollowed", { params: { followerId } });
+  return res.data;
+}
+
+
 export {
   followUser,
-  unfollowUser
+  unfollowUser,
+  getFollowedUsers,
+  getUnfollowedUsers
 }
