@@ -79,11 +79,12 @@ exports.unfollowed = async (req, res) => {
  * fail   : false
  */ 
 exports.status = async (req, res) => {
-  // get the follow connection if a user follows another user
+  // get the follow connection if a user has followed another user
   const follow = await db.follow.findOne({ 
     where: { 
       followerId: req.query.followerId, 
-      followingId: req.query.followingId } 
+      followingId: req.query.followingId 
+    } 
   }); 
   
   res.json(follow ? true : false);
