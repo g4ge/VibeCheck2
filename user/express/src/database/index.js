@@ -66,6 +66,14 @@ async function seedData() {
     name: "Mai Sakurajima",
     email: "mai@sakurajima.com"
   });
+
+  hash = await argon2.hash("qqQQ11!!", { type: argon2.argon2id });
+  await db.user.create({ 
+    username: "Shouko",
+    password: hash,
+    name: "Shouko Nishimiya",
+    email: "shouko@nishimiya.com"
+  });
 }
 
 module.exports = db;
