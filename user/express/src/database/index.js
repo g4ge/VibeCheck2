@@ -60,7 +60,8 @@ async function seedData() {
     username: "Violetto",
     password: hash,
     name: "Violet Evergarden",
-    email: "violet@evergarden.com"
+    email: "violet@evergarden.com",
+    avatar: "AvatarBook"
   });
 
   hash = await argon2.hash("qqQQ11!!", { type: argon2.argon2id });
@@ -68,7 +69,8 @@ async function seedData() {
     username: "Mai",
     password: hash,
     name: "Mai Sakurajima",
-    email: "mai@sakurajima.com"
+    email: "mai@sakurajima.com",
+    avatar: "AvatarCoffee"
   });
 
   hash = await argon2.hash("qqQQ11!!", { type: argon2.argon2id });
@@ -76,7 +78,8 @@ async function seedData() {
     username: "Shouko",
     password: hash,
     name: "Shouko Nishimiya",
-    email: "shouko@nishimiya.com"
+    email: "shouko@nishimiya.com",
+    avatar: "AvatarCat"
   });
 }
 
