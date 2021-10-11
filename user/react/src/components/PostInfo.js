@@ -104,14 +104,14 @@ function PostInfo({ post, sendButtonShown, showButtons = true }) {
             {/* show like & dislike buttons if (1) post is not deleted, (2) author is not deleted */}
             {!post.isAuthorDeleted && !post.isContentDeleted &&
               <Fragment>
-                <button type="button" className={`icon-btn po-icon-btn po-icon-btn-long ${hasLiked && "po-like-btn"}`} onClick={handleLike}>
-                  <FontAwesomeIcon icon={faThumbsUp} className="po-icon" fixedWidth />
-                  <span style={{fontSize: "10px"}}>&nbsp;{post.likeCount}</span>
-                </button>
-
                 <button type="button" className={`icon-btn po-icon-btn po-icon-btn-long ${hasDisliked && "po-dislike-btn"}`} onClick={handleDislike}>
                   <FontAwesomeIcon icon={faThumbsDown} className="po-icon" fixedWidth />
                   <span style={{fontSize: "10px"}}>&nbsp;{post.dislikeCount}</span>
+                </button>
+
+                <button type="button" className={`icon-btn po-icon-btn po-icon-btn-long ${hasLiked && "po-like-btn"}`} onClick={handleLike}>
+                  <FontAwesomeIcon icon={faThumbsUp} className="po-icon" fixedWidth />
+                  <span style={{fontSize: "10px"}}>&nbsp;{post.likeCount}</span>
                 </button>
               </Fragment>
             }
