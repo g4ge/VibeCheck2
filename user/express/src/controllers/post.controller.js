@@ -94,7 +94,9 @@ exports.remove = async (req, res) => {
   post.isContentDeleted = true;
   post.content = " This post has been deleted by the author."
   post.imageUrl = "";
-
+  post.likeCount = 0;
+  post.dislikeCount = 0;
+  
   await post.save();
 
   res.json(null);

@@ -36,6 +36,16 @@ module.exports = (sequelize, DataTypes) =>
       allowNull: false,
       defaultValue: false
     },
+    likeCount: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+      allowNull: false
+    },
+    dislikeCount: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+      allowNull: false
+    }
   }, {
     timestamps: true,
     createdAt: 'postedDate',
