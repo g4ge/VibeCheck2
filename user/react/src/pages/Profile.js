@@ -39,7 +39,7 @@ function Profile() {
       
     // set following status
     setHasFollowed(!hasFollowed);
-  }
+  };
   
 
   const refreshProfile = useCallback(() => {
@@ -49,27 +49,30 @@ function Profile() {
       setProfile(user);
     }  
     axiosGetUser();
-  }, [id])
+  }, [id]);
+
+
+  const refreshPosts = useCallback(() => {
+    // retrieve all posts/replies of the profile user
+    const axiosGetPosts = async () => {
+      const posts = await getAllUserPosts(parseInt(id));
+      setPosts(posts);
+    }
+    axiosGetPosts();
+  }, [id]);
 
 
   useEffect(() => {
     refreshProfile();
-
-    // retrieve all posts/reeplies of the profile user
-    const axiosGetPosts = async () => {
-      const posts = await getAllUserPosts(parseInt(id));
-      setPosts(posts);
-    }  
+    refreshPosts();
 
     // check if current logged in user has followed the user in profile
     const axiosGetFollowStatus = async () => {
       const followed = await hasUserFollowed(authUser.id, parseInt(id));
       setHasFollowed(followed);
     }  
-
-    axiosGetPosts();
     axiosGetFollowStatus();
-  }, [refreshProfile, id, authUser.id]);
+  }, [refreshProfile, refreshPosts, id, authUser.id]);
 
   return (
     <div>
@@ -137,7 +140,7 @@ function Profile() {
                   <div className="all-po-wrap">
                     {posts.map(post =>
                       <div key={post.id} className="po-wrap mt-3">
-                        <SinglePost post={post} includeOtherUsers={false} />
+                        <SinglePost post={post} includeReplies={false} refreshPosts={refreshPosts} />
                       </div>
                     )}
                   </div>

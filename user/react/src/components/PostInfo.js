@@ -14,7 +14,7 @@ import { addLike, removeLike, hasUserLiked } from "data/LikeRepository";
 import { addDislike, hasUserDisliked, removeDislike } from "data/DislikeRepository";
 import "App.css";
 
-function PostInfo({ post, sendButtonShown, showButtons = true, refresh }) {
+function PostInfo({ post, sendButtonShown, enableReply = true, refresh }) {
   const avatars = { AvatarBook, AvatarCat, AvatarCoffee, AvatarConsole, AvatarQuestion, AvatarUfo, AvatarUser };
   const { authUser } = useUserContext();
   const [hasLiked, setHasLiked] = useState(false);
@@ -77,6 +77,7 @@ function PostInfo({ post, sendButtonShown, showButtons = true, refresh }) {
     axiosGetLikeDislikeStatus();
   }, [authUser.id, post.id]);
 
+
   return (
     <div className="po-info-wrap mb-3">
       {/* post's author profile photo */}
@@ -110,61 +111,45 @@ function PostInfo({ post, sendButtonShown, showButtons = true, refresh }) {
         )}
       </div>
       
-      {/* post's like, dislike, delete, edit & reply buttons */}
+      {/* post/reply 's like, dislike, delete, edit & reply buttons */}
       <div className="po-btns-wrap">
-        {/* show all buttons if this post/reply has included other users */}
-        {showButtons && 
+        {/* show like & dislike buttons if (1) post is not deleted, (2) author is not deleted */}
+        {!post.isAuthorDeleted && !post.isContentDeleted &&
           <Fragment>
-            {/* show like & dislike buttons if (1) post is not deleted, (2) author is not deleted */}
-            {!post.isAuthorDeleted && !post.isContentDeleted &&
-              <Fragment>
-                <button type="button" className={`icon-btn po-icon-btn po-icon-btn-long ${hasDisliked && "po-dislike-btn"}`} onClick={handleDislike}>
-                  <FontAwesomeIcon icon={faThumbsDown} className="po-icon" fixedWidth />
-                  <span style={{fontSize: "10px"}}>&nbsp;{post.dislikeCount}</span>
-                </button>
+            <button type="button" className={`icon-btn po-icon-btn po-icon-btn-long ${hasDisliked && "po-dislike-btn"}`} onClick={handleDislike}>
+              <FontAwesomeIcon icon={faThumbsDown} className="po-icon" fixedWidth />
+              <span style={{fontSize: "10px"}}>&nbsp;{post.dislikeCount}</span>
+            </button>
 
-                <button type="button" className={`icon-btn po-icon-btn po-icon-btn-long ${hasLiked && "po-like-btn"}`} onClick={handleLike}>
-                  <FontAwesomeIcon icon={faThumbsUp} className="po-icon" fixedWidth />
-                  <span style={{fontSize: "10px"}}>&nbsp;{post.likeCount}</span>
-                </button>
-              </Fragment>
-            }
-  
-            {/* show delete & edit buttons if (1) this is the current user, (2) post is not deleted, (3) author is not deleted */}
-            {authUser.id === post.user.id && !post.isAuthorDeleted && !post.isContentDeleted &&
-              <Fragment>
-                <button 
-                  type="button" 
-                  className="icon-btn po-icon-btn" 
-                  onClick={() => {
-                    const newButton = {
-                      isDelete: !button.isDelete,
-                      isEdit: false,
-                      isReply: false
-                    };
-                    setButton(newButton);
-                    sendButtonShown(newButton);
-                  }}>
-                  <FontAwesomeIcon icon={faTrashAlt} className="po-icon" fixedWidth /> 
-                </button> 
+            <button type="button" className={`icon-btn po-icon-btn po-icon-btn-long ${hasLiked && "po-like-btn"}`} onClick={handleLike}>
+              <FontAwesomeIcon icon={faThumbsUp} className="po-icon" fixedWidth />
+              <span style={{fontSize: "10px"}}>&nbsp;{post.likeCount}</span>
+            </button>
+          </Fragment>
+        }
 
-                <button 
-                  type="button" 
-                  className="icon-btn po-icon-btn" 
-                  onClick={() => {
-                    const newButton = {
-                      isDelete: false,
-                      isEdit: !button.isEdit,
-                      isReply: false
-                    };
-                    setButton(newButton);
-                    sendButtonShown(newButton);
-                  }}>
-                  <FontAwesomeIcon icon={faEdit} className="po-icon" fixedWidth /> 
-                </button>
-              </Fragment>
-            }
+        {/* show reply button if reply function is enabled (only disabled in profile posts/replies) */}
+        {enableReply && 
+          <button 
+            type="button" 
+            className="icon-btn po-icon-btn" 
+            style={{float: "right"}}
+            onClick={() => {
+              const newButton = {
+                isDelete: false,
+                isEdit: false,
+                isReply: !button.isReply
+              };
+              setButton(newButton);
+              sendButtonShown(newButton);
+            }}>
+              <FontAwesomeIcon icon={faReply} className="po-icon" fixedWidth /> 
+          </button>
+        }
 
+        {/* show delete & edit buttons if (1) this is the current user, (2) post is not deleted, (3) author is not deleted */}
+        {authUser.id === post.user.id && !post.isAuthorDeleted && !post.isContentDeleted &&
+          <Fragment>
             <button 
               type="button" 
               className="icon-btn po-icon-btn" 
@@ -172,14 +157,30 @@ function PostInfo({ post, sendButtonShown, showButtons = true, refresh }) {
               onClick={() => {
                 const newButton = {
                   isDelete: false,
-                  isEdit: false,
-                  isReply: !button.isReply
+                  isEdit: !button.isEdit,
+                  isReply: false
                 };
                 setButton(newButton);
                 sendButtonShown(newButton);
               }}>
-                <FontAwesomeIcon icon={faReply} className="po-icon" fixedWidth /> 
+              <FontAwesomeIcon icon={faEdit} className="po-icon" fixedWidth /> 
             </button>
+
+            <button 
+              type="button" 
+              className="icon-btn po-icon-btn" 
+              style={{float: "right"}}
+              onClick={() => {
+                const newButton = {
+                  isDelete: !button.isDelete,
+                  isEdit: false,
+                  isReply: false
+                };
+                setButton(newButton);
+                sendButtonShown(newButton);
+              }}>
+              <FontAwesomeIcon icon={faTrashAlt} className="po-icon" fixedWidth /> 
+            </button> 
           </Fragment>
         }
       </div>

@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGhost, faUserSlash } from "@fortawesome/free-solid-svg-icons";
 import "App.css";
 
-function SinglePost({ post, refreshPosts, includeOtherUsers = true }) {
+function SinglePost({ post, refreshPosts, includeReplies = true }) {
   const [allReplies, setAllReplies] = useState([]);
   const [childReplies, setChildReplies] = useState([]);
   const [button, setButton] = useState({
@@ -45,11 +45,11 @@ function SinglePost({ post, refreshPosts, includeOtherUsers = true }) {
 
   useEffect(() => {
     // only retrieve replies if this post is set to include other users (i.e. other replies since this is the root post)
-    if (includeOtherUsers)
+    if (includeReplies)
       refreshReplies();
     else
       setChildReplies([]);
-  }, [refreshReplies, includeOtherUsers]);
+  }, [refreshReplies, includeReplies]);
 
   
   // display different type of icon based on how a post is deleted (deleted by user/user is deleted)
@@ -62,7 +62,7 @@ function SinglePost({ post, refreshPosts, includeOtherUsers = true }) {
 
   return (
     <div>
-      <PostInfo post={post} sendButtonShown={sendButtonShown} showButtons={includeOtherUsers} refresh={refreshPosts} />
+      <PostInfo post={post} sendButtonShown={sendButtonShown} enableReply={includeReplies} refresh={refreshPosts} />
 
       {/* post's text */}
       <div className={`po-text ${post.isContentDeleted && "po-dlted-text"}`}>
