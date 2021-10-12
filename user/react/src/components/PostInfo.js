@@ -27,12 +27,16 @@ function PostInfo({ post, sendButtonShown, showButtons = true, refresh }) {
 
 
   const handleLike = async () => {
-    // add or remove a like on a post
-    if (hasLiked)
-      await removeLike(authUser.id, post.id);
-    else 
-      await addLike(authUser.id, post.id);
-    
+    if (hasLiked) {
+      await removeLike(authUser.id, post.id); // remove like if it was liked
+    } 
+    else {    
+      if (hasDisliked) 
+        await removeDislike(authUser.id, post.id); // remove dislike if it was disliked
+
+      await addLike(authUser.id, post.id); // add new like
+    }
+     
     // refresh post/replies
     refresh();
 
@@ -43,11 +47,15 @@ function PostInfo({ post, sendButtonShown, showButtons = true, refresh }) {
 
 
   const handleDislike = async () => {
-    // add or remove a dislike on a post
-    if (hasDisliked)
-      await removeDislike(authUser.id, post.id);
-    else 
-      await addDislike(authUser.id, post.id);
+    if (hasDisliked) {
+      await removeDislike(authUser.id, post.id); // remove dislike if it was disliked
+    } 
+    else {
+      if (hasLiked)
+        await removeLike(authUser.id, post.id); // remove like if it was liked
+        
+      await addDislike(authUser.id, post.id); // add new dislike
+    }
 
     // refresh post/replies
     refresh();
