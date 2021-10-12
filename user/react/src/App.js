@@ -8,7 +8,6 @@ import SignIn from "pages/SignIn";
 import SignUp from "pages/SignUp";
 import Profile from "pages/Profile";
 import Posts from "pages/Posts";
-import Search from "pages/Search";
 import Follow from "pages/Follow";
 import Footer from "components/Footer";;
 
@@ -37,10 +36,6 @@ function App() {
           
           <Route path="/posts">
             <Posts />
-          </Route>
-
-          <Route path="/search">
-            <Search />
           </Route>
           
           <Route path="/follow">

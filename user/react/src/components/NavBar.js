@@ -2,7 +2,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser, faComment, faSearch, faUsers } from "@fortawesome/free-solid-svg-icons";
+import { faUser, faComment, faUsers } from "@fortawesome/free-solid-svg-icons";
 import { useUserContext } from "libs/Context";
 import AvatarBook from "images/avatars/book.png";
 import AvatarCat from "images/avatars/cat.png";
@@ -34,9 +34,6 @@ function NavBar({ currentPage, profileId }) {
           </Link>
           <Link className={`nav-sidebar-list ${currentPage === "posts" ? "nav-sidebar-current" : ""}`} to={"/posts"}>
             <FontAwesomeIcon icon={faComment} size="sm" fixedWidth /> Posts
-          </Link>
-          <Link className={`nav-sidebar-list ${currentPage === "search" ? "nav-sidebar-current" : ""}`} to={"/search"}>
-            <FontAwesomeIcon icon={faSearch} size="sm" fixedWidth /> Search
           </Link>
           <Link className={`nav-sidebar-list ${currentPage === "follow" ? "nav-sidebar-current" : ""}`} to={"/follow"}>
             <FontAwesomeIcon icon={faUsers} size="sm" fixedWidth /> Follow
