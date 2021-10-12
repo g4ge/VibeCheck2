@@ -62,7 +62,7 @@ function SinglePost({ post, refreshPosts, includeOtherUsers = true }) {
 
   return (
     <div>
-      <PostInfo post={post} sendButtonShown={sendButtonShown} showButtons={includeOtherUsers} />
+      <PostInfo post={post} sendButtonShown={sendButtonShown} showButtons={includeOtherUsers} refresh={refreshPosts} />
 
       {/* post's text */}
       <div className={`po-text ${post.isContentDeleted && "po-dlted-text"}`}>

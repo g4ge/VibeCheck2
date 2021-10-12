@@ -39,7 +39,7 @@ function SingleReply({ allReplies, rootId, reply, refreshReplies}) {
     
   return (
     <div>
-      <PostInfo post={reply} sendButtonShown={sendButtonShown} />
+      <PostInfo post={reply} sendButtonShown={sendButtonShown} refresh={refreshReplies} />
 
       {/* reply's text */}
       <div className={`reply-text ${reply.isContentDeleted && "reply-dlted-text"}`}>

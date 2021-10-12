@@ -14,7 +14,7 @@ import { addLike, removeLike, hasUserLiked } from "data/LikeRepository";
 import { addDislike, hasUserDisliked, removeDislike } from "data/DislikeRepository";
 import "App.css";
 
-function PostInfo({ post, sendButtonShown, showButtons = true }) {
+function PostInfo({ post, sendButtonShown, showButtons = true, refresh }) {
   const avatars = { AvatarBook, AvatarCat, AvatarCoffee, AvatarConsole, AvatarQuestion, AvatarUfo, AvatarUser };
   const { authUser } = useUserContext();
   const [hasLiked, setHasLiked] = useState(false);
@@ -32,6 +32,9 @@ function PostInfo({ post, sendButtonShown, showButtons = true }) {
       await removeLike(authUser.id, post.id);
     else 
       await addLike(authUser.id, post.id);
+    
+    // refresh post/replies
+    refresh();
 
     // update like & dislike buttons status
     setHasLiked(!hasLiked);
@@ -45,6 +48,9 @@ function PostInfo({ post, sendButtonShown, showButtons = true }) {
       await removeDislike(authUser.id, post.id);
     else 
       await addDislike(authUser.id, post.id);
+
+    // refresh post/replies
+    refresh();
 
     // update like & dislike buttons status
     setHasDisliked(!hasDisliked);
