@@ -4,10 +4,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faComment, faUser } from "@fortawesome/free-solid-svg-icons";
 import "App.css";
 
-function Dashboard() {
+function MainDashboard() {
   return (
     <div>
       <div className="page-title">| Dashboard</div>
+      <div className="page-subtitle">Manage and view the user and post statistics.</div>
       
       <div className="row mt-3">
         <div className="col-sm-6">
@@ -29,4 +30,4 @@ function Dashboard() {
   );
 }
 
-export default Dashboard;
+export default MainDashboard;

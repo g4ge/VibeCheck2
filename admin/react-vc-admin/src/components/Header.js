@@ -16,11 +16,11 @@ function Header() {
             
           <ul className="navbar-nav ml-auto">
             <li className="nav-item">
-              <Link className="nav-link admin-nav-link" style={{marginRight: "40px"}} to={"/"}>User</Link>
+              <Link className="nav-link admin-nav-link" style={{marginRight: "40px"}} to={"/user"}>User</Link>
             </li>
             
             <li className="nav-item">
-              <Link className="nav-link admin-nav-link" to={"/"}>Post</Link>
+              <Link className="nav-link admin-nav-link" to={"/post"}>Post</Link>
             </li>
           </ul>
         </div>

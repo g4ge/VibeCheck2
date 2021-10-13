@@ -38,6 +38,11 @@
   font-size: 24px;
 }
 
+.page-subtitle {
+  margin-top: 10px;
+  font-weight: 300;
+}
+
 
 /**********************************************************
   2. Header
