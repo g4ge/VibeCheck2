@@ -32,7 +32,6 @@ db.dislike.belongsTo(db.post, { foreignKey: { name: "postId", allowNull: false }
 db.sync = async () => {
   // sync schema
   await db.sequelize.sync();
-  await seedData();
 };
 
 
