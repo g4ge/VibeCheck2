@@ -5,6 +5,7 @@
   2.  Header
   3.  Footer
   4.  Dashboard
+  5.  User Account
 **********************************************************/
 
 @import url('https://fonts.googleapis.com/css2?family=Prompt:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
@@ -99,6 +100,89 @@
 
 
 /**********************************************************
+  3. Button (Icon only)
+**********************************************************/
+
+.icon-btn {
+  background-color: transparent;
+  border-style: none;
+  border-radius: 14px;
+  height: 40px;
+  width: 40px;
+}
+.icon-btn:focus {
+  outline: none;
+  border-radius: 14px;
+}
+.icon-btn:active {
+  border: none;
+}
+
+.pf-avatar-opt-btn {
+  width: 55px;
+  height: 55px;
+  margin-right: 6px;
+  background-color: lightgrey;
+}
+.pf-avatar-opt-btn:hover,
+.pf-avatar-opt-btn:active {
+  box-shadow: 0 0 15px rgba(119, 136, 153, 0.5);
+  background-color: lightgrey;
+}
+
+.pf-avatar-select {
+  border: 2px solid mediumseagreen;
+}
+
+
+/**********************************************************
+  2. Button (Text)
+**********************************************************/
+
+.custom-btn {
+  color: ghostwhite;
+  border-style: none;
+  border-radius: 14px;
+  height: 40px;
+  transition: all 0.25s ease;
+  -webkit-transition: all 0.25s ease;
+  -moz-transition: all 0.25s ease;
+}
+.custom-btn:hover {
+  opacity: 0.8;
+}
+.custom-btn:focus {
+  outline: none;
+  border-radius: 14px;
+}
+.custom-btn:active {
+  border: none;
+}
+
+.pf-save-btn {
+  background-color: mediumseagreen;
+  width: 100%;
+}
+.pf-save-btn:focus {
+  border: 1px solid seagreen;
+}
+.pf-save-btn:active {
+  background-color: seagreen;
+}
+
+.pf-dlt-btn {
+  background-color: rgb(229, 98, 75);
+  width: 100%;
+}
+.pf-dlt-btn:focus {
+  border: 1px solid rgb(220, 71, 45);
+}
+.pf-dlt-btn:active {
+  background-color: rgb(220, 71, 45);
+}
+
+
+/**********************************************************
   4. Dashboard
 **********************************************************/
 
@@ -123,4 +207,93 @@
 }
 .dashboard-tab:hover {
   background-color: rgba(119, 136, 153, 0.3);
+}
+
+
+/**********************************************************
+  5. User Account/Profile
+**********************************************************/
+
+/* remove browser default input autofill styling */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 40px lightgrey inset !important;
+}
+input:-webkit-autofill {
+  -webkit-text-fill-color: darkslategrey !important;
+}
+input {
+  filter: none;
+}
+
+.user-acc-wrap {
+  background-color: rgba(119, 136, 153, 0.3);
+  padding: 5%;
+  border-radius: 10px;
+}
+
+.form-title {
+  font-family: "Prompt", sans-serif;
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.form-msg {
+  border-radius: 12px;
+  padding: 6px 12px;
+  line-height: 18px;
+  font-size: 14px;
+  width: 100%;
+}
+
+.form-error {
+  background-color: rgba(255, 143, 99, 0.1);
+  color: crimson;
+  border: 1px solid rgb(229, 98, 75);
+}
+
+.form-noti {
+  background-color: rgba(222, 255, 220, 0.1);
+  color: seagreen;
+  border: 1px solid mediumseagreen;
+}
+
+.input-title {
+  width: 150px;
+}
+
+.input-body {
+  border-style: none;
+  border-radius: 14px;
+  height: 40px;
+  width: 270px;
+  text-indent: 10px;
+  background-color: lightgrey;
+  color: darkslategrey;
+  transition: all 0.2s ease;
+  -webkit-transition: all 0.2s ease;
+  -moz-transition: all 0.2s ease;
+  caret-color: darkslategrey;
+}
+.input-body::placeholder {
+  color: darkgrey;
+  font-size: small;
+}
+.input-body:hover {
+  box-shadow: 0 0 13px rgba(119, 136, 153, 0.4);
+}
+.input-body:focus {
+  outline: none;
+  border: 1px solid lightslategrey;
+  border-radius: 14px;
+}
+.input-body:active {
+  border-style: none;
+}
+
+.pf-avatar-opt {
+  width: 30px;
+  height: 30px;
 }
