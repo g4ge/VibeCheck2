@@ -6,6 +6,7 @@ import { useUserContext } from "libs/Context";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
 import { validateMaxLength } from "utils/FormValidation";
+import { updateUsageUponLogin } from "data/UsageRepository";
 import "App.css";
 
 function SignIn() {
@@ -50,12 +51,13 @@ function SignIn() {
 
     const authUser = await loginUser(form.username, form.password);
 
-    // if user is authenticated, navigates to profile page, otherwise set the error
     if (authUser) {
-      setAuthUser(authUser)
-      history.push(`/profile/${authUser.id}`);
+      // if user is authenticated
+      await updateUsageUponLogin(authUser.id); // update user daily usage in db
+      setAuthUser(authUser); // store user in context 
+      history.push(`/profile/${authUser.id}`); // navigates to profile page
     } else {
-      setError("Incorrect username or password")
+      setError("Incorrect username or password");
     }
   };
 

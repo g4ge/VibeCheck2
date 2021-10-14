@@ -3,16 +3,18 @@ import { Link, withRouter } from "react-router-dom";
 import { useUserContext } from "libs/Context";
 import { removeAuthUser } from "data/AuthUserRepository";
 import Logo from "images/logo-vibecheck.png";
+import { updateUsageUponLogout } from "data/UsageRepository";
 import "App.css";
 
 function Header({ history, isSignedIn, type }) {
-  const { setAuthUser } = useUserContext();
+  const { authUser, setAuthUser } = useUserContext();
 
-  // remove authenticated user and log user out to landing page
-  const logout = () => {
-    setAuthUser(null);
-    removeAuthUser();
-    history.push("/");
+  // remove authenticated user
+  const logout = async () => {
+    await updateUsageUponLogout(authUser.id); // update user daily usage in db
+    setAuthUser(null); // remove auth user in context
+    removeAuthUser(); // remove auth user in localStorage
+    history.push("/"); // log user out to landing page
   }
 
   return (
