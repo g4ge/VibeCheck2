@@ -35,7 +35,7 @@ exports.updateEnd = async (req, res) => {
   let usage = await db.usage.findOne({ where: { date: now, userId: req.query.userId } }); 
     
   // update existing usage (i.e. update time spent on last login session to total time spent in a day)
-  usage.totalTimeSpent += getDurationInSec(usage.lastLogin, now);
+  usage.totalTimeSpent += getDurationInMin(usage.lastLogin, now);
   
   await usage.save();
 
@@ -44,10 +44,10 @@ exports.updateEnd = async (req, res) => {
 
 
 /*
- * Calculate duration of two times in seconds
+ * Calculate duration of two times in mins
  */ 
-const getDurationInSec = (startTime, endTime) => {
+const getDurationInMin = (startTime, endTime) => {
   const duration = endTime - startTime;
-  const durationInSec = Math.round(duration / 1000); // convert ms to s
-  return durationInSec;
+  const durationInMin = Math.round(duration / 60000); // convert ms to min
+  return durationInMin;
 }
