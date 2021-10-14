@@ -20,6 +20,7 @@ module.exports = (sequelize, DataTypes) =>
     },
     lastLogin: {
       type: DataTypes.DATE, 
+      defaultValue: DataTypes.NOW,
       allowNull: false
     }
   }, {
