@@ -19,6 +19,7 @@ db.post = require("./models/post.js")(db.sequelize, DataTypes);
 db.follow = require("./models/follow.js")(db.sequelize, DataTypes);
 db.like = require("./models/like.js")(db.sequelize, DataTypes);
 db.dislike = require("./models/dislike.js")(db.sequelize, DataTypes);
+db.usage = require("./models/usage.js")(db.sequelize, DataTypes);
 
 
 // relate tables

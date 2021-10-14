@@ -33,6 +33,19 @@ graphql.schema = buildSchema(`
     user: User
   }
 
+  type Usage {
+    id: Int,
+    date: String,
+    userId: Int,
+    totalTimeSpent: Int,
+    lastLogin: String
+  }
+
+  type Days {
+    dates: [String],
+    num_users: [Int]
+  }
+
   # inputs --------------------------------------
   input UserInput {
     id: Int,
@@ -49,6 +62,7 @@ graphql.schema = buildSchema(`
     all_users: [User]
     all_posts: [Post]
     all_replies(rootId: Int): [Post]
+    num_users_per_day: Days
   }
 
   # mutations -----------------------------------
@@ -78,6 +92,33 @@ graphql.root = {
       include: { model: db.user },
       where: { rootId: args.rootId }
     });
+  },
+
+  num_users_per_day: async () => {
+    let dates = [];
+    let num_users = [];
+
+    const today = new Date();
+    
+    // iterate over last 7 days
+    for (let i = 6; i >= 0; --i) {
+      let day = new Date(today);
+      day.setDate(day.getDate() - i);
+
+      // get number of logged in users on the day
+      const count = await db.usage.count({
+        where: { 
+          date: day,
+          id: { [db.Op.ne]: 1 }
+        }
+      });
+
+      // add date and user count to array
+      dates.push(day.toLocaleDateString('en-AU', { day: 'numeric', month: 'short' }));
+      num_users.push(count);
+    }
+    
+    return { dates, num_users };
   },
 
   // mutations ----------------------------------
