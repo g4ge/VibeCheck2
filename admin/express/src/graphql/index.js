@@ -54,6 +54,7 @@ graphql.schema = buildSchema(`
   # mutations -----------------------------------
   type Mutation {
     edit_user(input: UserInput): User,
+    remove_post(id: Int): Post
   }
 `);
 
@@ -81,7 +82,7 @@ graphql.root = {
 
   // mutations ----------------------------------
   edit_user: async (args) => {
-    const user = await db.user.findByPk(args.input.id);
+    const user = await db.user.findByPk(args.input.id); // get user by id
   
     // edit user fields
     user.username = args.input.username;
@@ -92,6 +93,26 @@ graphql.root = {
 
     await user.save();
     return user;
+  },
+
+  remove_post: async (args) => {
+    const post = await db.post.findByPk(args.id); // get post by id
+
+    // remove post
+    post.isContentDeleted = true;
+    post.content = " This " + (post.rootId === 0 && post.parentId === 0 ? "post" : "reply") + " has been deleted by the admin."
+    post.imageUrl = "";
+    post.likeCount = 0;
+    post.dislikeCount = 0;
+    await post.save();
+
+    // remove all likes of the post
+    await db.like.destroy({ where: { postId: args.id } });
+      
+    // remove all dislikes of the post
+    await db.dislike.destroy({ where: { postId: args.id } });
+
+    return post;
   },
 };
 
