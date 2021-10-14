@@ -16,6 +16,23 @@ graphql.schema = buildSchema(`
     status: Boolean
   }
 
+  type Post {
+    id: Int,
+    rootId: Int,
+    parentId: Int,
+    content: String,
+    imageURL: String,
+    isContentEdited: Boolean,
+    isContentDeleted: Boolean,
+    isAuthorDeleted: Boolean,
+    linkCount: Int,
+    dislikeCount: Int,
+    postedDate: String,
+    editedDate: String,
+    authorId: Int,
+    user: User
+  }
+
   # inputs --------------------------------------
   input UserInput {
     id: Int,
@@ -30,6 +47,8 @@ graphql.schema = buildSchema(`
   # queries -------------------------------------
   type Query {
     all_users: [User]
+    all_posts: [Post]
+    all_replies(rootId: Int): [Post]
   }
 
   # mutations -----------------------------------
@@ -44,6 +63,20 @@ graphql.root = {
   // queries ------------------------------------
   all_users: async () => {
     return await db.user.findAll({ where: { id: { [db.Op.ne]: 1 } } });
+  },
+  
+  all_posts: async () => {
+    return await db.post.findAll({
+      include: { model: db.user },
+      where: { rootId: 0, parentId: 0 }
+    });
+  },
+
+  all_replies: async (args) => {
+    return await db.post.findAll({
+      include: { model: db.user },
+      where: { rootId: args.rootId }
+    });
   },
 
   // mutations ----------------------------------
