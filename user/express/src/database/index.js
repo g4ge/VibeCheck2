@@ -33,11 +33,12 @@ db.dislike.belongsTo(db.post, { foreignKey: { name: "postId", allowNull: false }
 db.sync = async () => {
   // sync schema
   await db.sequelize.sync();
-  await seedData();
+  await seedUserData();
+  await seedUsageData();
 };
 
 
-async function seedData() {
+async function seedUserData() {
   const count = await db.user.count();
 
   // only seed data if necessary
@@ -81,6 +82,18 @@ async function seedData() {
     name: "Shouko Nishimiya",
     email: "shouko@nishimiya.com",
     avatar: "AvatarCat"
+  });
+}
+
+async function seedUsageData() {
+  const count = await db.usage.count();
+
+  // only seed data if necessary
+  if (count > 0)
+    return;
+
+  await db.usage.create({ 
+    userId: 1,
   });
 }
 
