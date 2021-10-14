@@ -9,7 +9,7 @@ import SignUp from "pages/SignUp";
 import Profile from "pages/Profile";
 import Posts from "pages/Posts";
 import Follow from "pages/Follow";
-import Footer from "components/Footer";;
+import Footer from "components/Footer";
 
 function App() {
   const [authUser, setAuthUser] = useState(getAuthUser())
