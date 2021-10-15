@@ -145,6 +145,53 @@ async function deleteUser(id) {
 }
 
 
+/*
+ * Get all users a user is following
+ */
+async function getUsersFollowing(id) {
+  const query = gql`
+    query ($id: Int) {
+      all_following (id: $id) {
+        user {
+          id,
+          username
+        }
+      }
+    }
+  `;
+
+  const variables = { id };
+  const data = await request(GRAPH_QL_URL, query, variables);
+  const allFollowing = data.all_following;
+  
+  // remove user layer in each following connection
+  let res = [];
+  for (const following of allFollowing)
+    res.push(following.user)
+
+  return res;
+}
+
+
+/*
+ * Get all followers of a user
+ */
+async function getFollowers(id) {
+  const query = gql`
+    query ($id: Int) {
+      all_followers (id: $id) {
+        id,
+        username
+      }
+    }
+  `;
+
+  const variables = { id };
+  const data = await request(GRAPH_QL_URL, query, variables);
+  return data.all_followers;
+}
+
+
 export {
   getOneUser,
   getAllUsers,
@@ -152,5 +199,7 @@ export {
   getNumUsersPerDay,
   getTimeSpentPerDay,
   setUserStatus,
-  deleteUser
+  deleteUser,
+  getUsersFollowing,
+  getFollowers
 }
