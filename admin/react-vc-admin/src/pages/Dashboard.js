@@ -14,14 +14,16 @@ function MainDashboard() {
         <div className="col-sm-6">
           <Link className="dashboard-link" to={"/user"}>
             <div className="dashboard-tab mt-3">
-              <FontAwesomeIcon icon={faUser} size="xs" fixedWidth /> User
+              <div className="dashboard-tab-icon"><FontAwesomeIcon icon={faUser} fixedWidth /></div>
+              <div>User</div>
             </div>
           </Link>
         </div>
         <div className="col-sm-6">
           <Link className="dashboard-link" to={"/post"}>
             <div className="dashboard-tab mt-3">
-              <FontAwesomeIcon icon={faComment} size="xs" fixedWidth /> Post 
+              <div className="dashboard-tab-icon"><FontAwesomeIcon icon={faComment} fixedWidth /></div>
+              <div>Post</div>
             </div>
           </Link>
         </div>

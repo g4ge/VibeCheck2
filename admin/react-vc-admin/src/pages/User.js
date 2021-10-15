@@ -28,21 +28,24 @@ function User() {
         <div className="col-lg-4">
           <Link className="dashboard-link" to={{ pathname: `/user/${user.id}/account` }}>
             <div className="dashboard-tab mt-3">
-              <FontAwesomeIcon icon={faUser} size="xs" fixedWidth /> Account
+              <div className="dashboard-tab-icon"><FontAwesomeIcon icon={faUser} fixedWidth /></div>
+              <div>Account</div>
             </div>
           </Link>
         </div>
         <div className="col-lg-4">
           <Link className="dashboard-link" to={{ pathname: `/user/${user.id}/following` }}>
             <div className="dashboard-tab mt-3">
-              <FontAwesomeIcon icon={faUserPlus} size="xs" fixedWidth /> Following 
+              <div className="dashboard-tab-icon"><FontAwesomeIcon icon={faUserPlus} fixedWidth /></div>
+              <div>Following</div>
             </div>
           </Link>
         </div>
         <div className="col-lg-4">
           <Link className="dashboard-link" to={{ pathname: `/user/${user.id}/time` }}>
             <div className="dashboard-tab mt-3">
-              <FontAwesomeIcon icon={faClock} size="xs" fixedWidth /> Time Spent 
+              <div className="dashboard-tab-icon"><FontAwesomeIcon icon={faClock} fixedWidth /></div>
+              <div>Time Spent</div>
             </div>
           </Link>
         </div>

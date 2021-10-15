@@ -199,7 +199,6 @@
   background-color: rgba(119, 136, 153, 0.5);
   text-align: center;
   height: 300px;
-  line-height: 300px;
   border-radius: 30px;
   font-size: 20px;
   transition: all 0.25s ease;
@@ -210,6 +209,12 @@
   background-color: rgba(119, 136, 153, 0.3);
 }
 
+.dashboard-tab-icon {
+  font-size: 60px;
+  padding-top: 65px;
+  line-height: 125px;
+  /* background-color: aqua; */
+}
 
 /**********************************************************
   5. User Management Dashboard
