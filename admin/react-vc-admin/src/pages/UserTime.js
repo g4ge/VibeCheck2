@@ -46,7 +46,7 @@ function UserTime() {
       setChart({ labels: timeSpentPerDay.dates, data: timeSpentPerDay.times_spent });
     }
     loadData();
-  }, [])
+  }, [id])
 
   return (
     <div>

@@ -8,7 +8,6 @@ import "App.css";
 
 function UserFollowing() {
   const { id } = useParams();
-  const [chart, setChart] = useState({});
   const [user, setUser] = useState({});
   const [followings, setFollowings] = useState([]);
   const [followers, setFollowers] = useState([]);
@@ -68,7 +67,7 @@ function UserFollowing() {
       setFollowers(followers);
     }
     loadData();
-  }, [])
+  }, [id])
 
   return (
     <div>
