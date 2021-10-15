@@ -63,7 +63,6 @@ async function editUser(user) {
         name,
         email,
         avatar,
-        password,
         status
       }
     }
@@ -93,9 +92,45 @@ async function getNumUsersPerDay() {
 }
 
 
+/*
+ * Set user status (blocked/unblocked)
+ */
+async function setUserStatus(id) {
+  const query = gql`
+    mutation ($id: Int) {
+      set_user_status(id: $id) {
+        status
+      }
+    }
+  `;
+
+  const variables = { id };
+  const data = await request(GRAPH_QL_URL, query, variables);
+  return data.set_user_status;
+}
+
+
+/*
+ * Delete a single user
+ */
+async function deleteUser(id) {
+  const query = gql`
+    mutation ($id: Int) {
+      delete_user(id: $id)
+    }
+  `;
+
+  const variables = { id };
+  const data = await request(GRAPH_QL_URL, query, variables);
+  return data.delete_user;
+}
+
+
 export {
   getOneUser,
   getAllUsers,
   editUser,
-  getNumUsersPerDay
+  getNumUsersPerDay,
+  setUserStatus,
+  deleteUser
 }

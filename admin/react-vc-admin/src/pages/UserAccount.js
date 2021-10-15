@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { validatePassword, isEmptyString, validateEmail, validateMaxLength } from "utils/FormValidation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle, faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
@@ -9,12 +9,13 @@ import AvatarCoffee from "images/avatars/coffee.png";
 import AvatarConsole from "images/avatars/console.png";
 import AvatarUfo from "images/avatars/ufo.png";
 import AvatarUser from "images/avatars/user.png";
-import { editUser, getOneUser } from "data/UserRepository";
+import { deleteUser, editUser, getOneUser, setUserStatus } from "data/UserRepository";
 import "App.css";
 
 function UserAccount() {
+  const history = useHistory();
   const { id } = useParams();
-  const [user, setUser] = useState([]);
+  const [user, setUser] = useState({});
   const [error, setError] = useState("");
   const [notification, setNotification] = useState("");
   const [avatar, setAvatar] = useState("");
@@ -99,7 +100,7 @@ function UserAccount() {
   }
 
 
-  const handleSubmit = async (e) => {
+  const handleEdit = async (e) => {
     e.preventDefault();
     // clear notification & error
     setNotification("");
@@ -110,10 +111,10 @@ function UserAccount() {
       return;
 
     // add avatar to user profile form
-    const user = { ...form, avatar: avatar };
+    const inputForm = { ...form, avatar: avatar };
     
     // edit user profile
-    const editedUser = await editUser(user);
+    const editedUser = await editUser(inputForm);
 
     if (editedUser === null) {
       setError("Duplicate username. Please try again.");
@@ -122,6 +123,29 @@ function UserAccount() {
       setForm({ ...form, password: "" }); // clear password field
     } 
   } 
+
+
+  const handleStatus = async (e) => {
+    e.preventDefault();
+
+    // block/unblock user
+    const statusSetUser = await setUserStatus(user.id);
+    
+    // update user status
+    setUser({ ...user, status: statusSetUser.status });
+  }
+
+
+  const handleDelete = async (e) => {
+    e.preventDefault();
+
+    // delete the user
+    const res = await deleteUser(user.id);
+
+    // navigate to user management page
+    if (res)
+      history.push("/user"); 
+  }
 
   return (
     <div>
@@ -133,7 +157,7 @@ function UserAccount() {
         <div className="col-xl-7 mt-3">
           <div className="user-acc-wrap">
             <div className="form-title mb-3">Edit User Profile</div>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleEdit}>
               {/* form error */}
               {error && 
                 <div className="form-group mb-3 form-msg form-error">
@@ -267,10 +291,15 @@ function UserAccount() {
             <div className="form-title mb-3">Block/Unblock User</div>
             <div>Blocking a user will not allow a user to login until the admin unblocks the account.</div>
             <div>Status: <strong><i>{user.status ? "Unblocked" : "Blocked"}</i></strong></div>
-            {/* block/unblock button */}
-            <div className="form-group mt-3">  
-              <button type="submit" className="custom-btn pf-dlt-btn">Block</button>
-            </div>
+            
+            {/* block/unblock button based on current user status */}
+            <form onSubmit={handleStatus}>
+              <div className="form-group mt-3">  
+                <button type="submit" className={`custom-btn ${user.status ? "pf-dlt-btn" : "pf-save-btn"}`}>
+                  {user.status ? "Block" : "Unblock"}
+                </button>
+              </div>
+            </form>
           </div>
 
           {/* delete user */}
@@ -282,9 +311,11 @@ function UserAccount() {
               <li>Erase all user posts and replies</li>
             </ul>
             {/* delete button */}
-            <div className="form-group mt-3">  
-              <button type="submit" className="custom-btn pf-dlt-btn">Delete</button>
-            </div>
+            <form onSubmit={handleDelete}>
+              <div className="form-group mt-3">  
+                <button type="submit" className="custom-btn pf-dlt-btn">Delete</button>
+              </div>
+            </form>
           </div>
         </div>
       </div>
