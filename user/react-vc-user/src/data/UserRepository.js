@@ -22,7 +22,7 @@ async function loginUser(username, password) {
   const user = res.data;
   
   // user is returned
-  if (user) {
+  if (user.id) {
     user.joinedDate = convertTimestampToDate(user.joinedDate) // change date format
     setAuthUser(user);
   }

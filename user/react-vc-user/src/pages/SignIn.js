@@ -51,13 +51,13 @@ function SignIn() {
 
     const authUser = await loginUser(form.username, form.password);
 
-    if (authUser) {
+    if (authUser.error) {
+      setError(authUser.error);
+    } else {
       // if user is authenticated
       await updateUsageUponLogin(authUser.id); // update user daily usage in db
       setAuthUser(authUser); // store user in context 
       history.push(`/profile/${authUser.id}`); // navigates to profile page
-    } else {
-      setError("Incorrect username or password");
     }
   };
 
