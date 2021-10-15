@@ -48,6 +48,13 @@ graphql.schema = buildSchema(`
     times_spent: [Int]
   }
 
+  type Follow {
+    id: Int,
+    followerId: Int,
+    followingId: Int,
+    user: User
+  }
+
   # inputs --------------------------------------
   input UserInput {
     id: Int,
@@ -67,6 +74,8 @@ graphql.schema = buildSchema(`
     all_replies(rootId: Int): [Post]
     num_users_per_day: Days
     time_spent_per_day(userId: Int): Days
+    all_following(id: Int): [Follow]
+    all_followers(id: Int): [User]
   }
 
   # mutations -----------------------------------
@@ -162,6 +171,29 @@ graphql.root = {
     }
     
     return { dates, times_spent };
+  },
+
+  // Get all users followed by the user
+  all_following: async (args) => {
+    return await db.follow.findAll({
+      include: { model: db.user },
+      where: { followerId: args.id }
+    }); 
+  },
+
+  // Get all followers of the user
+  all_followers: async (args) => {
+    // get all connections where a user has followed the input user
+    const follows = await db.follow.findAll({ where: { followingId: args.id } }); 
+    
+    let followers = [];
+
+    for (const follow of follows) {
+      const follower = await db.user.findByPk(follow.followerId);
+      followers.push(follower);
+    }
+
+    return followers;
   },
 
   /*
