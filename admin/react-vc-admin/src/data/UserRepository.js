@@ -3,10 +3,13 @@ import { request, gql } from "graphql-request";
 const GRAPH_QL_URL = "http://localhost:8001/graphql";
 
 
-async function getAllUsers() {
+/*
+ * Get a user data
+ */
+async function getOneUser(id) {
   const query = gql`
-    {
-      all_users {
+    query ($id: Int) {
+      one_user (id: $id) {
         id,
         username,
         name,
@@ -16,23 +19,52 @@ async function getAllUsers() {
       }
     }
   `;
+  
+  const variables = { id };
+  const data = await request(GRAPH_QL_URL, query, variables);
+  return data.one_user;
+}
+
+
+/*
+ * Get all users id & username
+ */
+async function getAllUsers() {
+  const query = gql`
+    {
+      all_users {
+        id,
+        username
+      }
+    }
+  `;
 
   const data = await request(GRAPH_QL_URL, query);
   return data.all_users;
 }
 
 
+/*
+ * Edit user profile information
+ */
 async function editUser(user) {
   const query = gql`
-    mutation ($email: String, $first_name: String, $last_name: String) {
-      update_owner(input: {
+    mutation ($id: Int, $username: String, $name: String, $email: String, $avatar: String, $password: String) {
+      edit_user(input: {
+        id: $id,
+        username: $username,
+        name: $name,
         email: $email,
-        first_name: $first_name,
-        last_name: $last_name
+        avatar: $avatar,
+        password: $password
       }) {
+        id,
+        username,
+        name,
         email,
-        first_name,
-        last_name
+        avatar,
+        password,
+        status
       }
     }
   `;
@@ -43,7 +75,27 @@ async function editUser(user) {
 }
 
 
+/*
+ * Get number of users per day for the last 7 days
+ */
+async function getNumUsersPerDay() {
+  const query = gql`
+    {
+      num_users_per_day {
+        dates,
+        num_users
+      }
+    }
+  `;
+
+  const data = await request(GRAPH_QL_URL, query);
+  return data.num_users_per_day;
+}
+
+
 export {
+  getOneUser,
   getAllUsers,
-  editUser
+  editUser,
+  getNumUsersPerDay
 }
