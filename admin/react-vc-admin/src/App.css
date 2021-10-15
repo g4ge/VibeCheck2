@@ -5,6 +5,7 @@
   2.  Header
   3.  Footer
   4.  Dashboard
+  5.  User Management
   5.  User Account
 **********************************************************/
 
@@ -131,7 +132,7 @@
 }
 
 .pf-avatar-select {
-  border: 2px solid mediumseagreen;
+  border: 3px solid mediumseagreen;
 }
 
 
@@ -211,7 +212,32 @@
 
 
 /**********************************************************
-  5. User Account/Profile
+  5. User Management Dashboard
+**********************************************************/
+
+.num-user-line-wrap {
+  height: 400px;
+}
+
+.user-tab {
+  color: darkslategrey;
+  border-radius: 14px;
+  height: 60px;
+  background-color: rgba(119, 136, 153, 0.5);
+  width: 100%;
+  font-size: 14px;
+  display: flex;
+  padding: 0px 25px;
+}
+
+.user-tab-username {
+  font-size: 15px;
+  line-height: 60px;
+}
+
+
+/**********************************************************
+  5. User Account
 **********************************************************/
 
 /* remove browser default input autofill styling */
