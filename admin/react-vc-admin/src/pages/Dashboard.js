@@ -8,7 +8,7 @@ function MainDashboard() {
   return (
     <div>
       <div className="page-title">| Dashboard</div>
-      <div className="page-subtitle">Manage and view the user and post statistics.</div>
+      <div className="page-subtitle">Manage and view the user and post statistics</div>
       
       <div className="row mt-3">
         <div className="col-sm-6">

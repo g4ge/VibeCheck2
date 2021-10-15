@@ -5,17 +5,17 @@ import Header from "components/Header";
 import Footer from "components/Footer";
 
 // main
-import MainDashboard from "pages/MainDashboard";
+import Dashboard from "pages/Dashboard";
 
 // user
-import UserDashboard from "pages/UserDashboard";
+import UserManagement from "pages/UserManagement";
 import User from "pages/User";
 import UserAccount from "pages/UserAccount";
 import UserFollowing from "pages/UserFollowing";
 import UserTime from "pages/UserTime";
 
 // post
-import PostDashboard from "pages/PostDashboard";
+import PostManagement from "pages/PostManagement";
 
 
 function App() {
@@ -27,11 +27,11 @@ function App() {
         <div className="content-container">
           <Switch>
             <Route exact path="/">
-              <MainDashboard />
+              <Dashboard />
             </Route>
 
             <Route exact path="/user">
-              <UserDashboard />
+              <UserManagement />
             </Route>
 
             <Route exact path="/user/:id">
@@ -51,7 +51,7 @@ function App() {
             </Route>
 
             <Route exact path="/post">
-              <PostDashboard />
+              <PostManagement />
             </Route>
           </Switch>
         </div>
