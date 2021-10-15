@@ -55,7 +55,7 @@ function UserTime() {
           <div className="page-title">| Time Spent</div>
         </div>
         <div className="col-9">
-          <div className="page-title-right">Current selected user: <strong><i>{user.username}</i></strong></div>
+          <div className="page-title-right">Current viewing user: <strong><i>{user.username}</i></strong></div>
         </div>
       </div>
       <div className="page-subtitle">Time spent on VC per day for the last 7 days</div>

@@ -53,12 +53,13 @@ function UserDashboard() {
       <div className="page-subtitle">Number of users using VC per day for the last 7 days</div>
       
       {/* num of users per day for the last 7 days line graph */}
-      <div className="num-user-line-wrap mt-2 mb-5">
+      <div className="num-user-line-wrap mt-2">
         <Line data={data} options={options} />
       </div>
 
-      <div className="page-subtitle">Select and manage user</div>
       {/* list of all users */}
+      <hr className="mt-5" />
+      <div className="page-subtitle">Select and manage user</div>
       {users.length > 0 &&
         <div className="row">
           {users.map(user =>

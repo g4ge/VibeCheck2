@@ -154,7 +154,7 @@ function UserAccount() {
           <div className="page-title">| Account</div>
         </div>
         <div className="col-9">
-          <div className="page-title-right">Current selected user: <strong><i>{form.username}</i></strong></div>
+          <div className="page-title-right">Current viewing user: <strong><i>{form.username}</i></strong></div>
         </div>
       </div>
 
