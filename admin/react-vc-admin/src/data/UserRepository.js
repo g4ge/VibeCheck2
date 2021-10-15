@@ -93,6 +93,25 @@ async function getNumUsersPerDay() {
 
 
 /*
+ * Get user time spent per day for the last 7 days
+ */
+async function getTimeSpentPerDay(userId) {
+  const query = gql`
+    query ($userId: Int) {
+      time_spent_per_day(userId: $userId) {
+        dates,
+        times_spent
+      }
+    }
+  `;
+
+  const variables = { userId };
+  const data = await request(GRAPH_QL_URL, query, variables);
+  return data.time_spent_per_day;
+}
+
+
+/*
  * Set user status (blocked/unblocked)
  */
 async function setUserStatus(id) {
@@ -131,6 +150,7 @@ export {
   getAllUsers,
   editUser,
   getNumUsersPerDay,
+  getTimeSpentPerDay,
   setUserStatus,
   deleteUser
 }
