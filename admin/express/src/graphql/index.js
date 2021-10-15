@@ -1,5 +1,6 @@
 const { buildSchema } = require("graphql");
 const db = require("../database");
+const argon2 = require("argon2");
 
 const graphql = {};
 
@@ -60,6 +61,7 @@ graphql.schema = buildSchema(`
 
   # queries -------------------------------------
   type Query {
+    one_user(id: Int): User
     all_users: [User]
     all_posts: [Post]
     all_replies(rootId: Int): [Post]
@@ -77,11 +79,21 @@ graphql.schema = buildSchema(`
 // resolver function for each API endpoint.
 graphql.root = {
 
-  // queries ------------------------------------
+  /*
+   * queries ------------------------------------
+   */
+  
+  // Get one user based on user id
+  one_user: async (args) => {
+    return await db.user.findByPk(args.id);
+  },
+
+  // Get all users except dummy user (i.e. user with id = 1)
   all_users: async () => {
     return await db.user.findAll({ where: { id: { [db.Op.ne]: 1 } } });
   },
   
+  // Get all root posts (i.e. post with rootId = 0 and parentId = 0)
   all_posts: async () => {
     return await db.post.findAll({
       include: { model: db.user },
@@ -89,6 +101,7 @@ graphql.root = {
     });
   },
 
+  // Get all replies to other posts/replies
   all_replies: async (args) => {
     return await db.post.findAll({
       include: { model: db.user },
@@ -96,6 +109,7 @@ graphql.root = {
     });
   },
 
+  // Get number of user per day for the last 7 days
   num_users_per_day: async () => {
     let dates = [];
     let num_users = [];
@@ -124,6 +138,7 @@ graphql.root = {
     return { dates, num_users };
   },
 
+  // Get time spent of a user per day in mins for the last 7 days
   time_spent_per_day: async (args) => {
     let dates = [];
     let times_spent = [];
@@ -147,21 +162,39 @@ graphql.root = {
     return { dates, times_spent };
   },
 
-  // mutations ----------------------------------
+  /*
+   * mutations ----------------------------------
+   */
+
+  // Edit user profile information
   edit_user: async (args) => {
     const user = await db.user.findByPk(args.input.id); // get user by id
-  
-    // edit user fields
-    user.username = args.input.username;
-    user.password = args.input.password;
-    user.name = args.input.name;
-    user.email = args.input.email;
-    user.avatar = args.input.avatar;
 
-    await user.save();
-    return user;
+    // get user by username
+    const userByUsername = await db.user.findOne({ where: { username: args.input.username } }); 
+    
+    // check for user with duplicate username
+    if (userByUsername === null || userByUsername.id === args.input.id) {
+      // edit user fields
+      user.username = args.input.username;
+      user.name = args.input.name;
+      user.email = args.input.email;
+      user.avatar = args.input.avatar;
+
+      // edit password if new password is supplied
+      if (args.input.password) {
+        const hash = await argon2.hash(args.input.password, { type: argon2.argon2id });
+        user.password = hash;
+      }
+
+      await user.save();
+      return user;
+    }
+
+    return null;
   },
 
+  // Remove user's post or reply
   remove_post: async (args) => {
     const post = await db.post.findByPk(args.id); // get post by id
 
