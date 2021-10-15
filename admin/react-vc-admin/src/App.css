@@ -7,6 +7,7 @@
   4.  Dashboard
   5.  User Management
   5.  User Account
+  5.  User Time Spent
 **********************************************************/
 
 @import url('https://fonts.googleapis.com/css2?family=Prompt:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
@@ -38,6 +39,12 @@
   font-family: "Prompt", sans-serif;
   font-weight: 600;
   font-size: 24px;
+}
+
+.page-title-right {
+  float: right;
+  height: 36px;
+  line-height: 36px;
 }
 
 .page-subtitle {
@@ -327,4 +334,13 @@ input {
 .pf-avatar-opt {
   width: 30px;
   height: 30px;
+}
+
+
+/**********************************************************
+  5. User Time Spent
+**********************************************************/
+
+.time-spent-bar-wrap {
+  height: 450px;
 }

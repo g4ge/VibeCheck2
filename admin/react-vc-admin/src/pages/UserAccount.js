@@ -149,9 +149,15 @@ function UserAccount() {
 
   return (
     <div>
-      <div className="page-title">| Account</div>
-    
-      <div className="mt-4">Current selected user: <strong><i>{form.username}</i></strong></div>
+      <div className="row mb-4">
+        <div className="col-3">
+          <div className="page-title">| Account</div>
+        </div>
+        <div className="col-9">
+          <div className="page-title-right">Current selected user: <strong><i>{form.username}</i></strong></div>
+        </div>
+      </div>
+
       <div className="row">
         {/* edit user profile */}
         <div className="col-xl-7 mt-3">

@@ -20,10 +20,16 @@ function User() {
 
   return (
     <div>
-      <div className="page-title">| User</div>
+      <div className="row">
+        <div className="col-3">
+          <div className="page-title">| User</div>
+        </div>
+        <div className="col-9">
+          <div className="page-title-right">Current selected user: <strong><i>{user.username}</i></strong></div>
+        </div>
+      </div>
       <div className="page-subtitle">Manage user account and view user statistics</div>
       
-      <div className="mt-4">Current selected user: <strong><i>{user.username}</i></strong></div>
       <div className="row">
         <div className="col-lg-4">
           <Link className="dashboard-link" to={{ pathname: `/user/${user.id}/account` }}>
