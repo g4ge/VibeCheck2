@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { validatePassword, isEmptyString, validateEmail, validateMaxLength } from "utils/FormValidation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle, faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
@@ -8,27 +9,39 @@ import AvatarCoffee from "images/avatars/coffee.png";
 import AvatarConsole from "images/avatars/console.png";
 import AvatarUfo from "images/avatars/ufo.png";
 import AvatarUser from "images/avatars/user.png";
+import { editUser, getOneUser } from "data/UserRepository";
 import "App.css";
 
-
 function UserAccount() {
+  const { id } = useParams();
+  const [user, setUser] = useState([]);
   const [error, setError] = useState("");
   const [notification, setNotification] = useState("");
-  const [avatar, setAvatar] = useState("AvatarUser");
+  const [avatar, setAvatar] = useState("");
   const [form, setForm] = useState({
-    username: "Violetto",
-    name: "Violet Evergarden",
-    email: "violet@evergarden.com",
+    id: "",
+    username: "",
+    name: "",
+    email: "",
     password: ""
   });
-  // const [avatar, setAvatar] = useState(profile.avatar);
-  // const [form, setForm] = useState({
-  //   username: profile.username,
-  //   name: profile.name,
-  //   email: profile.email,
-  //   newPassword: "",
-  //   curPassword: ""
-  // });
+  
+  useEffect(() => {
+    const loadData = async () => {  
+      // get the user data
+      const user = await getOneUser(parseInt(id));
+      setUser(user); 
+      setAvatar(user.avatar);
+      setForm({
+        id: user.id,
+        username: user.username,
+        name: user.name,
+        email: user.email,
+        password: ""
+      });
+    }
+    loadData();
+  }, [id])
 
 
   const handleChange = (e) => {
@@ -87,37 +100,34 @@ function UserAccount() {
 
 
   const handleSubmit = async (e) => {
-    // e.preventDefault();
-    // // clear notification & error
-    // setNotification("");
-    // setError("");
+    e.preventDefault();
+    // clear notification & error
+    setNotification("");
+    setError("");
 
-    // // stop editing user profile if form input is invalid
-    // if (!handleValidation())
-    //   return;
+    // stop editing user profile if form input is invalid
+    if (!handleValidation())
+      return;
+
+    // add avatar to user profile form
+    const user = { ...form, avatar: avatar };
     
-    // // edit user profile
-    // const user = await editUser(profile.id, form, avatar);
+    // edit user profile
+    const editedUser = await editUser(user);
 
-    // if (user.error) {
-    //   setError(user.error);
-    // } else {
-    //   refreshProfile(); // update profile page
-    //   setAuthUser(user); // update user stored in context
-    //   setNotification("Profile has been updated.");
-    //   // clear password field
-    //   setForm({
-    //     ...form,
-    //     newPassword: "",
-    //     curPassword: ""
-    //   });
-    // } 
+    if (editedUser === null) {
+      setError("Duplicate username. Please try again.");
+    } else {
+      setNotification("Profile has been updated.");
+      setForm({ ...form, password: "" }); // clear password field
+    } 
   } 
 
   return (
     <div>
       <div className="page-title">| Account</div>
     
+      <div className="mt-4">Current selected user: <strong><i>{form.username}</i></strong></div>
       <div className="row">
         {/* edit user profile */}
         <div className="col-xl-7 mt-3">
@@ -234,9 +244,9 @@ function UserAccount() {
                 <input
                   type="password"
                   className="input-body"
-                  placeholder="enter password"
+                  placeholder="enter new password"
                   spellCheck={false}
-                  required={true}
+                  required={false}
                   name="password"
                   value={form.password}
                   onChange={handleChange}
@@ -256,7 +266,7 @@ function UserAccount() {
           <div className="user-acc-wrap">
             <div className="form-title mb-3">Block/Unblock User</div>
             <div>Blocking a user will not allow a user to login until the admin unblocks the account.</div>
-            <div>Status: <i>Unblocked</i></div>
+            <div>Status: <strong><i>{user.status ? "Unblocked" : "Blocked"}</i></strong></div>
             {/* block/unblock button */}
             <div className="form-group mt-3">  
               <button type="submit" className="custom-btn pf-dlt-btn">Block</button>
