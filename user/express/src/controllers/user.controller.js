@@ -33,17 +33,22 @@ exports.create = async (req, res) => {
  * Authenticate a single user with username & password
  * --------------------
  * success: user
- * fail   : null
+ * fail   : error message
  */ 
 exports.login = async (req, res) => {
   // get user by username
   const user = await db.user.findOne({ where: { username: req.query.username } }); 
   
   // check if user doesn't exist or password is incorrect
-  if (user === null || await argon2.verify(user.password, req.query.password) === false)
-    res.json(null); // login failed
-  else
-    res.json(user); // login successful
+  if (user === null || await argon2.verify(user.password, req.query.password) === false) {
+    res.json({ error: "Incorrect username or password" }); // login failed
+  } else {
+    // check if user has been blocked/unblocked by admin
+    if (user.status)
+      res.json(user); // login successful
+    else
+      res.json({ error: "Account has been blocked by admin" }); // login failed
+  }
 };
 
 
