@@ -72,7 +72,9 @@ graphql.schema = buildSchema(`
   # mutations -----------------------------------
   type Mutation {
     edit_user(input: UserInput): User,
+    set_user_status(id: Int): User
     remove_post(id: Int): Post
+    delete_user(id: Int): Boolean
   }
 `);
 
@@ -194,6 +196,16 @@ graphql.root = {
     return null;
   },
 
+  // Set user status (blocked/unblocked)
+  set_user_status: async (args) => {
+    const user = await db.user.findByPk(args.id); // get user by id
+
+    user.status = !user.status;
+    await user.save();
+
+    return user;
+  },
+
   // Remove user's post or reply
   remove_post: async (args) => {
     const post = await db.post.findByPk(args.id); // get post by id
@@ -213,6 +225,44 @@ graphql.root = {
     await db.dislike.destroy({ where: { postId: args.id } });
 
     return post;
+  },
+
+
+  // Delete a single user from database
+  delete_user: async (args) => {
+    const user = await db.user.findByPk(args.id); // get user by id
+
+    // remove all posts of the deleted user
+    const posts = await db.post.findAll({ where: { authorId: args.id } });  // get all posts by authorId
+    for (let post of posts) {
+      post.authorId = 1; // point the author to the dummy user with id 1
+      post.isAuthorDeleted = true;
+      post.isContentDeleted = true;
+      post.content = " This post has been removed as the author is deleted by the admin.";
+      post.imageUrl = "";
+      post.likeCount = 0;
+      post.dislikeCount = 0;
+    
+      await post.save();
+    }
+
+    // remove all follower/following connection of the deleted user
+    await db.follow.destroy({
+      where: {
+        [db.Op.or]: [{ followerId: args.id }, { followingId: args.id } ]
+      }
+    });
+    
+    // remove all liked posts of the deleted user
+    await db.like.destroy({ where: { userId: args.id } });
+    
+    // remove all disliked posts of the deleted user
+    await db.dislike.destroy({ where: { userId: args.id } });
+      
+    // purge user data 
+    await db.user.destroy({ where: { id: args.id } });
+    
+    return true;
   },
 };
 
