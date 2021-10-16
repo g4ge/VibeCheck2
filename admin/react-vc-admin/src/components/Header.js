@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Logo from "images/logo-vibecheck.png";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faComment, faUser } from "@fortawesome/free-solid-svg-icons";
 import "App.css";
 
 function Header() {
@@ -16,11 +18,15 @@ function Header() {
             
           <ul className="navbar-nav ml-auto">
             <li className="nav-item">
-              <Link className="nav-link admin-nav-link" style={{marginRight: "40px"}} to={"/user"}>User</Link>
+              <Link className="nav-link admin-nav-link" style={{marginRight: "40px"}} to={"/user"}>
+                <FontAwesomeIcon icon={faUser} size="xs" fixedWidth /> User
+              </Link>
             </li>
             
             <li className="nav-item">
-              <Link className="nav-link admin-nav-link" to={"/post"}>Post</Link>
+              <Link className="nav-link admin-nav-link" to={"/post"}>
+              <FontAwesomeIcon icon={faComment} size="xs" fixedWidth /> Post
+              </Link>
             </li>
           </ul>
         </div>
