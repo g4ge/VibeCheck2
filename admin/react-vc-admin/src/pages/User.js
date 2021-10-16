@@ -21,7 +21,7 @@ function User() {
   return (
     <div>
       <div className="row">
-        <div className="col-3">
+        <div className="col-4">
           <div className="page-title">
             <Link className="dashboard-link" to={"/user"}>
               <div className="icon-btn back-btn">
@@ -31,7 +31,7 @@ function User() {
             {" "}| User
           </div>
         </div>
-        <div className="col-9">
+        <div className="col-8">
           <div className="page-title-right">Current viewing user: <strong><i>{user.username}</i></strong></div>
         </div>
       </div>

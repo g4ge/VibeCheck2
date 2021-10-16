@@ -150,7 +150,7 @@ function UserAccount() {
   return (
     <div>
       <div className="row mb-4">
-        <div className="col-3">
+        <div className="col-6">
           <div className="page-title">
             <Link className="dashboard-link" to={`/user/${id}`}>
               <div className="icon-btn back-btn">
@@ -160,7 +160,7 @@ function UserAccount() {
             {" "}| Account
           </div>
         </div>
-        <div className="col-9">
+        <div className="col-6">
           <div className="page-title-right">Current viewing user: <strong><i>{form.username}</i></strong></div>
         </div>
       </div>
