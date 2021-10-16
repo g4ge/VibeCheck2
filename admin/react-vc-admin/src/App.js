@@ -16,6 +16,7 @@ import UserTime from "pages/UserTime";
 
 // post
 import PostManagement from "pages/PostManagement";
+import Posts from "pages/Posts";
 
 
 function App() {
@@ -52,6 +53,10 @@ function App() {
 
             <Route exact path="/post">
               <PostManagement />
+            </Route>
+
+            <Route exact path="/post/all">
+              <Posts />
             </Route>
           </Switch>
         </div>

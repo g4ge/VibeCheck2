@@ -210,12 +210,28 @@
 .pf-dlt-btn {
   background-color: rgb(229, 98, 75);
   width: 100%;
+  height: 100%;
 }
 .pf-dlt-btn:focus {
   border: 1px solid rgb(220, 71, 45);
 }
 .pf-dlt-btn:active {
   background-color: rgb(220, 71, 45);
+}
+
+.view-posts-btn  {
+  color: darkslategrey;
+  background-color: rgba(119, 136, 153, 0.5);
+  width: 180px;
+  text-align: center;
+  height: 46px;
+  line-height: 46px;
+}
+.view-posts-btn:focus {
+  border: 1px solid rgba(119, 136, 153, 0.3);
+}
+.view-posts-btn:active {
+  background-color: rgba(119, 136, 153, 0.3);
 }
 
 
@@ -249,7 +265,6 @@
   font-size: 60px;
   padding-top: 65px;
   line-height: 125px;
-  /* background-color: aqua; */
 }
 
 /**********************************************************
