@@ -34,6 +34,26 @@ graphql.schema = buildSchema(`
     user: User
   }
 
+  type MostPopularPost {
+    id: Int,
+    rootId: Int,
+    parentId: Int,
+    content: String,
+    imageURL: String,
+    isContentEdited: Boolean,
+    isContentDeleted: Boolean,
+    isAuthorDeleted: Boolean,
+    likeCount: Int,
+    dislikeCount: Int,
+    postedDate: String,
+    editedDate: String,
+    authorId: Int,
+    user: User
+    totalLikeCount: Int,
+    totalDislikeCount: Int,
+    totalReplyCount: Int
+  }
+
   type Usage {
     id: Int,
     date: String,
@@ -76,6 +96,7 @@ graphql.schema = buildSchema(`
     time_spent_per_day(userId: Int): Days
     all_following(id: Int): [Follow]
     all_followers(id: Int): [User]
+    most_popular_post: MostPopularPost
   }
 
   # mutations -----------------------------------
@@ -194,6 +215,61 @@ graphql.root = {
     }
 
     return followers;
+  },
+
+
+  // Get the most popular post of all the posts
+  most_popular_post: async () => {
+    let mostPopularPost = {};
+    let mostPopularPostLikeCount = -1;
+    let mostPopularPostDislikeCount = Number.MAX_SAFE_INTEGER;
+    let mostPopularPostReplyCount = -1;
+
+    // get all the root posts
+    const posts = await db.post.findAll({
+      include: { model: db.user },
+      where: { rootId: 0, parentId: 0 }
+    });
+
+    // iterate over all the root posts
+    for (const post of posts) {
+      // get all the replies
+      const replies = await db.post.findAll({
+        include: { model: db.user },
+        where: { rootId: post.id }
+      });
+      
+      // define initial counts
+      let totalLikeCount = post.likeCount;
+      let totalDislikeCount = post.dislikeCount;
+      let totalReplyCount = replies ? replies.length : 0;
+
+      // iterate over all the replies to this root post and update the like & dislike counts
+      for (const reply of replies) {
+        totalLikeCount += reply.likeCount;
+        totalDislikeCount += reply.dislikeCount;
+      }
+
+      // define the popularity of the current and most popular post
+      const popularity = totalLikeCount + totalReplyCount;
+      const maxPopularity = mostPopularPostLikeCount + mostPopularPostReplyCount;
+
+      // update most popular post
+      // (if two current most popular posts have the same popularity, pick the post with the lower total dislike count,
+      // ignore the newer post if they have the same total dislike count)
+      if (popularity > maxPopularity || (popularity == maxPopularity && totalDislikeCount < mostPopularPostDislikeCount)) {
+        mostPopularPost = post;
+        mostPopularPostLikeCount = totalLikeCount;
+        mostPopularPostDislikeCount = totalDislikeCount;
+        mostPopularPostReplyCount = totalReplyCount;
+      }
+    }
+    
+    // add popularity attributes
+    mostPopularPost["totalLikeCount"] = mostPopularPostLikeCount;
+    mostPopularPost["totalDislikeCount"] = mostPopularPostDislikeCount;
+    mostPopularPost["totalReplyCount"] = mostPopularPostReplyCount;    
+    return mostPopularPost;
   },
 
   /*
