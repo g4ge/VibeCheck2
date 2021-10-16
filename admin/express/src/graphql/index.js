@@ -26,7 +26,7 @@ graphql.schema = buildSchema(`
     isContentEdited: Boolean,
     isContentDeleted: Boolean,
     isAuthorDeleted: Boolean,
-    linkCount: Int,
+    likeCount: Int,
     dislikeCount: Int,
     postedDate: String,
     editedDate: String,
@@ -82,7 +82,7 @@ graphql.schema = buildSchema(`
   type Mutation {
     edit_user(input: UserInput): User,
     set_user_status(id: Int): User
-    remove_post(id: Int): Post
+    remove_post(id: Int): Boolean
     delete_user(id: Int): Boolean
   }
 `);
@@ -256,14 +256,12 @@ graphql.root = {
     // remove all dislikes of the post
     await db.dislike.destroy({ where: { postId: args.id } });
 
-    return post;
+    return true;
   },
 
 
   // Delete a single user from database
   delete_user: async (args) => {
-    const user = await db.user.findByPk(args.id); // get user by id
-
     // remove all posts of the deleted user
     const posts = await db.post.findAll({ where: { authorId: args.id } });  // get all posts by authorId
     for (let post of posts) {
