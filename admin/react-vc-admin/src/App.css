@@ -251,7 +251,6 @@
 .pf-dlt-btn {
   background-color: rgb(229, 98, 75);
   width: 100%;
-  height: 100%;
 }
 .pf-dlt-btn:focus {
   border: 1px solid rgb(220, 71, 45);
