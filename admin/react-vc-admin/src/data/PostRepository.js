@@ -99,8 +99,49 @@ async function removePost(id) {
 }
 
 
+/*
+ * Get the most popular post of all the posts
+ */
+async function getMostPopularPost() {
+  const query = gql`
+    {
+      most_popular_post {
+        id,
+        rootId,
+        parentId,
+        content,
+        imageURL,
+        isContentEdited,
+        isContentDeleted,
+        isAuthorDeleted,
+        likeCount,
+        dislikeCount,
+        postedDate,
+        editedDate,
+        authorId,
+        user {
+          id,
+          username,
+          avatar
+        },
+        totalLikeCount,
+        totalDislikeCount,
+        totalReplyCount
+      }
+    }
+  `;
+
+  const data = await request(GRAPH_QL_URL, query);
+  const post = data.most_popular_post;
+  post.postedDate = convertTimestampToDateTime(post.postedDate); // change date time format
+  
+  return post;
+}
+
+
 export {
   getAllPosts,
   getAllReplies,
-  removePost
+  removePost,
+  getMostPopularPost
 }

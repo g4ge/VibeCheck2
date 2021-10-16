@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGhost, faUserSlash } from "@fortawesome/free-solid-svg-icons";
 import "App.css";
 
-function SinglePost({ post, refreshPosts }) {
+function SinglePost({ post, refreshPosts, enableDelete = true }) {
   const [allReplies, setAllReplies] = useState([]);
   const [childReplies, setChildReplies] = useState([]);
   const [deletePost, setDeletePost] = useState(false);
@@ -31,7 +31,7 @@ function SinglePost({ post, refreshPosts }) {
     loadData();
   }, [post.id])
 
-
+  
   useEffect(() => {
     refreshReplies();
   }, [refreshReplies]);
@@ -47,7 +47,7 @@ function SinglePost({ post, refreshPosts }) {
 
   return (
     <div>
-      <PostInfo post={post} sendButtonShown={sendButtonShown} />
+      <PostInfo post={post} sendButtonShown={sendButtonShown} enableDelete={enableDelete} />
 
       {/* post's text */}
       <div className={`po-text ${post.isContentDeleted && "po-dlted-text"}`}>
@@ -80,7 +80,8 @@ function SinglePost({ post, refreshPosts }) {
                 allReplies={allReplies} 
                 rootId={post.id} 
                 reply={reply} 
-                refreshReplies={refreshReplies} 
+                refreshReplies={refreshReplies}
+                enableDelete={enableDelete} 
               />
             </div>
           )}

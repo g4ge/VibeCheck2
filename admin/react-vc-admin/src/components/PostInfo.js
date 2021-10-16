@@ -1,4 +1,4 @@
-import React, { useState, Fragment, useEffect } from "react";
+import React, { useState, Fragment } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrashAlt, faThumbsUp, faThumbsDown } from "@fortawesome/free-solid-svg-icons";
@@ -11,7 +11,7 @@ import AvatarUfo from "images/avatars/ufo.png";
 import AvatarUser from "images/avatars/user.png";
 import "App.css";
 
-function PostInfo({ post, sendButtonShown }) {
+function PostInfo({ post, sendButtonShown, enableDelete = true }) {
   const avatars = { AvatarBook, AvatarCat, AvatarCoffee, AvatarConsole, AvatarQuestion, AvatarUfo, AvatarUser };
   const [deletePost, setDeletePost] = useState(false);
 
@@ -49,16 +49,18 @@ function PostInfo({ post, sendButtonShown }) {
         {!post.isAuthorDeleted && !post.isContentDeleted &&
           <Fragment>
             {/* delete button */}
-            <button 
-              type="button" 
-              className="icon-btn po-icon-btn" 
-              style={{float: "right"}}
-              onClick={() => {
-                setDeletePost(!deletePost);
-                sendButtonShown(!deletePost);
-              }}>
-              <FontAwesomeIcon icon={faTrashAlt} className="po-icon" fixedWidth /> 
-            </button> 
+            {enableDelete &&
+              <button 
+                type="button" 
+                className="icon-btn po-icon-btn" 
+                style={{float: "right"}}
+                onClick={() => {
+                  setDeletePost(!deletePost);
+                  sendButtonShown(!deletePost);
+                }}>
+                <FontAwesomeIcon icon={faTrashAlt} className="po-icon" fixedWidth /> 
+              </button> 
+            }
             
             {/* dislike button */}
             <div className="icon-btn po-icon-btn po-icon-btn-long po-dislike-btn">

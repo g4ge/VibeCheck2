@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGhost, faUserSlash } from "@fortawesome/free-solid-svg-icons";
 import "App.css";
 
-function SingleReply({ allReplies, rootId, reply, refreshReplies}) {
+function SingleReply({ allReplies, rootId, reply, refreshReplies, enableDelete = true }) {
   const [deletePost, setDeletePost] = useState(false);
 
   // extract child replies of this reply
@@ -27,7 +27,7 @@ function SingleReply({ allReplies, rootId, reply, refreshReplies}) {
     
   return (
     <div>
-      <PostInfo post={reply} sendButtonShown={sendButtonShown} />
+      <PostInfo post={reply} sendButtonShown={sendButtonShown} enableDelete={enableDelete} />
 
       {/* reply's text */}
       <div className={`reply-text ${reply.isContentDeleted && "reply-dlted-text"}`}>

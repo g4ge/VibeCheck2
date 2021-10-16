@@ -58,12 +58,10 @@ function UserFollowing() {
 
       // get all users that current user is following
       const followings = await getUsersFollowing(parseInt(id));
-      console.log("following", followings);
       setFollowings(followings);
 
       // get all followers of the current user
       const followers = await getFollowers(parseInt(id));
-      console.log("followers", followers);
       setFollowers(followers);
     }
     loadData();
