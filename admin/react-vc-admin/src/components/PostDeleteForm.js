@@ -7,7 +7,7 @@ import "App.css";
 function PostDeleteForm({ isPost, id, refreshPosts, refreshReplies, sendButtonShown }) {
   const handleClick = async () => {
     // remove post/reply
-    // await removePost(id);
+    await removePost(id);
 
     if (isPost)
       refreshPosts();

@@ -83,7 +83,24 @@ async function getAllReplies(rootId) {
 }
 
 
+/*
+ * Remove user's post or reply
+ */
+async function removePost(id) {
+  const query = gql`
+    mutation ($id: Int) {
+      remove_post(id: $id)
+    }
+  `;
+
+  const variables = { id };
+  const data = await request(GRAPH_QL_URL, query, variables);
+  return data.remove_post;
+}
+
+
 export {
   getAllPosts,
-  getAllReplies
+  getAllReplies,
+  removePost
 }
