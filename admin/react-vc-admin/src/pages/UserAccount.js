@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useHistory, Link } from "react-router-dom";
 import { validatePassword, isEmptyString, validateEmail, validateMaxLength } from "utils/FormValidation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheckCircle, faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
+import { faCheckCircle, faExclamationCircle, faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import AvatarBook from "images/avatars/book.png";
 import AvatarCat from "images/avatars/cat.png";
 import AvatarCoffee from "images/avatars/coffee.png";
@@ -151,7 +151,14 @@ function UserAccount() {
     <div>
       <div className="row mb-4">
         <div className="col-3">
-          <div className="page-title">| Account</div>
+          <div className="page-title">
+            <Link className="dashboard-link" to={`/user/${id}`}>
+              <div className="icon-btn back-btn">
+                <FontAwesomeIcon icon={faChevronLeft} size="xs" fixedWidth />
+              </div>
+            </Link>
+            {" "}| Account
+          </div>
         </div>
         <div className="col-9">
           <div className="page-title-right">Current viewing user: <strong><i>{form.username}</i></strong></div>

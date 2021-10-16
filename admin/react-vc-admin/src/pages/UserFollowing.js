@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { getFollowers, getOneUser, getUsersFollowing } from "data/UserRepository";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
+import { faExclamationCircle, faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import { Doughnut, Bar } from 'react-chartjs-2';
 import "App.css";
 
@@ -73,7 +73,14 @@ function UserFollowing() {
     <div>
       <div className="row">
         <div className="col-3">
-          <div className="page-title">| Following</div>
+          <div className="page-title">
+            <Link className="dashboard-link" to={`/user/${id}`}>
+              <div className="icon-btn back-btn">
+                <FontAwesomeIcon icon={faChevronLeft} size="xs" fixedWidth />
+              </div>
+            </Link>
+            {" "}| Following
+          </div>
         </div>
         <div className="col-9">
           <div className="page-title-right">Current viewing user: <strong><i>{user.username}</i></strong></div>
