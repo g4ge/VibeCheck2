@@ -11,6 +11,7 @@ function MainDashboard() {
       <div className="page-subtitle">Manage and view the user and post statistics</div>
       
       <div className="row mt-3">
+        {/* user management link */}
         <div className="col-sm-6">
           <Link className="dashboard-link" to={"/user"}>
             <div className="dashboard-tab mt-3">
@@ -19,6 +20,7 @@ function MainDashboard() {
             </div>
           </Link>
         </div>
+        {/* post management link */}
         <div className="col-sm-6">
           <Link className="dashboard-link" to={"/post"}>
             <div className="dashboard-tab mt-3">

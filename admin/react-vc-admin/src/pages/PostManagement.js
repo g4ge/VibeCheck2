@@ -53,6 +53,7 @@ function PostDashboard() {
     // get the most popular post of all the posts
     const loadData = async () => {
       const post = await getMostPopularPost();
+
       setMostPopularPost(post);
       setChart({
         totalLikeCount: post.totalLikeCount, 
@@ -66,6 +67,7 @@ function PostDashboard() {
   return (
     <div>
       <div className="row">
+        {/* post management page title */}
         <div className="col-6">
           <div className="page-title">
             <Link className="dashboard-link" to={"/"}>
@@ -76,11 +78,12 @@ function PostDashboard() {
             {" "}| Post Management
           </div>  
         </div>
+        {/* view all posts link */}
         <div className="col-6">
           <div className="page-title-right">
             <Link className="dashboard-link" to={"/post/all"}>
               <div className="custom-btn view-posts-btn">
-              <FontAwesomeIcon icon={faComments} size="xs" fixedWidth /> View All Posts
+                <FontAwesomeIcon icon={faComments} size="xs" fixedWidth /> View All Posts
               </div>
             </Link>
           </div>
@@ -95,7 +98,7 @@ function PostDashboard() {
         </div>
       }
 
-      {/* number of likes, dislikes and replies of the most popular post */}
+      {/* donut and bar graph for number of likes, dislikes and replies of the most popular post */}
       <div className="page-subtitle mt-5">Most popular post statistics</div>
       <div className="row">
         <div className="col-md-6">

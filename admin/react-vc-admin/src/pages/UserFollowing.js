@@ -86,7 +86,7 @@ function UserFollowing() {
       </div>
       <div className="page-subtitle">Users following and followers statistics</div>
 
-      {/* number of users following & followers */}
+      {/* donut and bar graph for number of users following & followers */}
       <div className="row">
         <div className="col-md-6">
           <div className="flw-donut-bar-wrap mt-3"> 

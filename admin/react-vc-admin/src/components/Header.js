@@ -10,6 +10,7 @@ function Header() {
     <div>
       <nav className="navbar navbar-expand navbar-light fixed-top admin-header">
         <div className="container">
+          {/* home dashboard link */}
           <Link className={`navbar-brand admin-navbar-brand`} to={"/"}>
             <img className="header-logo" src={Logo} alt="Logo"></img>  
             VibeCheck{" "}
@@ -17,12 +18,14 @@ function Header() {
           </Link>
             
           <ul className="navbar-nav ml-auto">
+            {/* user management link */}
             <li className="nav-item">
               <Link className="nav-link admin-nav-link" style={{marginRight: "40px"}} to={"/user"}>
                 <FontAwesomeIcon icon={faUser} size="xs" fixedWidth /> User
               </Link>
             </li>
             
+            {/* post management link */}
             <li className="nav-item">
               <Link className="nav-link admin-nav-link" to={"/post"}>
               <FontAwesomeIcon icon={faComment} size="xs" fixedWidth /> Post

@@ -38,6 +38,7 @@ function User() {
       <div className="page-subtitle">Manage user account and view user statistics</div>
       
       <div className="row">
+        {/* user account link */}
         <div className="col-lg-4">
           <Link className="dashboard-link" to={`/user/${user.id}/account`}>
             <div className="dashboard-tab mt-3">
@@ -46,6 +47,7 @@ function User() {
             </div>
           </Link>
         </div>
+        {/* user following link */}
         <div className="col-lg-4">
           <Link className="dashboard-link" to={`/user/${user.id}/following`}>
             <div className="dashboard-tab mt-3">
@@ -54,6 +56,7 @@ function User() {
             </div>
           </Link>
         </div>
+        {/* user time spent link */}
         <div className="col-lg-4">
           <Link className="dashboard-link" to={`/user/${user.id}/time`}>
             <div className="dashboard-tab mt-3">

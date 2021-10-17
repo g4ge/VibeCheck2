@@ -69,7 +69,7 @@ function UserTime() {
       </div>
       <div className="page-subtitle">Time spent on VC per day for the last 7 days</div>
       
-      {/* time spent per day for the last 7 days bar graph */}
+      {/* bar graph time spent per day for the last 7 days */}
       <div className="time-spent-bar-wrap mt-4">
         <Bar data={data} options={options} />
       </div>

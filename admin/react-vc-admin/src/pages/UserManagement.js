@@ -61,7 +61,7 @@ function UserDashboard() {
       </div>
       <div className="page-subtitle">Number of users using VC per day for the last 7 days</div>
       
-      {/* num of users per day for the last 7 days line graph */}
+      {/* line graph for num of users per day for the last 7 days */}
       <div className="num-user-line-wrap mt-2">
         <Line data={data} options={options} />
       </div>
