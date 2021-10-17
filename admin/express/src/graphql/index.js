@@ -321,7 +321,7 @@ graphql.root = {
     // remove post
     post.isContentDeleted = true;
     post.content = " This " + (post.rootId === 0 && post.parentId === 0 ? "post" : "reply") + " has been deleted by the admin."
-    post.imageUrl = "";
+    post.imageURL = "";
     post.likeCount = 0;
     post.dislikeCount = 0;
     await post.save();
@@ -345,7 +345,7 @@ graphql.root = {
       post.isAuthorDeleted = true;
       post.isContentDeleted = true;
       post.content = " This post has been removed as the author is deleted by the admin.";
-      post.imageUrl = "";
+      post.imageURL = "";
       post.likeCount = 0;
       post.dislikeCount = 0;
     
