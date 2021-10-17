@@ -93,7 +93,7 @@ exports.remove = async (req, res) => {
   // remove post
   post.isContentDeleted = true;
   post.content = " This " + (post.rootId === 0 && post.parentId === 0 ? "post" : "reply") + " has been deleted by the author."
-  post.imageUrl = "";
+  post.imageURL = "";
   post.likeCount = 0;
   post.dislikeCount = 0;
   await post.save();

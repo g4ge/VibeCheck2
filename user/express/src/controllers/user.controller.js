@@ -110,7 +110,7 @@ exports.delete = async (req, res) => {
       post.isAuthorDeleted = true;
       post.isContentDeleted = true;
       post.content = " This post has been removed as the author does not exist anymore.";
-      post.imageUrl = "";
+      post.imageURL = "";
       post.likeCount = 0;
       post.dislikeCount = 0;
     
