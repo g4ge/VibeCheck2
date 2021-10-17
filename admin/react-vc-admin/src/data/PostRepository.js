@@ -133,7 +133,8 @@ async function getMostPopularPost() {
 
   const data = await request(GRAPH_QL_URL, query);
   const post = data.most_popular_post;
-  post.postedDate = convertTimestampToDateTime(post.postedDate); // change date time format
+  if (post)
+    post.postedDate = convertTimestampToDateTime(post.postedDate); // change date time format
   
   return post;
 }

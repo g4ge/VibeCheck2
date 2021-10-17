@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from "react";
+import React, { useState, Fragment, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrashAlt, faThumbsUp, faThumbsDown } from "@fortawesome/free-solid-svg-icons";
@@ -11,9 +11,13 @@ import AvatarUfo from "images/avatars/ufo.png";
 import AvatarUser from "images/avatars/user.png";
 import "App.css";
 
-function PostInfo({ post, sendButtonShown, enableDelete = true }) {
+function PostInfo({ post, sendButtonShown, enableDelete = true, hasProfanity = false }) {
   const avatars = { AvatarBook, AvatarCat, AvatarCoffee, AvatarConsole, AvatarQuestion, AvatarUfo, AvatarUser };
   const [deletePost, setDeletePost] = useState(false);
+
+  useEffect(() => {
+    setDeletePost(hasProfanity);
+  }, [hasProfanity])
 
   return (
     <div className="po-info-wrap mb-3">

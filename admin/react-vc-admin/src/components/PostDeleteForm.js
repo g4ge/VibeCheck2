@@ -1,10 +1,10 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt, faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
 import { removePost } from "data/PostRepository";
 import "App.css";
 
-function PostDeleteForm({ isPost, id, refreshPosts, refreshReplies, sendButtonShown }) {
+function PostDeleteForm({ isPost, id, refreshPosts, refreshReplies, sendButtonShown, hasProfanity = false }) {
   const handleClick = async () => {
     // remove post/reply
     await removePost(id);
@@ -23,7 +23,15 @@ function PostDeleteForm({ isPost, id, refreshPosts, refreshReplies, sendButtonSh
       {/* delete post confirmation text */}
       <div className="form-error form-msg-sm">
         <FontAwesomeIcon icon={faExclamationCircle} size="sm" fixedWidth />{" "}
-        Are you sure you want to delete this {isPost ? "post" : "reply"}?
+        {hasProfanity ? (
+          <Fragment>
+            Inappropriate {isPost ? "post" : "reply"}! Do you want to delete this?
+          </Fragment>
+        ) : (
+          <Fragment>
+            Are you sure you want to delete this {isPost ? "post" : "reply"}?
+          </Fragment>
+        )}        
       </div>
 
       {/* delete post button */}

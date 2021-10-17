@@ -5,12 +5,14 @@ import PostDeleteForm from "components/PostDeleteForm";
 import PostInfo from "components/PostInfo";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGhost, faUserSlash } from "@fortawesome/free-solid-svg-icons";
+import { checkProfanity } from "utils/ProfanityFilter";
 import "App.css";
 
 function SinglePost({ post, refreshPosts, enableDelete = true }) {
   const [allReplies, setAllReplies] = useState([]);
   const [childReplies, setChildReplies] = useState([]);
   const [deletePost, setDeletePost] = useState(false);
+  const [hasProfanity, setHasProfanity] = useState(false);
 
   // send delete form shown from child to parent
   const sendButtonShown = (showdeletePost) => {
@@ -34,7 +36,14 @@ function SinglePost({ post, refreshPosts, enableDelete = true }) {
   
   useEffect(() => {
     refreshReplies();
-  }, [refreshReplies]);
+
+    // profanity filter
+    if (checkProfanity(post.content)) {
+      setDeletePost(true);
+      setHasProfanity(true);
+    }
+
+  }, [refreshReplies, post.content]);
 
   
   // display different type of icon based on how a post is deleted (deleted by user/user is deleted)
@@ -47,7 +56,7 @@ function SinglePost({ post, refreshPosts, enableDelete = true }) {
 
   return (
     <div>
-      <PostInfo post={post} sendButtonShown={sendButtonShown} enableDelete={enableDelete} />
+      <PostInfo post={post} sendButtonShown={sendButtonShown} enableDelete={enableDelete} hasProfanity={hasProfanity} />
 
       {/* post's text */}
       <div className={`po-text ${post.isContentDeleted && "po-dlted-text"}`}>
@@ -68,6 +77,7 @@ function SinglePost({ post, refreshPosts, enableDelete = true }) {
           id={post.id} 
           refreshPosts={refreshPosts} 
           sendButtonShown={sendButtonShown}
+          hasProfanity={hasProfanity}
         />
       }
 

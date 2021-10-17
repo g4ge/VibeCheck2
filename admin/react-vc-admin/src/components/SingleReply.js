@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PostDeleteForm from "components/PostDeleteForm";
 import PostInfo from "components/PostInfo";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGhost, faUserSlash } from "@fortawesome/free-solid-svg-icons";
+import { checkProfanity } from "utils/ProfanityFilter";
 import "App.css";
 
 function SingleReply({ allReplies, rootId, reply, refreshReplies, enableDelete = true }) {
   const [deletePost, setDeletePost] = useState(false);
+  const [hasProfanity, setHasProfanity] = useState(false);
 
   // extract child replies of this reply
   const childReplies = allReplies.filter((r) => r.parentId === reply.id);
@@ -15,6 +17,14 @@ function SingleReply({ allReplies, rootId, reply, refreshReplies, enableDelete =
   const sendButtonShown = (showdeletePost) => {
     setDeletePost(showdeletePost);
   };
+
+  useEffect(() => {
+    // profanity filter
+    if (checkProfanity(reply.content)) {
+      setDeletePost(true);
+      setHasProfanity(true);
+    }
+  }, [reply.content]);
 
 
   // display different type of icon based on how a post is deleted (deleted by user/user is deleted)
@@ -27,7 +37,7 @@ function SingleReply({ allReplies, rootId, reply, refreshReplies, enableDelete =
     
   return (
     <div>
-      <PostInfo post={reply} sendButtonShown={sendButtonShown} enableDelete={enableDelete} />
+      <PostInfo post={reply} sendButtonShown={sendButtonShown} enableDelete={enableDelete} hasProfanity={hasProfanity} />
 
       {/* reply's text */}
       <div className={`reply-text ${reply.isContentDeleted && "reply-dlted-text"}`}>
@@ -48,6 +58,7 @@ function SingleReply({ allReplies, rootId, reply, refreshReplies, enableDelete =
           id={reply.id}
           refreshReplies={refreshReplies}
           sendButtonShown={sendButtonShown}
+          hasProfanity={hasProfanity}
         />
       }
 
