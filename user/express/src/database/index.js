@@ -54,34 +54,35 @@ async function seedUserData() {
     password: hash,
     name: "",
     email: "",
-    status: false
+    status: false,
+    avatar: "AvatarQuestion"
   });
 
   hash = await argon2.hash("qqQQ11!!", { type: argon2.argon2id });
   await db.user.create({ 
-    username: "Violetto",
+    username: "Alice",
     password: hash,
-    name: "Violet Evergarden",
-    email: "violet@evergarden.com",
-    avatar: "AvatarBook"
+    name: "Alice Smith",
+    email: "alice@smith.com",
+    avatar: "AvatarCat"
   });
 
   hash = await argon2.hash("qqQQ11!!", { type: argon2.argon2id });
   await db.user.create({ 
-    username: "Mai",
+    username: "Bob",
     password: hash,
-    name: "Mai Sakurajima",
-    email: "mai@sakurajima.com",
+    name: "Bob Smith",
+    email: "bob@smith.com",
     avatar: "AvatarCoffee"
   });
 
   hash = await argon2.hash("qqQQ11!!", { type: argon2.argon2id });
   await db.user.create({ 
-    username: "Shouko",
+    username: "Charlie",
     password: hash,
-    name: "Shouko Nishimiya",
-    email: "shouko@nishimiya.com",
-    avatar: "AvatarCat"
+    name: "Charlie Smith",
+    email: "charlie@smith.com",
+    avatar: "AvatarConsole"
   });
 }
 
