@@ -1,5 +1,9 @@
 # VC Admin App Design Decisions
 
+## Profanity Filter
+
+- A delete confirmation message will be displayed if inappropriate post is detected.
+
 ## Number of users using VC per day
 
 - Once a user is logged in to VC for the first time on the day, the number of users using VC per day increases by one.
