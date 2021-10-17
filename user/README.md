@@ -11,14 +11,11 @@
 - User is redirected to _Sign In_ page upon successful account registration.
 - User is redirected to _Landing_ page upon successful account deletion.
 - User is redirected to _Profile_ page upon successful login.
-- Once user is authenticated (i.e. signed in), the user is stored with React Context.\
-  It is also stored in local storage by `react-vc-user/src/data/AuthUserRepository.js`\
-  so that it can be retrieved when a page is refreshed, thus preventing data lost.
+- Once user is authenticated (i.e. signed in), the user is stored with React Context. It is also stored in local storage by `react-vc-user/src/data/AuthUserRepository.js` so that it can be retrieved when a page is refreshed, thus preventing data lost.
 
 ## User Profile Management
 
-- User is given a default avatar upon successful account registration.\
-  User is able to choose one of 6 avatars stored in `react-vc-user/src/images/avatars/` and add it in _Profile_ page.
+- User is given a default avatar upon successful account registration. User is able to choose one of 6 avatars stored in `react-vc-user/src/images/avatars/` and add it in _Profile_ page.
 - User only edits the field he/she wants to change (all field are not required except _current password_).
 - All posts and replies of the user is listed in the user profile so that others can view them.
 
